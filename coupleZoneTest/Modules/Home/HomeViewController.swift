@@ -79,17 +79,17 @@ final class HomeViewController: UIViewController {
     // MARK: - Layout
     @MainActor private func layout() {
         welcomeLabel.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(30)
             make.leading.equalTo(20)
             make.trailing.equalTo(-20)
         }
         imageView.snp.makeConstraints { make in
-            make.top.equalTo(welcomeLabel.snp.bottom).offset(10)
+            make.top.equalTo(welcomeLabel.snp.bottom).offset(20)
             make.size.equalTo(view.snp.width).multipliedBy(0.7)
             make.centerX.equalToSuperview()
         }
         sendLoveButton.snp.makeConstraints { make in
-            make.top.equalTo(imageView.snp.bottom).offset(10)
+            make.top.equalTo(imageView.snp.bottom).offset(30)
             make.leading.equalTo(imageView.snp.leading)
             make.trailing.equalTo(imageView.snp.trailing)
             make.height.equalTo(44)
@@ -113,7 +113,11 @@ final class HomeViewController: UIViewController {
     }
     
     private func fetchData() {
-        interactor.fetchData(.init())
+        LottieHUD.shared.showWithoutDelay()
+        Task {
+            await interactor.fetchData(.init())
+            LottieHUD.shared.dismiss()
+        }
     }
 
     // MARK: - Actions
@@ -128,8 +132,23 @@ final class HomeViewController: UIViewController {
         }
     }
     @objc private func settingsButtonAction() {
-        let viewController = SettingsViewController()
-        present(viewController, animated: true)
+//        let viewController = SettingsViewController()
+//        present(viewController, animated: true)
+        LottieHUD.shared.showWithoutDelay()
+        AuthManager.shared.signOut { result in
+            LottieHUD.shared.dismiss()
+            switch result {
+                case .success(_):
+                    DispatchQueue.main.async {
+                        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene, let sceneDelegate = windowScene.delegate as? SceneDelegate else { return }
+                        sceneDelegate.navigateFromAuth()
+                    }
+                case .failure(let error):
+                    self.displaySimpleAlert(title: "Error", message: error.localizedDescription, okButtonText: "OK") {
+                        //
+                    }
+            }
+        }
     }
 }
 
@@ -141,7 +160,27 @@ extension HomeViewController: HomeDisplayLogic {
     func display(_ model: HomeModels.FetchData.ViewModel) {
         let displayModel = model.displayModel
         self.imageView.setImage(urlString: displayModel.imageURLString)
-        self.welcomeLabel.text = "Welcome \(displayModel.username),\nYou've been together with this weirdo(\(displayModel.partnerUsername)) for the past \(displayModel.numberOfDays) days."
+        self.welcomeLabel.attributedText = getAttributedWelcomeMessage(username: displayModel.username, partnerName: displayModel.partnerUsername, numberOfDays: displayModel.numberOfDays)
+    }
+}
+
+extension HomeViewController {
+    private func getAttributedWelcomeMessage(username: String, partnerName: String, numberOfDays: Int) -> NSAttributedString {
+        let regularAttributes: [NSAttributedString.Key: Any] = [.font: UIFont.systemFont(ofSize: 16, weight: .regular)]
+        let boldAttributes: [NSAttributedString.Key: Any] = [.font: UIFont.systemFont(ofSize: 16, weight: .bold)]
+
+        let welcomeIntro = NSMutableAttributedString(string: "Welcome \(username),", attributes: [.font: UIFont.systemFont(ofSize: 17, weight: .semibold)])
+        let two = NSMutableAttributedString(string: "\nYou've been together with this weirdo\n", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .regular)])
+        let three = NSMutableAttributedString(string: "(\(partnerName))", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .semibold)])
+        let four = NSMutableAttributedString(string: " for the past ", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .regular)])
+        let five = NSMutableAttributedString(string: "\(numberOfDays)", attributes: [.font: UIFont.systemFont(ofSize: 20, weight: .bold)])
+        let six = NSMutableAttributedString(string: " days.", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .regular)])
+        welcomeIntro.append(two)
+        welcomeIntro.append(three)
+        welcomeIntro.append(four)
+        welcomeIntro.append(five)
+        welcomeIntro.append(six)
+        return welcomeIntro
     }
 }
 

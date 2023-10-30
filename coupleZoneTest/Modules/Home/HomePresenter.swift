@@ -35,8 +35,15 @@ extension HomeModels.FetchData.ViewModel.DisplayableModel {
     init(model: HomeItem) {
         self.imageURLString =  model.imageURLString
         self.numberOfDays = model.numberOfDays
-        self.partnerUsername = model.partnerUsername
-        self.username = model.username
-        
+        if let email = AppGlobal.shared.user?.email {
+            if email == "zeynepozahishali@gmail.com" {
+                self.partnerUsername = "cankoç, on the right"
+            } else {
+                self.partnerUsername = "zeynom, on the left"
+            }
+        } else {
+            self.partnerUsername = "Error"
+        }
+        self.username = AppGlobal.shared.appleCredentialUserFullName?.givenName ?? "Anonymous"
     }
 }
