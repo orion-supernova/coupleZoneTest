@@ -7,8 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		544F5C382AED9257001D3243 /* coupleKissing.riv in Resources */ = {isa = PBXBuildFile; fileRef = 544F5C372AED9257001D3243 /* coupleKissing.riv */; };
+		544F5C5C2AED9DA6001D3243 /* test.riv in Resources */ = {isa = PBXBuildFile; fileRef = 544F5C5B2AED9DA6001D3243 /* test.riv */; };
+		544F5C5E2AEFE999001D3243 /* LottieHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544F5C5D2AEFE999001D3243 /* LottieHUD.swift */; };
+		544F5C612AEFE9BD001D3243 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 544F5C602AEFE9BD001D3243 /* Lottie */; };
+		544F5C652AEFEC87001D3243 /* loading.json in Resources */ = {isa = PBXBuildFile; fileRef = 544F5C642AEFEC87001D3243 /* loading.json */; };
 		548FD3852AEC314E0098D6AA /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 548FD3842AEC314E0098D6AA /* LoginViewController.swift */; };
 		548FD3872AEC38D60098D6AA /* SensitiveData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 548FD3862AEC38D60098D6AA /* SensitiveData.swift */; };
+		548FD38A2AEC4D5D0098D6AA /* RiveRuntime in Frameworks */ = {isa = PBXBuildFile; productRef = 548FD3892AEC4D5D0098D6AA /* RiveRuntime */; };
+		548FD38C2AEC4E870098D6AA /* loginAnimation.riv in Resources */ = {isa = PBXBuildFile; fileRef = 548FD38B2AEC4E870098D6AA /* loginAnimation.riv */; };
+		548FD38E2AEC58CA0098D6AA /* UIViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 548FD38D2AEC58CA0098D6AA /* UIViewControllerExtension.swift */; };
+		548FD3912AEC5D4C0098D6AA /* SignInWithAppleHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 548FD3902AEC5D4C0098D6AA /* SignInWithAppleHelper.swift */; };
+		548FD3932AEC5D890098D6AA /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 548FD3922AEC5D890098D6AA /* AuthManager.swift */; };
+		548FD3952AEC60FC0098D6AA /* AppGlobal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 548FD3942AEC60FC0098D6AA /* AppGlobal.swift */; };
 		549E525E2AE0101500857FF5 /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 549E525D2AE0101500857FF5 /* UIColorExtension.swift */; };
 		549E52612AE024C700857FF5 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 549E52602AE024C700857FF5 /* SettingsViewController.swift */; };
 		54A6756C2ADFD96A00743B1A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A6756B2ADFD96A00743B1A /* AppDelegate.swift */; };
@@ -43,8 +54,18 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		544F5C372AED9257001D3243 /* coupleKissing.riv */ = {isa = PBXFileReference; lastKnownFileType = file; path = coupleKissing.riv; sourceTree = "<group>"; };
+		544F5C5B2AED9DA6001D3243 /* test.riv */ = {isa = PBXFileReference; lastKnownFileType = file; path = test.riv; sourceTree = "<group>"; };
+		544F5C5D2AEFE999001D3243 /* LottieHUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieHUD.swift; sourceTree = "<group>"; };
+		544F5C642AEFEC87001D3243 /* loading.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = loading.json; sourceTree = "<group>"; };
 		548FD3842AEC314E0098D6AA /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		548FD3862AEC38D60098D6AA /* SensitiveData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensitiveData.swift; sourceTree = "<group>"; };
+		548FD38B2AEC4E870098D6AA /* loginAnimation.riv */ = {isa = PBXFileReference; lastKnownFileType = file; path = loginAnimation.riv; sourceTree = "<group>"; };
+		548FD38D2AEC58CA0098D6AA /* UIViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtension.swift; sourceTree = "<group>"; };
+		548FD3902AEC5D4C0098D6AA /* SignInWithAppleHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInWithAppleHelper.swift; sourceTree = "<group>"; };
+		548FD3922AEC5D890098D6AA /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
+		548FD3942AEC60FC0098D6AA /* AppGlobal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppGlobal.swift; sourceTree = "<group>"; };
+		548FD3962AEC768B0098D6AA /* coupleZoneTest.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = coupleZoneTest.entitlements; sourceTree = "<group>"; };
 		549E525D2AE0101500857FF5 /* UIColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
 		549E52602AE024C700857FF5 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		54A675682ADFD96A00743B1A /* coupleZoneTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = coupleZoneTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -82,7 +103,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				544F5C612AEFE9BD001D3243 /* Lottie in Frameworks */,
 				74BDA94E2AE05DD5006164D7 /* SnapKit in Frameworks */,
+				548FD38A2AEC4D5D0098D6AA /* RiveRuntime in Frameworks */,
 				74E1103D2AE040F700C58295 /* Kingfisher in Frameworks */,
 				74E1102C2AE0337600C58295 /* Supabase in Frameworks */,
 			);
@@ -99,6 +122,15 @@
 			path = LoginRegister;
 			sourceTree = "<group>";
 		};
+		548FD38F2AEC5D270098D6AA /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				548FD3902AEC5D4C0098D6AA /* SignInWithAppleHelper.swift */,
+				548FD3922AEC5D890098D6AA /* AuthManager.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
 		549E525C2AE0100600857FF5 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -107,6 +139,7 @@
 				74E110402AE0426500C58295 /* UIViewExtension.swift */,
 				74E110422AE042AE00C58295 /* CollectionExtension.swift */,
 				74BDA9552AE095D2006164D7 /* StringExtension.swift */,
+				548FD38D2AEC58CA0098D6AA /* UIViewControllerExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -138,12 +171,15 @@
 		54A6756A2ADFD96A00743B1A /* coupleZoneTest */ = {
 			isa = PBXGroup;
 			children = (
+				548FD3942AEC60FC0098D6AA /* AppGlobal.swift */,
+				548FD3962AEC768B0098D6AA /* coupleZoneTest.entitlements */,
 				54A675802ADFD9A100743B1A /* Storyboards */,
 				54A6757F2ADFD99200743B1A /* AppFiles */,
 				74E110442AE044F500C58295 /* Services */,
 				74E110452AE044FC00C58295 /* Networking */,
 				54A675822ADFDA0800743B1A /* Modules */,
 				54A675952ADFEDB300743B1A /* Utils */,
+				548FD38F2AEC5D270098D6AA /* Helpers */,
 				549E525C2AE0100600857FF5 /* Extensions */,
 				54A675812ADFD9AA00743B1A /* Media */,
 				54A675792ADFD96B00743B1A /* Info.plist */,
@@ -172,6 +208,10 @@
 		54A675812ADFD9AA00743B1A /* Media */ = {
 			isa = PBXGroup;
 			children = (
+				544F5C642AEFEC87001D3243 /* loading.json */,
+				544F5C5B2AED9DA6001D3243 /* test.riv */,
+				544F5C372AED9257001D3243 /* coupleKissing.riv */,
+				548FD38B2AEC4E870098D6AA /* loginAnimation.riv */,
 				54A675742ADFD96B00743B1A /* Assets.xcassets */,
 			);
 			path = Media;
@@ -234,6 +274,7 @@
 			children = (
 				54A675962ADFEDBC00743B1A /* Alertable.swift */,
 				548FD3862AEC38D60098D6AA /* SensitiveData.swift */,
+				544F5C5D2AEFE999001D3243 /* LottieHUD.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -293,6 +334,8 @@
 				74E1102B2AE0337600C58295 /* Supabase */,
 				74E1103C2AE040F700C58295 /* Kingfisher */,
 				74BDA94D2AE05DD5006164D7 /* SnapKit */,
+				548FD3892AEC4D5D0098D6AA /* RiveRuntime */,
+				544F5C602AEFE9BD001D3243 /* Lottie */,
 			);
 			productName = coupleZoneTest;
 			productReference = 54A675682ADFD96A00743B1A /* coupleZoneTest.app */;
@@ -326,6 +369,8 @@
 				74E1102A2AE0337600C58295 /* XCRemoteSwiftPackageReference "supabase-swift" */,
 				74E1103B2AE040F700C58295 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				74BDA94C2AE05DD5006164D7 /* XCRemoteSwiftPackageReference "SnapKit" */,
+				548FD3882AEC4D5D0098D6AA /* XCRemoteSwiftPackageReference "rive-ios" */,
+				544F5C5F2AEFE9BD001D3243 /* XCRemoteSwiftPackageReference "lottie-ios" */,
 			);
 			productRefGroup = 54A675692ADFD96A00743B1A /* Products */;
 			projectDirPath = "";
@@ -342,7 +387,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				54A675782ADFD96B00743B1A /* LaunchScreen.storyboard in Resources */,
+				544F5C5C2AED9DA6001D3243 /* test.riv in Resources */,
+				544F5C382AED9257001D3243 /* coupleKissing.riv in Resources */,
 				54A675752ADFD96B00743B1A /* Assets.xcassets in Resources */,
+				544F5C652AEFEC87001D3243 /* loading.json in Resources */,
+				548FD38C2AEC4E870098D6AA /* loginAnimation.riv in Resources */,
 				54A675732ADFD96A00743B1A /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -366,11 +415,15 @@
 				74BDA9542AE09574006164D7 /* RequestError.swift in Sources */,
 				74E1102E2AE0384500C58295 /* HomeBuilder.swift in Sources */,
 				54A675942ADFE51C00743B1A /* ChatViewController.swift in Sources */,
+				548FD38E2AEC58CA0098D6AA /* UIViewControllerExtension.swift in Sources */,
 				74E110412AE0426500C58295 /* UIViewExtension.swift in Sources */,
 				54A6756C2ADFD96A00743B1A /* AppDelegate.swift in Sources */,
+				548FD3912AEC5D4C0098D6AA /* SignInWithAppleHelper.swift in Sources */,
+				548FD3952AEC60FC0098D6AA /* AppGlobal.swift in Sources */,
 				549E525E2AE0101500857FF5 /* UIColorExtension.swift in Sources */,
 				74E1104C2AE04B1300C58295 /* HomeServices.swift in Sources */,
 				54A6756E2ADFD96A00743B1A /* SceneDelegate.swift in Sources */,
+				548FD3932AEC5D890098D6AA /* AuthManager.swift in Sources */,
 				74E110342AE0398C00C58295 /* HomeInteractor.swift in Sources */,
 				54A675972ADFEDBC00743B1A /* Alertable.swift in Sources */,
 				74E110362AE03A6900C58295 /* HomeRouter.swift in Sources */,
@@ -378,6 +431,7 @@
 				548FD3872AEC38D60098D6AA /* SensitiveData.swift in Sources */,
 				74E1103F2AE0416C00C58295 /* UIImageViewExtension.swift in Sources */,
 				549E52612AE024C700857FF5 /* SettingsViewController.swift in Sources */,
+				544F5C5E2AEFE999001D3243 /* LottieHUD.swift in Sources */,
 				74E110302AE038E100C58295 /* HomePresenter.swift in Sources */,
 				548FD3852AEC314E0098D6AA /* LoginViewController.swift in Sources */,
 				74E110322AE0394800C58295 /* HomeNetworkWorker.swift in Sources */,
@@ -530,6 +584,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = coupleZoneTest/coupleZoneTest.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 37TC2VKVJ6;
@@ -560,6 +615,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = coupleZoneTest/coupleZoneTest.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 37TC2VKVJ6;
@@ -609,6 +665,22 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		544F5C5F2AEFE9BD001D3243 /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-ios.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.3.3;
+			};
+		};
+		548FD3882AEC4D5D0098D6AA /* XCRemoteSwiftPackageReference "rive-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/rive-app/rive-ios";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.5.1;
+			};
+		};
 		74BDA94C2AE05DD5006164D7 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
@@ -636,6 +708,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		544F5C602AEFE9BD001D3243 /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 544F5C5F2AEFE9BD001D3243 /* XCRemoteSwiftPackageReference "lottie-ios" */;
+			productName = Lottie;
+		};
+		548FD3892AEC4D5D0098D6AA /* RiveRuntime */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 548FD3882AEC4D5D0098D6AA /* XCRemoteSwiftPackageReference "rive-ios" */;
+			productName = RiveRuntime;
+		};
 		74BDA94D2AE05DD5006164D7 /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 74BDA94C2AE05DD5006164D7 /* XCRemoteSwiftPackageReference "SnapKit" */;

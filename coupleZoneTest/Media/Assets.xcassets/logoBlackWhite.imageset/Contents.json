@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "logoBlackWhite.png",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

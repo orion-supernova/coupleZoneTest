@@ -55,6 +55,15 @@
       }
     },
     {
+      "identity" : "lottie-ios",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/airbnb/lottie-ios.git",
+      "state" : {
+        "revision" : "45517c3cfec9469bbdd4f86e32393c28ae9df0bc",
+        "version" : "4.3.3"
+      }
+    },
+    {
       "identity" : "postgrest-swift",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/supabase-community/postgrest-swift",
@@ -70,6 +79,15 @@
       "state" : {
         "revision" : "0b985c687fe963f6bd818ff77a35c27247b98bb4",
         "version" : "0.0.2"
+      }
+    },
+    {
+      "identity" : "rive-ios",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/rive-app/rive-ios",
+      "state" : {
+        "revision" : "2f9b26311742b0c36bb936655497304ed2f518a9",
+        "version" : "5.5.1"
       }
     },
     {

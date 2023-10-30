@@ -7,7 +7,6 @@
 
 import UIKit
 import Supabase
-import GoTrue
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -39,8 +38,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         vc1.title = "Photos"
         vc2.title = "Notes"
         vc3.title = "Chat"
-        
-        window?.rootViewController = tabController
+
+        // MARK: - Check For Auth & Navigate
+        navigateFromAuth()
+
         guard let _ = (scene as? UIWindowScene) else { return }
     }
 
@@ -73,5 +74,21 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
 
+}
+
+extension SceneDelegate {
+    func navigateFromAuth() {
+        LottieHUD.shared.showWithoutDelay()
+        Task {
+            do {
+                _ = try await SensitiveData.supabase.auth.session
+                window?.rootViewController = tabController
+                LottieHUD.shared.dismiss()
+            } catch {
+                window?.rootViewController = LoginViewController()
+                LottieHUD.shared.dismiss()
+            }
+        }
+    }
 }
 
