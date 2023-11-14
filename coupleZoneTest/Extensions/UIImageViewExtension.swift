@@ -16,12 +16,14 @@ import Kingfisher
         clipsToBounds       = true
     }
     
-    func setImage(url: URL?, placeholder: UIImage? = nil) {
-        kf.setImage(with: url, placeholder: placeholder)
+    func setImage(url: URL?, placeholder: UIImage? = nil, completion: @escaping () -> Void) {
+        kf.setImage(with: url, placeholder: placeholder) { result in
+            completion()
+        }
     }
     
-    func setImage(urlString: String?, placeholder: UIImage? = nil) {
+    func setImage(urlString: String?, placeholder: UIImage? = nil, completion: @escaping () -> Void) {
         guard let urlString, let url = URL(string: urlString) else { return }
-        setImage(url: url, placeholder: placeholder)
+        setImage(url: url, placeholder: placeholder, completion: completion)
     }
 }

@@ -18,11 +18,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     // MARK: - Configure Navbar and Tabbar Appearance
     func configureTabbarAndNavbarAppearance() {
-//        let navigationBarAppearance = UINavigationBarAppearance()
-//        navigationBarAppearance.configureWithDefaultBackground()
-//        UINavigationBar.appearance().standardAppearance   = navigationBarAppearance
-//        UINavigationBar.appearance().compactAppearance    = navigationBarAppearance
-//        UINavigationBar.appearance().scrollEdgeAppearance = navigationBarAppearance
+        let navigationBarAppearance = UINavigationBarAppearance()
+        navigationBarAppearance.configureWithTransparentBackground()
+        UINavigationBar.appearance().standardAppearance   = navigationBarAppearance
+        UINavigationBar.appearance().compactAppearance    = navigationBarAppearance
+        UINavigationBar.appearance().scrollEdgeAppearance = navigationBarAppearance
 
         let tabBarAppearance: UITabBarAppearance = UITabBarAppearance()
         tabBarAppearance.configureWithDefaultBackground()

@@ -12,6 +12,19 @@
 		544F5C5E2AEFE999001D3243 /* LottieHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544F5C5D2AEFE999001D3243 /* LottieHUD.swift */; };
 		544F5C612AEFE9BD001D3243 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 544F5C602AEFE9BD001D3243 /* Lottie */; };
 		544F5C652AEFEC87001D3243 /* loading.json in Resources */ = {isa = PBXBuildFile; fileRef = 544F5C642AEFEC87001D3243 /* loading.json */; };
+		544F5C672AEFF122001D3243 /* PhotosBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544F5C662AEFF122001D3243 /* PhotosBuilder.swift */; };
+		544F5C692AF001AB001D3243 /* PhotosPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544F5C682AF001AB001D3243 /* PhotosPresenter.swift */; };
+		544F5C6B2AF002F2001D3243 /* PhotosNetworkWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544F5C6A2AF002F2001D3243 /* PhotosNetworkWorker.swift */; };
+		544F5C6D2AF00303001D3243 /* PhotosRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544F5C6C2AF00303001D3243 /* PhotosRouter.swift */; };
+		544F5C6F2AF0034E001D3243 /* PhotosInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544F5C6E2AF0034E001D3243 /* PhotosInteractor.swift */; };
+		544F5C712AF0035E001D3243 /* PhotosModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544F5C702AF0035E001D3243 /* PhotosModels.swift */; };
+		544F5C732AF0036F001D3243 /* PhotosItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544F5C722AF0036F001D3243 /* PhotosItem.swift */; };
+		544F5C752AF003A2001D3243 /* PhotosServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544F5C742AF003A2001D3243 /* PhotosServices.swift */; };
+		5477E9812B00FDC200348A37 /* PhotosTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5477E9802B00FDC200348A37 /* PhotosTableViewCell.swift */; };
+		5477E9842B00FE7700348A37 /* LastPhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5477E9832B00FE7700348A37 /* LastPhotoViewController.swift */; };
+		5477E9862B010E9100348A37 /* UITableViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5477E9852B010E9100348A37 /* UITableViewExtension.swift */; };
+		5477E9882B0115E300348A37 /* CustomCameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5477E9872B0115E300348A37 /* CustomCameraViewController.swift */; };
+		5477E9912B036B6300348A37 /* MessageKit in Frameworks */ = {isa = PBXBuildFile; productRef = 5477E9902B036B6300348A37 /* MessageKit */; };
 		548FD3852AEC314E0098D6AA /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 548FD3842AEC314E0098D6AA /* LoginViewController.swift */; };
 		548FD3872AEC38D60098D6AA /* SensitiveData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 548FD3862AEC38D60098D6AA /* SensitiveData.swift */; };
 		548FD38A2AEC4D5D0098D6AA /* RiveRuntime in Frameworks */ = {isa = PBXBuildFile; productRef = 548FD3892AEC4D5D0098D6AA /* RiveRuntime */; };
@@ -58,6 +71,18 @@
 		544F5C5B2AED9DA6001D3243 /* test.riv */ = {isa = PBXFileReference; lastKnownFileType = file; path = test.riv; sourceTree = "<group>"; };
 		544F5C5D2AEFE999001D3243 /* LottieHUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieHUD.swift; sourceTree = "<group>"; };
 		544F5C642AEFEC87001D3243 /* loading.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = loading.json; sourceTree = "<group>"; };
+		544F5C662AEFF122001D3243 /* PhotosBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosBuilder.swift; sourceTree = "<group>"; };
+		544F5C682AF001AB001D3243 /* PhotosPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosPresenter.swift; sourceTree = "<group>"; };
+		544F5C6A2AF002F2001D3243 /* PhotosNetworkWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosNetworkWorker.swift; sourceTree = "<group>"; };
+		544F5C6C2AF00303001D3243 /* PhotosRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosRouter.swift; sourceTree = "<group>"; };
+		544F5C6E2AF0034E001D3243 /* PhotosInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosInteractor.swift; sourceTree = "<group>"; };
+		544F5C702AF0035E001D3243 /* PhotosModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosModels.swift; sourceTree = "<group>"; };
+		544F5C722AF0036F001D3243 /* PhotosItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosItem.swift; sourceTree = "<group>"; };
+		544F5C742AF003A2001D3243 /* PhotosServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosServices.swift; sourceTree = "<group>"; };
+		5477E9802B00FDC200348A37 /* PhotosTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosTableViewCell.swift; sourceTree = "<group>"; };
+		5477E9832B00FE7700348A37 /* LastPhotoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastPhotoViewController.swift; sourceTree = "<group>"; };
+		5477E9852B010E9100348A37 /* UITableViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableViewExtension.swift; sourceTree = "<group>"; };
+		5477E9872B0115E300348A37 /* CustomCameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCameraViewController.swift; sourceTree = "<group>"; };
 		548FD3842AEC314E0098D6AA /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		548FD3862AEC38D60098D6AA /* SensitiveData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensitiveData.swift; sourceTree = "<group>"; };
 		548FD38B2AEC4E870098D6AA /* loginAnimation.riv */ = {isa = PBXFileReference; lastKnownFileType = file; path = loginAnimation.riv; sourceTree = "<group>"; };
@@ -106,6 +131,7 @@
 				544F5C612AEFE9BD001D3243 /* Lottie in Frameworks */,
 				74BDA94E2AE05DD5006164D7 /* SnapKit in Frameworks */,
 				548FD38A2AEC4D5D0098D6AA /* RiveRuntime in Frameworks */,
+				5477E9912B036B6300348A37 /* MessageKit in Frameworks */,
 				74E1103D2AE040F700C58295 /* Kingfisher in Frameworks */,
 				74E1102C2AE0337600C58295 /* Supabase in Frameworks */,
 			);
@@ -114,6 +140,30 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5477E97C2B00E44800348A37 /* Subviews */ = {
+			isa = PBXGroup;
+			children = (
+				5477E97F2B00FD2400348A37 /* Cell */,
+				5477E9832B00FE7700348A37 /* LastPhotoViewController.swift */,
+			);
+			path = Subviews;
+			sourceTree = "<group>";
+		};
+		5477E97F2B00FD2400348A37 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				5477E9802B00FDC200348A37 /* PhotosTableViewCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		5477E98C2B0260B400348A37 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		548FD3832AEC311D0098D6AA /* LoginRegister */ = {
 			isa = PBXGroup;
 			children = (
@@ -140,6 +190,7 @@
 				74E110422AE042AE00C58295 /* CollectionExtension.swift */,
 				74BDA9552AE095D2006164D7 /* StringExtension.swift */,
 				548FD38D2AEC58CA0098D6AA /* UIViewControllerExtension.swift */,
+				5477E9852B010E9100348A37 /* UITableViewExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -157,6 +208,7 @@
 			children = (
 				54A6756A2ADFD96A00743B1A /* coupleZoneTest */,
 				54A675692ADFD96A00743B1A /* Products */,
+				5477E98C2B0260B400348A37 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -248,7 +300,15 @@
 		54A6758C2ADFE4BF00743B1A /* Photos */ = {
 			isa = PBXGroup;
 			children = (
+				5477E97C2B00E44800348A37 /* Subviews */,
+				544F5C662AEFF122001D3243 /* PhotosBuilder.swift */,
 				54A6758F2ADFE50800743B1A /* PhotosViewController.swift */,
+				544F5C682AF001AB001D3243 /* PhotosPresenter.swift */,
+				544F5C6A2AF002F2001D3243 /* PhotosNetworkWorker.swift */,
+				544F5C6C2AF00303001D3243 /* PhotosRouter.swift */,
+				544F5C6E2AF0034E001D3243 /* PhotosInteractor.swift */,
+				544F5C702AF0035E001D3243 /* PhotosModels.swift */,
+				544F5C722AF0036F001D3243 /* PhotosItem.swift */,
 			);
 			path = Photos;
 			sourceTree = "<group>";
@@ -275,6 +335,7 @@
 				54A675962ADFEDBC00743B1A /* Alertable.swift */,
 				548FD3862AEC38D60098D6AA /* SensitiveData.swift */,
 				544F5C5D2AEFE999001D3243 /* LottieHUD.swift */,
+				5477E9872B0115E300348A37 /* CustomCameraViewController.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -291,6 +352,7 @@
 			isa = PBXGroup;
 			children = (
 				74E1104B2AE04B1300C58295 /* HomeServices.swift */,
+				544F5C742AF003A2001D3243 /* PhotosServices.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -336,6 +398,7 @@
 				74BDA94D2AE05DD5006164D7 /* SnapKit */,
 				548FD3892AEC4D5D0098D6AA /* RiveRuntime */,
 				544F5C602AEFE9BD001D3243 /* Lottie */,
+				5477E9902B036B6300348A37 /* MessageKit */,
 			);
 			productName = coupleZoneTest;
 			productReference = 54A675682ADFD96A00743B1A /* coupleZoneTest.app */;
@@ -371,6 +434,7 @@
 				74BDA94C2AE05DD5006164D7 /* XCRemoteSwiftPackageReference "SnapKit" */,
 				548FD3882AEC4D5D0098D6AA /* XCRemoteSwiftPackageReference "rive-ios" */,
 				544F5C5F2AEFE9BD001D3243 /* XCRemoteSwiftPackageReference "lottie-ios" */,
+				5477E98F2B036B6300348A37 /* XCRemoteSwiftPackageReference "MessageKit" */,
 			);
 			productRefGroup = 54A675692ADFD96A00743B1A /* Products */;
 			projectDirPath = "";
@@ -407,16 +471,22 @@
 				74E1103A2AE03EFA00C58295 /* HomeItem.swift in Sources */,
 				74E1104A2AE0455300C58295 /* ReachabilitySwift.swift in Sources */,
 				74E110382AE03D0D00C58295 /* HomeModels.swift in Sources */,
+				5477E9882B0115E300348A37 /* CustomCameraViewController.swift in Sources */,
 				54A675922ADFE51300743B1A /* NotesViewController.swift in Sources */,
 				74E110432AE042AE00C58295 /* CollectionExtension.swift in Sources */,
+				544F5C6B2AF002F2001D3243 /* PhotosNetworkWorker.swift in Sources */,
 				74E110482AE0454800C58295 /* InternetConnectionStatusProvider.swift in Sources */,
+				544F5C712AF0035E001D3243 /* PhotosModels.swift in Sources */,
+				544F5C692AF001AB001D3243 /* PhotosPresenter.swift in Sources */,
 				74BDA9562AE095D2006164D7 /* StringExtension.swift in Sources */,
 				74BDA9512AE089FA006164D7 /* APIResponse.swift in Sources */,
+				544F5C6D2AF00303001D3243 /* PhotosRouter.swift in Sources */,
 				74BDA9542AE09574006164D7 /* RequestError.swift in Sources */,
 				74E1102E2AE0384500C58295 /* HomeBuilder.swift in Sources */,
 				54A675942ADFE51C00743B1A /* ChatViewController.swift in Sources */,
 				548FD38E2AEC58CA0098D6AA /* UIViewControllerExtension.swift in Sources */,
 				74E110412AE0426500C58295 /* UIViewExtension.swift in Sources */,
+				544F5C672AEFF122001D3243 /* PhotosBuilder.swift in Sources */,
 				54A6756C2ADFD96A00743B1A /* AppDelegate.swift in Sources */,
 				548FD3912AEC5D4C0098D6AA /* SignInWithAppleHelper.swift in Sources */,
 				548FD3952AEC60FC0098D6AA /* AppGlobal.swift in Sources */,
@@ -427,12 +497,18 @@
 				74E110342AE0398C00C58295 /* HomeInteractor.swift in Sources */,
 				54A675972ADFEDBC00743B1A /* Alertable.swift in Sources */,
 				74E110362AE03A6900C58295 /* HomeRouter.swift in Sources */,
+				544F5C6F2AF0034E001D3243 /* PhotosInteractor.swift in Sources */,
 				54A675902ADFE50800743B1A /* PhotosViewController.swift in Sources */,
 				548FD3872AEC38D60098D6AA /* SensitiveData.swift in Sources */,
+				544F5C752AF003A2001D3243 /* PhotosServices.swift in Sources */,
 				74E1103F2AE0416C00C58295 /* UIImageViewExtension.swift in Sources */,
 				549E52612AE024C700857FF5 /* SettingsViewController.swift in Sources */,
 				544F5C5E2AEFE999001D3243 /* LottieHUD.swift in Sources */,
+				5477E9862B010E9100348A37 /* UITableViewExtension.swift in Sources */,
+				5477E9812B00FDC200348A37 /* PhotosTableViewCell.swift in Sources */,
+				5477E9842B00FE7700348A37 /* LastPhotoViewController.swift in Sources */,
 				74E110302AE038E100C58295 /* HomePresenter.swift in Sources */,
+				544F5C732AF0036F001D3243 /* PhotosItem.swift in Sources */,
 				548FD3852AEC314E0098D6AA /* LoginViewController.swift in Sources */,
 				74E110322AE0394800C58295 /* HomeNetworkWorker.swift in Sources */,
 			);
@@ -590,12 +666,13 @@
 				DEVELOPMENT_TEAM = 37TC2VKVJ6;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = coupleZoneTest/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "You need to allow access to the camera to be able to send photos with it.";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "We need access to your photo library to save and upload images.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -621,12 +698,13 @@
 				DEVELOPMENT_TEAM = 37TC2VKVJ6;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = coupleZoneTest/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "You need to allow access to the camera to be able to send photos with it.";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "We need access to your photo library to save and upload images.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -673,6 +751,14 @@
 				minimumVersion = 4.3.3;
 			};
 		};
+		5477E98F2B036B6300348A37 /* XCRemoteSwiftPackageReference "MessageKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/MessageKit/MessageKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.2.0;
+			};
+		};
 		548FD3882AEC4D5D0098D6AA /* XCRemoteSwiftPackageReference "rive-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/rive-app/rive-ios";
@@ -712,6 +798,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 544F5C5F2AEFE9BD001D3243 /* XCRemoteSwiftPackageReference "lottie-ios" */;
 			productName = Lottie;
+		};
+		5477E9902B036B6300348A37 /* MessageKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5477E98F2B036B6300348A37 /* XCRemoteSwiftPackageReference "MessageKit" */;
+			productName = MessageKit;
 		};
 		548FD3892AEC4D5D0098D6AA /* RiveRuntime */ = {
 			isa = XCSwiftPackageProductDependency;

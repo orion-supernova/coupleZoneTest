@@ -101,8 +101,7 @@ class LoginViewController: UIViewController {
                     }
                 case .failure(let error):
                     print("DEBUG: -----", error)
-                    self.displaySimpleAlert(title: "Error", message: error.localizedDescription, okButtonText: "OK") {
-                    }
+                    self.displaySimpleAlert(title: "Error", message: error.localizedDescription, okButtonText: "OK", completion: nil)
             }
         }
     }
