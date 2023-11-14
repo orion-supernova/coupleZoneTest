@@ -34,7 +34,36 @@ final class HomePresenter: HomePresentationLogic {
 extension HomeModels.FetchData.ViewModel.DisplayableModel {
     init(model: HomeItem) {
         self.imageURLString =  model.imageURLString
-        self.numberOfDays = model.numberOfDays
+
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZZZZZ"
+        dateFormatter.timeZone = TimeZone(identifier: "UTC")
+        if let startDate = dateFormatter.date(from: model.anniversaryDate) {
+            let calendar = Calendar.current
+            let currentDate = calendar.startOfDay(for: Date()) // Get the current date at midnight
+            let startServerDate = calendar.startOfDay(for: startDate) // Get the server's date at midnight
+            var componentsForDay = calendar.dateComponents([.day], from: startServerDate, to: currentDate)
+            var componentsWithCalendar = calendar.dateComponents([.year, .month, .day], from: startServerDate, to: currentDate)
+            // Add 1 day to the result
+            if let originalDay = componentsForDay.day {
+                componentsForDay.day = nil  // Clear the day component temporarily
+                componentsWithCalendar.day = nil  // Clear the day component temporarily
+
+                if let modifiedDay = calendar.date(byAdding: .day, value: originalDay + 1, to: startDate) {
+                    let modifiedComponentsWithCalendar = calendar.dateComponents([.year, .month, .day], from: startDate, to: modifiedDay)
+                    let modifiedComponentsForDay = calendar.dateComponents([.day], from: startDate, to: modifiedDay)
+                    componentsWithCalendar.year = modifiedComponentsWithCalendar.year
+                    componentsWithCalendar.month = modifiedComponentsWithCalendar.month
+                    componentsWithCalendar.day = modifiedComponentsWithCalendar.day
+                    componentsForDay.day = modifiedComponentsForDay.day
+                }
+            }
+            self.numberOfDays = componentsForDay.day ?? 0
+            self.numberOfDaysInOrder = [componentsWithCalendar.year ?? 0, componentsWithCalendar.month ?? 0, componentsWithCalendar.day ?? 0]
+        } else {
+            self.numberOfDays = 0
+            self.numberOfDaysInOrder = [0]
+        }
         if let email = AppGlobal.shared.user?.email {
             if email == "zeynepozahishali@gmail.com" {
                 self.partnerUsername = "cankoç, on the right"

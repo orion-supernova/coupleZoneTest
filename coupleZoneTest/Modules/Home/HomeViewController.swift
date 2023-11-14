@@ -114,10 +114,7 @@ final class HomeViewController: UIViewController {
     
     private func fetchData() {
         LottieHUD.shared.showWithoutDelay()
-        Task {
-            await interactor.fetchData(.init())
-            LottieHUD.shared.dismiss()
-        }
+        interactor.fetchData(.init())
     }
 
     // MARK: - Actions
@@ -134,20 +131,22 @@ final class HomeViewController: UIViewController {
     @objc private func settingsButtonAction() {
 //        let viewController = SettingsViewController()
 //        present(viewController, animated: true)
-        LottieHUD.shared.showWithoutDelay()
-        AuthManager.shared.signOut { result in
-            LottieHUD.shared.dismiss()
-            switch result {
-                case .success(_):
-                    DispatchQueue.main.async {
-                        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene, let sceneDelegate = windowScene.delegate as? SceneDelegate else { return }
-                        sceneDelegate.navigateFromAuth()
-                    }
-                case .failure(let error):
-                    self.displaySimpleAlert(title: "Error", message: error.localizedDescription, okButtonText: "OK") {
-                        //
-                    }
+        displayAlertTwoButtons(title: "Sign Out?", message: "Dou you want to signout?", firstButtonText: "Yeap", firstButtonStyle: .destructive, seconButtonText: "Nope, I thought it was settings.", secondButtonStyle: .default) {
+            LottieHUD.shared.showWithoutDelay()
+            AuthManager.shared.signOut { result in
+                LottieHUD.shared.dismiss()
+                switch result {
+                    case .success(_):
+                        DispatchQueue.main.async {
+                            guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene, let sceneDelegate = windowScene.delegate as? SceneDelegate else { return }
+                            sceneDelegate.navigateFromAuth()
+                        }
+                    case .failure(let error):
+                        self.displaySimpleAlert(title: "Error", message: error.localizedDescription, okButtonText: "OK", completion: nil)
+                }
             }
+        } secondButtonCompletion: {
+            //
         }
     }
 }
@@ -159,27 +158,32 @@ extension HomeViewController: Alertable {}
 extension HomeViewController: HomeDisplayLogic {
     func display(_ model: HomeModels.FetchData.ViewModel) {
         let displayModel = model.displayModel
-        self.imageView.setImage(urlString: displayModel.imageURLString)
-        self.welcomeLabel.attributedText = getAttributedWelcomeMessage(username: displayModel.username, partnerName: displayModel.partnerUsername, numberOfDays: displayModel.numberOfDays)
+        self.imageView.setImage(urlString: displayModel.imageURLString) {
+            LottieHUD.shared.dismiss()
+        }
+        self.welcomeLabel.attributedText = getAttributedWelcomeMessage(username: displayModel.username, partnerName: displayModel.partnerUsername, numberOfDays: displayModel.numberOfDays, numberOfDaysInOrder: displayModel.numberOfDaysInOrder)
     }
 }
 
 extension HomeViewController {
-    private func getAttributedWelcomeMessage(username: String, partnerName: String, numberOfDays: Int) -> NSAttributedString {
-        let regularAttributes: [NSAttributedString.Key: Any] = [.font: UIFont.systemFont(ofSize: 16, weight: .regular)]
-        let boldAttributes: [NSAttributedString.Key: Any] = [.font: UIFont.systemFont(ofSize: 16, weight: .bold)]
-
+    private func getAttributedWelcomeMessage(username: String, partnerName: String, numberOfDays: Int, numberOfDaysInOrder: [Int]) -> NSAttributedString {
         let welcomeIntro = NSMutableAttributedString(string: "Welcome \(username),", attributes: [.font: UIFont.systemFont(ofSize: 17, weight: .semibold)])
         let two = NSMutableAttributedString(string: "\nYou've been together with this weirdo\n", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .regular)])
         let three = NSMutableAttributedString(string: "(\(partnerName))", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .semibold)])
         let four = NSMutableAttributedString(string: " for the past ", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .regular)])
         let five = NSMutableAttributedString(string: "\(numberOfDays)", attributes: [.font: UIFont.systemFont(ofSize: 20, weight: .bold)])
         let six = NSMutableAttributedString(string: " days.", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .regular)])
+        let seven = NSMutableAttributedString(string: "\nWhich is ", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .regular)])
+        let eight = NSMutableAttributedString(string: "\(String(describing: numberOfDaysInOrder[safeIndex: 0] ?? 0)) \(numberOfDaysInOrder[safeIndex: 0] == 1 ? "year" : "years"), \(numberOfDaysInOrder[safeIndex: 1] ?? 0) \(numberOfDaysInOrder[safeIndex: 1] == 1 ? "month" : "months"), \(numberOfDaysInOrder[safeIndex: 2] ?? 0) \(numberOfDaysInOrder[safeIndex: 2] == 1 ? "day" : "days")", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .bold)])
+        let nine = NSMutableAttributedString(string: "", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .regular)])
         welcomeIntro.append(two)
         welcomeIntro.append(three)
         welcomeIntro.append(four)
         welcomeIntro.append(five)
         welcomeIntro.append(six)
+        welcomeIntro.append(seven)
+        welcomeIntro.append(eight)
+        welcomeIntro.append(nine)
         return welcomeIntro
     }
 }

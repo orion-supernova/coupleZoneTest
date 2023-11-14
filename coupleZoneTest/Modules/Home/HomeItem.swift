@@ -11,19 +11,19 @@ final class HomeItem: APIResponse {
     
     private enum CodingKeys: String, CodingKey {
         case imageURLString = "imageURLString"
-        case numberOfDays = "numberOfDays"
+        case anniversaryDate = "anniversary_date"
         case username = "username"
         case partnerUsername = "partnerUsername"
     }
     
     let imageURLString: String
-    let numberOfDays: Int
+    let anniversaryDate: String
     let username: String
     let partnerUsername: String
     
     init?(with json: JSON) {
         self.imageURLString = json[CodingKeys.imageURLString.stringValue] as? String ?? ""
-        self.numberOfDays = json[CodingKeys.numberOfDays.stringValue] as? Int ?? 0
+        self.anniversaryDate = json[CodingKeys.anniversaryDate.stringValue] as? String ?? "1998-06-23"
         self.username = json[CodingKeys.username.stringValue] as? String ?? ""
         self.partnerUsername = json[CodingKeys.partnerUsername.stringValue] as? String ?? ""
     }

@@ -8,16 +8,16 @@
 import UIKit
 
 public protocol Alertable: UIViewController {
-    func displaySimpleAlert(title: String, message: String, okButtonText: String, completion: @escaping () -> Void)
+    func displaySimpleAlert(title: String, message: String, okButtonText: String, completion: (() -> Void)?)
     func displayAlertTwoButtons(title: String, message: String, firstButtonText: String, firstButtonStyle: UIAlertAction.Style, seconButtonText: String, secondButtonStyle: UIAlertAction.Style, firstButtonCompletion: @escaping () -> Void, secondButtonCompletion: @escaping () -> Void)
 }
 
 public extension Alertable {
 
-    @MainActor func displaySimpleAlert(title: String, message: String, okButtonText: String, completion: @escaping () -> Void) {
+    @MainActor func displaySimpleAlert(title: String, message: String, okButtonText: String, completion: (() -> Void)?) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let okAction = UIAlertAction(title: okButtonText, style: .default) { _ in
-            completion()
+            completion?()
         }
         alertController.addAction(okAction)
         present(alertController, animated: true)
