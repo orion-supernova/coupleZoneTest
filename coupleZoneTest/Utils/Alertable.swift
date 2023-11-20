@@ -9,12 +9,12 @@ import UIKit
 
 public protocol Alertable: UIViewController {
     func displaySimpleAlert(title: String, message: String, okButtonText: String, completion: (() -> Void)?)
-    func displayAlertTwoButtons(title: String, message: String, firstButtonText: String, firstButtonStyle: UIAlertAction.Style, seconButtonText: String, secondButtonStyle: UIAlertAction.Style, firstButtonCompletion: @escaping () -> Void, secondButtonCompletion: @escaping () -> Void)
+    func displayAlertTwoButtons(title: String, message: String, firstButtonText: String, firstButtonStyle: UIAlertAction.Style, seconButtonText: String, secondButtonStyle: UIAlertAction.Style, firstButtonCompletion: (() -> Void)?, secondButtonCompletion: (() -> Void)?)
 }
 
 public extension Alertable {
 
-    @MainActor func displaySimpleAlert(title: String, message: String, okButtonText: String, completion: (() -> Void)?) {
+    @MainActor func displaySimpleAlert(title: String, message: String, okButtonText: String, completion: (() -> Void)? = nil) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let okAction = UIAlertAction(title: okButtonText, style: .default) { _ in
             completion?()
@@ -22,13 +22,13 @@ public extension Alertable {
         alertController.addAction(okAction)
         present(alertController, animated: true)
     }
-    @MainActor func displayAlertTwoButtons(title: String, message: String, firstButtonText: String, firstButtonStyle: UIAlertAction.Style, seconButtonText: String, secondButtonStyle: UIAlertAction.Style, firstButtonCompletion: @escaping () -> Void, secondButtonCompletion: @escaping () -> Void) {
+    @MainActor func displayAlertTwoButtons(title: String, message: String, firstButtonText: String, firstButtonStyle: UIAlertAction.Style, seconButtonText: String, secondButtonStyle: UIAlertAction.Style, firstButtonCompletion: (() -> Void)? = nil, secondButtonCompletion: (() -> Void)? = nil) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let firstButtonAction = UIAlertAction(title: firstButtonText, style: firstButtonStyle) { _ in
-            firstButtonCompletion()
+            firstButtonCompletion?()
         }
         let secondButtonAction = UIAlertAction(title: seconButtonText, style: secondButtonStyle) { _ in
-            secondButtonCompletion()
+            secondButtonCompletion?()
         }
         alertController.addAction(firstButtonAction)
         alertController.addAction(secondButtonAction)

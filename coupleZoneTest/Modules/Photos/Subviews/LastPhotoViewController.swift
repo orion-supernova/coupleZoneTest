@@ -85,11 +85,11 @@ class LastPhotoViewController: UIViewController {
         if let error = error {
             // Handle error
             print("Error saving image to photo library: \(error.localizedDescription)")
-            displaySimpleAlert(title: "Error!", message: error.localizedDescription, okButtonText: "OK", completion: nil)
+            displaySimpleAlert(title: "Error!", message: error.localizedDescription, okButtonText: "OK")
         } else {
             // Image saved successfully
             print("Image saved to photo library")
-            displaySimpleAlert(title: "Success!", message: "Check your photo library!", okButtonText: "OK", completion: nil)
+            displaySimpleAlert(title: "Success!", message: "Check your photo library!", okButtonText: "OK")
         }
     }
 }

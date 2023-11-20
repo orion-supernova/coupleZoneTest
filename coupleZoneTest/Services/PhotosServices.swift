@@ -38,8 +38,7 @@ class PhotosServices {
         do {
             guard let imageData = image.jpegData(compressionQuality: 0.8) else { return .failure(.convertImageToDataError) }
             let fileName = UUID().uuidString
-            let file = File(name: fileName, data: imageData, fileName: fileName, contentType: "image/jpeg"
-            )
+            let file = File(name: fileName, data: imageData, fileName: fileName, contentType: "image/jpeg")
             let homeID = await getHomeID()
             let uploadPhotoToStorage = try await supabase.storage.from(id: "homes/\(homeID)/timelinePhotos").upload(path: "\(fileName).jpeg", file: file, fileOptions: FileOptions(cacheControl: "3600"))
             let urlString = try supabase.storage.from(id: "homes/\(homeID)/timelinePhotos").getPublicURL(path: "\(fileName).jpeg").absoluteString

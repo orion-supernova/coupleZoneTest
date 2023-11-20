@@ -13,6 +13,8 @@ import SideMenu
     func display(_ model: HomeModels.FetchData.ViewModel, loadPhoto: Bool)
     func displayHomeNotExist()
     func displayError(with message: String)
+    func displayImagePicker()
+    func displaySuccessAfterPhotoUpload()
 }
 
 final class HomeViewController: UIViewController {
@@ -146,7 +148,9 @@ final class HomeViewController: UIViewController {
         }
     }
     @objc private func imageViewAction() {
-        displaySimpleAlert(title: "Yes", message: "ImageView Tapped", okButtonText: "OK") {
+        displayAlertTwoButtons(title: "Change Photo", message: "Do you want to change the photo?", firstButtonText: "Yes", firstButtonStyle: .default, seconButtonText: "Nope", secondButtonStyle: .cancel) {
+            self.interactor.changePhotoTapped()
+        } secondButtonCompletion: {
             //
         }
     }
@@ -164,7 +168,7 @@ final class HomeViewController: UIViewController {
                             sceneDelegate.navigateFromAuth()
                         }
                     case .failure(let error):
-                        self.displaySimpleAlert(title: "Error", message: error.localizedDescription, okButtonText: "OK", completion: nil)
+                        self.displaySimpleAlert(title: "Error", message: error.localizedDescription, okButtonText: "OK")
                 }
             }
         } secondButtonCompletion: {
@@ -196,6 +200,7 @@ extension HomeViewController: HomeDisplayLogic {
     }
     func displayError(with message: String) {
         LottieHUD.shared.dismiss()
+        displaySimpleAlert(title: "Error", message: message, okButtonText: "OK")
     }
     func displayHomeNotExist() {
         LottieHUD.shared.dismiss()
@@ -203,8 +208,41 @@ extension HomeViewController: HomeDisplayLogic {
         viewController.modalPresentationStyle = .fullScreen
         self.present(viewController, animated: true)
     }
+    func displayImagePicker() {
+        LottieHUD.shared.showWithoutDelay()
+        let imagePicker = UIImagePickerController()
+        imagePicker.delegate = self
+        imagePicker.sourceType = .photoLibrary
+        self.present(imagePicker, animated: true) {
+            LottieHUD.shared.dismiss()
+        }
+    }
+    func displaySuccessAfterPhotoUpload() {
+        interactor.fetchData(.init(fetchPhoto: true))
+        displaySimpleAlert(title: "Successs", message: "Photo changed successfully!", okButtonText: "OK")
+    }
 }
 
+// MARK: - Image Picker
+extension HomeViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        var image = UIImage(named: "person")
+        if let editedImage = info[.editedImage] as? UIImage {
+            image = editedImage
+        } else if let originalImage = info[.originalImage] as? UIImage {
+            image = originalImage
+        }
+        picker.dismiss(animated: true) { [weak self] in
+            guard let self else { return }
+            self.interactor.uploadPhoto(.init(image: image!))
+        }
+    }
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true)
+    }
+}
+
+// MARK: - Attributed Welcome Message
 extension HomeViewController {
     private func getAttributedWelcomeMessage(username: String, partnerName: String, numberOfDays: Int, numberOfDaysInOrder: [Int]) -> NSAttributedString {
         let welcomeIntro = NSMutableAttributedString(string: "Welcome \(username),\n", attributes: [.font: UIFont.systemFont(ofSize: 17, weight: .semibold)])

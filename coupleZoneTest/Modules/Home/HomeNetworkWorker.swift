@@ -6,9 +6,11 @@
 //
 
 import Foundation
+import UIKit.UIImage
 
 protocol HomeWorker {
     func fetchData() async -> Result<HomeItem, RequestError>
+    func uploadImage(_ image: UIImage) async -> Result<Void, CustomMessageError>
 }
 
 final class HomeNetworkWorker: HomeWorker {
@@ -18,8 +20,10 @@ final class HomeNetworkWorker: HomeWorker {
     init(homeServices: HomeServices) {
         self.homeServices = homeServices
     }
-    
     func fetchData() async -> Result<HomeItem, RequestError> {
         return await homeServices.getHomeInfo()
+    }
+    func uploadImage(_ image: UIImage) async -> Result<Void, CustomMessageError> {
+        return await homeServices.uploadPhoto(image)
     }
 }

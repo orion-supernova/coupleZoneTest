@@ -20,11 +20,9 @@ final class PhotosNetworkWorker: PhotosWorker {
     init(PhotosServices: PhotosServices) {
         self.PhotosServices = PhotosServices
     }
-
     func fetchData() async -> Result<[PhotosItem], RequestError> {
         return await PhotosServices.getPhotos()
     }
-
     func uploadImage(_ image: UIImage) async -> Result<Bool, RequestError> {
         return await PhotosServices.uploadPhoto(image)
     }

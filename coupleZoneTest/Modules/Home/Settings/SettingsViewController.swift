@@ -129,7 +129,7 @@ class SettingsViewController: UIViewController {
     @objc private func shareButtonAction() {
         let pasteboard = UIPasteboard.general
         pasteboard.string = homeIDString
-        displaySimpleAlert(title: "Copied to clipboard!", message: "Just send your home ID to your partner! ", okButtonText: "OK", completion: nil)
+        displaySimpleAlert(title: "Copied to clipboard!", message: "Just send your home ID to your partner! ", okButtonText: "OK")
     }
     @objc private func changeAnniversaryButtonAction() {
         displayAlertWithTextfield(title: "Change Anniversary?", message: "Please type in \"DD.MM.YYYY\" format.", okButtonText: "Change", cancelButtonText: "Cancel", placeholder: "(e.g 15.01.1999)") { dateString in

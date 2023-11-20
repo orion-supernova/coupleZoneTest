@@ -119,14 +119,12 @@ class CreateOrJoinRoomViewController: UIViewController {
                                         }
                                     case .failure(let error):
                                         LottieHUD.shared.dismiss()
-                                        self.displaySimpleAlert(title: "Hmm", message: error.localizedDescription, okButtonText: "OK", completion: nil)
+                                        self.displaySimpleAlert(title: "Hmm", message: error.localizedDescription, okButtonText: "OK")
                                 }
                             }
-//                            self.displaySimpleAlert(title: "Success", message: "Oke", okButtonText: "sg", completion: nil)
-
                         case .failure(let error):
                             LottieHUD.shared.dismiss()
-                            self.displaySimpleAlert(title: "Error", message: error.localizedDescription, okButtonText: "OK", completion: nil)
+                            self.displaySimpleAlert(title: "Error", message: error.localizedDescription, okButtonText: "OK")
                     }
                 }
             }
