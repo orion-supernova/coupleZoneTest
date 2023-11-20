@@ -15,7 +15,12 @@ class PhotosServices {
 
     func getPhotos() async -> Result<[PhotosItem], RequestError> {
         do {
-            let data = try await supabase.database.from("photosTimeline").select(columns: "*", head: false).execute().underlyingResponse.data
+            guard let userID = AppGlobal.shared.user?.id else { return .failure(.generic) }
+            let homeIDData = try await supabase.database.from("users").select(columns: "homeID").eq(column: "userID", value: userID).execute().underlyingResponse.data
+            let homeIDStringData = String(data: homeIDData, encoding: .utf8) ?? ""
+            let homeIDDict = homeIDStringData.convertStringToDictionary()
+            let homeID = homeIDDict?["homeID"] as? String ?? ""
+            let data = try await supabase.database.from("photosTimeline").select(columns: "*", head: false).eq(column: "homeID", value: homeID).execute().underlyingResponse.data
             let stringData = String(data: data, encoding: .utf8) ?? ""
             guard let dict = stringData.convertStringToDictionaryArray() else { return .failure(.generic) }
             var items = [PhotosItem]()
@@ -35,13 +40,13 @@ class PhotosServices {
             let fileName = UUID().uuidString
             let file = File(name: fileName, data: imageData, fileName: fileName, contentType: "image/jpeg"
             )
-            let uploadPhotoToStorage = try await supabase.storage.from(id: "/timelinePhotos").upload(path: "\(fileName).jpeg", file: file, fileOptions: FileOptions(cacheControl: "3600"))
-            let urlString = try supabase.storage.from(id: "/timelinePhotos").getPublicURL(path: "\(fileName).jpeg").absoluteString
+            let homeID = await getHomeID()
+            let uploadPhotoToStorage = try await supabase.storage.from(id: "homes/\(homeID)/timelinePhotos").upload(path: "\(fileName).jpeg", file: file, fileOptions: FileOptions(cacheControl: "3600"))
+            let urlString = try supabase.storage.from(id: "homes/\(homeID)/timelinePhotos").getPublicURL(path: "\(fileName).jpeg").absoluteString
             print(urlString)
             print(uploadPhotoToStorage)
             let username = await getUsername()
-            let dict = ["imageURL": "\(urlString)", "username": username]
-            let photosItem = PhotosItem(imageURLString: urlString, username: AppGlobal.shared.username ?? "Anonymous")
+            let dict = ["imageURL": "\(urlString)", "username": username, "homeID": homeID]
             let updateTable = supabase.database.from("photosTimeline").upsert(values: dict)
             try await updateTable.execute()
             return .success(true)
@@ -61,6 +66,17 @@ class PhotosServices {
             let username = userDict["username"] as? String ?? ""
             return username
         } catch  {
+            return ""
+        }
+    }
+    private func getHomeID() async -> String {
+        do {
+            guard let userID = AppGlobal.shared.user?.id else { return "" }
+            let userDict = try await SensitiveData.supabase.database.from("users").select(columns: "*", head: false).eq(column: "userID", value: userID).execute().underlyingResponse.data.convertDataToString().convertStringToDictionary()
+            let idString = userDict?["homeID"] as? String ?? ""
+            return idString
+        } catch let error {
+            print(error.localizedDescription)
             return ""
         }
     }

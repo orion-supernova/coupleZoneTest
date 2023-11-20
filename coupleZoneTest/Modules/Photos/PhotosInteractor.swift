@@ -42,9 +42,11 @@ final class PhotosInteractor: PhotosBusinessLogic, PhotosDataStore {
 
     func uploadPhoto(_ request: PhotosModels.UploadPhoto.Request) {
         Task {
+            LottieHUD.shared.show()
             let result = await worker.uploadImage(request.image)
             let response = PhotosModels.UploadPhoto.Response.init(result: result)
             self.presenter.presentUploadPhoto(response)
+            LottieHUD.shared.dismiss()
         }
     }
 }

@@ -34,4 +34,20 @@ public extension Alertable {
         alertController.addAction(secondButtonAction)
         present(alertController, animated: true)
     }
+    @MainActor func displayAlertWithTextfield(title: String, message: String, okButtonText: String, cancelButtonText: String, placeholder: String? = nil, completion: @escaping (String) -> Void) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alertController.addTextField { textfield in
+            textfield.placeholder = placeholder
+        }
+        let okButtonAction = UIAlertAction(title: okButtonText, style: .default) { _ in
+            guard let textFields = alertController.textFields else { return }
+            if let username = textFields[0].text {
+                completion(username)
+            }
+        }
+        let cancelButtonAction = UIAlertAction(title: cancelButtonText, style: .cancel)
+        alertController.addAction(okButtonAction)
+        alertController.addAction(cancelButtonAction)
+        present(alertController, animated: true)
+    }
 }

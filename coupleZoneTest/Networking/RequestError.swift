@@ -23,3 +23,12 @@ extension RequestError: LocalizedError {
         }
     }
 }
+
+struct CustomMessageError: Error {
+    let message: String?
+}
+extension CustomMessageError: LocalizedError {
+    var errorDescription: String? {
+        return message
+    }
+}

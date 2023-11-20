@@ -10,7 +10,9 @@ import UIKit.UIImage
 enum HomeModels {
     
     enum FetchData {
-        struct Request {}
+        struct Request {
+            let fetchPhoto: Bool
+        }
         
         struct Response {
             let result: Result<HomeItem, RequestError>
