@@ -11,6 +11,8 @@ protocol HomePresentationLogic {
     func presentData(_ model: HomeModels.FetchData.ViewModel, loadPhoto: Bool)
     func presentHomeNotExist()
     func presentError(_ message: String)
+    func presentImagePicker()
+    func presentUploadPhotoResponse(_ response: HomeModels.UploadPhoto.Response)
 }
 
 final class HomePresenter: HomePresentationLogic {
@@ -29,6 +31,17 @@ final class HomePresenter: HomePresentationLogic {
     }
     @MainActor func presentError(_ message: String) {
         view?.displayError(with: message)
+    }
+    @MainActor func presentImagePicker() {
+        view?.displayImagePicker()
+    }
+    @MainActor func presentUploadPhotoResponse(_ response: HomeModels.UploadPhoto.Response) {
+        switch response.result {
+            case .success():
+                view?.displaySuccessAfterPhotoUpload()
+            case .failure(let error):
+                view?.displayError(with: error.localizedDescription)
+        }
     }
 }
 

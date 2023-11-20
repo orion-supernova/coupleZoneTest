@@ -9,6 +9,8 @@ import Foundation
 
 protocol HomeBusinessLogic {
     func fetchData(_ request: HomeModels.FetchData.Request)
+    func changePhotoTapped()
+    func uploadPhoto(_ request: HomeModels.UploadPhoto.Request)
 }
 
 protocol HomeDataStore {
@@ -47,8 +49,19 @@ final class HomeInteractor: HomeBusinessLogic, HomeDataStore {
             }
         }
     }
-    func changePhoto() {
-        
+    func changePhotoTapped() {
+        presenter.presentImagePicker()
+    }
+    func uploadPhoto(_ request: HomeModels.UploadPhoto.Request) {
+        Task {
+            LottieHUD.shared.show()
+            let result = await worker.uploadImage(request.image)
+            let response = HomeModels.UploadPhoto.Response.init(result: result)
+            LottieHUD.shared.dismiss()
+            DispatchQueue.main.async {
+                self.presenter.presentUploadPhotoResponse(response)
+            }
+        }
     }
     // MARK: - Actions
     @objc private func usernameChanged() {
