@@ -45,8 +45,10 @@ final class PhotosInteractor: PhotosBusinessLogic, PhotosDataStore {
             LottieHUD.shared.show()
             let result = await worker.uploadImage(request.image)
             let response = PhotosModels.UploadPhoto.Response.init(result: result)
-            self.presenter.presentUploadPhoto(response)
             LottieHUD.shared.dismiss()
+            DispatchQueue.main.async {
+                self.presenter.presentUploadPhoto(response)
+            }
         }
     }
 }

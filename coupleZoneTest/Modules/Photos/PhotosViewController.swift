@@ -80,8 +80,11 @@ class PhotosViewController: UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        LottieHUD.shared.show()
-        interactor.fetchData(.init())
+        // FIXME: - Remove Comment
+//        LottieHUD.shared.show()
+//        interactor.fetchData(.init())
+        // Remove Bottom
+        presentImagePicker()
     }
     // MARK: - Setup
     private func setup() {
@@ -134,18 +137,20 @@ class PhotosViewController: UIViewController {
         timelineTableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
     }
     @MainActor private func presentImagePicker() {
-        let imagePicker = UIImagePickerController()
-        imagePicker.sourceType = .camera
-        imagePicker.cameraCaptureMode = .photo
-        imagePicker.cameraDevice = .front
-        imagePicker.cameraFlashMode = .off
-        imagePicker.allowsEditing = false
-        imagePicker.delegate = self
-
-        // Allow more freedom in cropping
-        imagePicker.showsCameraControls = true
-        imagePicker.isNavigationBarHidden = false
-        imagePicker.isToolbarHidden = false
+        let imagePicker = CustomCameraViewController()
+        imagePicker.modalPresentationStyle = .fullScreen
+//        let imagePicker = UIImagePickerController()
+//        imagePicker.sourceType = .camera
+//        imagePicker.cameraCaptureMode = .photo
+//        imagePicker.cameraDevice = .front
+//        imagePicker.cameraFlashMode = .off
+//        imagePicker.allowsEditing = false
+//        imagePicker.delegate = self
+//
+//        // Allow more freedom in cropping
+//        imagePicker.showsCameraControls = true
+//        imagePicker.isNavigationBarHidden = false
+//        imagePicker.isToolbarHidden = false
         present(imagePicker, animated: true)
     }
 
@@ -170,9 +175,7 @@ extension PhotosViewController: Alertable {}
 // MARK: - Display Logic
 extension PhotosViewController: PhotosDisplayLogic {
     func displayError(_ errorString: String) {
-        DispatchQueue.main.async {
-            self.displaySimpleAlert(title: "Error", message: errorString, okButtonText: "OK")
-        }
+        self.displaySimpleAlert(title: "Error", message: errorString, okButtonText: "OK")
     }
     func display(_ model: PhotosModels.FetchData.ViewModel) {
         self.items.removeAll()
@@ -193,10 +196,8 @@ extension PhotosViewController: PhotosDisplayLogic {
         }
     }
     func displaySuccessAfterPhotoUpload() {
-        DispatchQueue.main.async {
-            self.interactor.fetchData(.init())
-            self.displaySimpleAlert(title: "Success", message: "", okButtonText: "Olley!")
-        }
+        self.interactor.fetchData(.init())
+        self.displaySimpleAlert(title: "Success", message: "", okButtonText: "Olley!")
     }
 }
 
