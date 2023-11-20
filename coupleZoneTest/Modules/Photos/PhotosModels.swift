@@ -11,11 +11,9 @@ enum PhotosModels {
 
     enum FetchData {
         struct Request {}
-
         struct Response {
             let result: Result<[PhotosItem], RequestError>
         }
-
         struct ViewModel {
             struct DisplayableModel {
                 let uploadDate: String
@@ -25,16 +23,13 @@ enum PhotosModels {
             let displayModels: [DisplayableModel]
         }
     }
-
     enum UploadPhoto {
         struct Request {
             let image: UIImage
         }
-
         struct Response {
             let result: Result<Bool, RequestError>
         }
-
         struct ViewModel {}
     }
 }

@@ -8,25 +8,39 @@
 import UIKit
 
 protocol HomePresentationLogic {
-    func present(_ response: HomeModels.FetchData.Response)
+    func presentData(_ model: HomeModels.FetchData.ViewModel, loadPhoto: Bool)
+    func presentHomeNotExist()
+    func presentError(_ message: String)
+    func presentImagePicker()
+    func presentUploadPhotoResponse(_ response: HomeModels.UploadPhoto.Response)
 }
 
 final class HomePresenter: HomePresentationLogic {
-    
     // MARK: Public Properties
     weak var view: HomeDisplayLogic?
 
     // MARK: Presentation Logic
-    func present(_ response: HomeModels.FetchData.Response) {
+    @MainActor func presentData(_ model: HomeModels.FetchData.ViewModel, loadPhoto: Bool) {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            self.view?.display(model, loadPhoto: loadPhoto)
+        }
+    }
+    @MainActor func presentHomeNotExist() {
+        view?.displayHomeNotExist()
+    }
+    @MainActor func presentError(_ message: String) {
+        view?.displayError(with: message)
+    }
+    @MainActor func presentImagePicker() {
+        view?.displayImagePicker()
+    }
+    @MainActor func presentUploadPhotoResponse(_ response: HomeModels.UploadPhoto.Response) {
         switch response.result {
-        case .success( let item):
-            let displayableModel = HomeModels.FetchData.ViewModel.DisplayableModel.init(model: item)
-            DispatchQueue.main.async { [weak self] in
-                guard let self = self else { return }
-                self.view?.display(HomeModels.FetchData.ViewModel(displayModel: displayableModel))
-            }
-        case .failure(let error):
-            print(error.localizedDescription)
+            case .success():
+                view?.displaySuccessAfterPhotoUpload()
+            case .failure(let error):
+                view?.displayError(with: error.localizedDescription)
         }
     }
 }
@@ -66,13 +80,15 @@ extension HomeModels.FetchData.ViewModel.DisplayableModel {
         }
         if let email = AppGlobal.shared.user?.email {
             if email == "zeynepozahishali@gmail.com" {
-                self.partnerUsername = "cankoç, on the right"
+                self.partnerUsername = "(cankoç, on the right)"
+            } else if email == "muratcankoc@gmail.com" {
+                self.partnerUsername = "(zeynom, on the left)"
             } else {
-                self.partnerUsername = "zeynom, on the left"
+                self.partnerUsername = model.partnerUsername.isEmpty ? "" :   "(\(model.partnerUsername))"
             }
         } else {
             self.partnerUsername = "Error"
         }
-        self.username = AppGlobal.shared.appleCredentialUserFullName?.givenName ?? "Anonymous"
+        self.username = AppGlobal.shared.username ?? "Anonymous"
     }
 }

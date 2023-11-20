@@ -26,7 +26,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let vc2 = UINavigationController(rootViewController: NotesViewController())
         let vc3 = UINavigationController(rootViewController: ChatViewController())
         tabController?.viewControllers = [vc0, vc1, vc2, vc3]
-        tabController?.selectedIndex = 1
+        tabController?.selectedIndex = 0
         tabController?.tabBar.tintColor = .systemPink
         tabController?.tabBar.unselectedItemTintColor = .black
         vc0.tabBarItem.image = UIImage(systemName: "heart")

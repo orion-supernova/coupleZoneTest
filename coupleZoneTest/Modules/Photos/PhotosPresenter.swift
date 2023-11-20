@@ -38,7 +38,7 @@ final class PhotosPresenter: PhotosPresentationLogic {
                     presentError(RequestError.generic.localizedDescription)
                     return
                 }
-                view?.displaySuccess()
+                view?.displaySuccessAfterPhotoUpload()
             case .failure(let error):
                 print(error.localizedDescription)
                 presentError(error.localizedDescription)

@@ -6,11 +6,12 @@
 //
 
 import UIKit
+import TOCropViewController
 
 @MainActor protocol PhotosDisplayLogic: AnyObject {
     func display(_ model: PhotosModels.FetchData.ViewModel)
     func displayError(_ errorString: String)
-    func displaySuccess()
+    func displaySuccessAfterPhotoUpload()
 }
 
 class PhotosViewController: UIViewController {
@@ -128,6 +129,7 @@ class PhotosViewController: UIViewController {
     }
     @MainActor private func scrollToBottom() {
         let row = timelineTableView.numberOfRows(inSection: 0) - 1
+        guard row > 0 else { return }
         let indexPath = IndexPath(row: row, section: 0)
         timelineTableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
     }
@@ -140,9 +142,6 @@ class PhotosViewController: UIViewController {
         imagePicker.allowsEditing = false
         imagePicker.delegate = self
 
-        // Flip the photo horizontally to correct mirroring
-//        imagePicker.cameraViewTransform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-
         // Allow more freedom in cropping
         imagePicker.showsCameraControls = true
         imagePicker.isNavigationBarHidden = false
@@ -153,13 +152,10 @@ class PhotosViewController: UIViewController {
     // MARK: - Actions
     @objc private func sendPhotoButtonAction() {
         displayAlertTwoButtons(title: "Send Photo", message: "It's getting hot in here!", firstButtonText: "I changed my mind.", firstButtonStyle: .destructive, seconButtonText: "Take Photo!", secondButtonStyle: .default) {
-            self.displaySimpleAlert(title: "Why?", message: ":(", okButtonText: "...") {
-                //
-            }
+            self.displaySimpleAlert(title: "Why?", message: ":(", okButtonText: "...")
         } secondButtonCompletion: {
             self.presentImagePicker()
         }
-
     }
     @objc private func lastPhotoImageViewAction() {
         guard let image = lastPhotoImageView.image else { return }
@@ -175,7 +171,7 @@ extension PhotosViewController: Alertable {}
 extension PhotosViewController: PhotosDisplayLogic {
     func displayError(_ errorString: String) {
         DispatchQueue.main.async {
-            self.displaySimpleAlert(title: "Error", message: errorString, okButtonText: "OK", completion: nil)
+            self.displaySimpleAlert(title: "Error", message: errorString, okButtonText: "OK")
         }
     }
     func display(_ model: PhotosModels.FetchData.ViewModel) {
@@ -183,22 +179,23 @@ extension PhotosViewController: PhotosDisplayLogic {
         model.displayModels.forEach({ item in
             self.items.append(item)
         })
-        let lastItem = model.displayModels.last
+        self.items.sort(by: { $0.uploadDate < $1.uploadDate })
+        let lastItem = self.items.last
         DispatchQueue.main.async {
-            self.streakLabel.text = "Streak \(model.displayModels.count)!"
+            self.streakLabel.text = "Streak \(self.items.count)!"
             self.lastPhotoImageView.setImage(urlString: lastItem?.imageURLString) {
                 LottieHUD.shared.dismiss()
             }
             self.timelineTableView.reloadData {
                 self.scrollToBottom()
+                LottieHUD.shared.dismiss()
             }
         }
     }
-    func displaySuccess() {
+    func displaySuccessAfterPhotoUpload() {
         DispatchQueue.main.async {
-            self.displaySimpleAlert(title: "Success", message: "Olley!", okButtonText: "OK") {
-                self.interactor.fetchData(.init())
-            }
+            self.interactor.fetchData(.init())
+            self.displaySimpleAlert(title: "Success", message: "", okButtonText: "Olley!")
         }
     }
 }
@@ -233,27 +230,18 @@ extension PhotosViewController: UIImagePickerControllerDelegate, UINavigationCon
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         var image = UIImage(named: "person")
         if let editedImage = info[.editedImage] as? UIImage {
-            // Upload the editedImage to the server
-            // Call your upload function here
-            // ...
             image = editedImage
         } else if let originalImage = info[.originalImage] as? UIImage {
-            // Upload the originalImage to the server
-            // Call your upload function here
-            // ...
             image = originalImage
         }
-        // Dismiss the image picker
         picker.dismiss(animated: true) { [weak self] in
             guard let self else { return }
             self.interactor.uploadPhoto(.init(image: image!))
         }
     }
-
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        // Handle cancellation
         picker.dismiss(animated: true) {
-            self.displaySimpleAlert(title: "Why?", message: "Why did you cancel? Come on!", okButtonText: "...", completion: nil)
+            self.displaySimpleAlert(title: "Why?", message: "Why did you cancel? Come on!", okButtonText: "...")
         }
     }
 }

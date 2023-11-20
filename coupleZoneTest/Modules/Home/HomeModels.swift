@@ -10,12 +10,12 @@ import UIKit.UIImage
 enum HomeModels {
     
     enum FetchData {
-        struct Request {}
-        
+        struct Request {
+            let fetchPhoto: Bool
+        }
         struct Response {
             let result: Result<HomeItem, RequestError>
         }
-        
         struct ViewModel {
             struct DisplayableModel {
                 let imageURLString: String
@@ -27,5 +27,14 @@ enum HomeModels {
             }
             let displayModel: DisplayableModel
         }
+    }
+    enum UploadPhoto {
+        struct Request {
+            let image: UIImage
+        }
+        struct Response {
+            let result: Result<Void, CustomMessageError>
+        }
+        struct ViewModel {}
     }
 }
