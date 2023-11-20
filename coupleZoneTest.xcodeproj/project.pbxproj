@@ -12,6 +12,32 @@
 		544F5C5E2AEFE999001D3243 /* LottieHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544F5C5D2AEFE999001D3243 /* LottieHUD.swift */; };
 		544F5C612AEFE9BD001D3243 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 544F5C602AEFE9BD001D3243 /* Lottie */; };
 		544F5C652AEFEC87001D3243 /* loading.json in Resources */ = {isa = PBXBuildFile; fileRef = 544F5C642AEFEC87001D3243 /* loading.json */; };
+		544F5C672AEFF122001D3243 /* PhotosBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544F5C662AEFF122001D3243 /* PhotosBuilder.swift */; };
+		544F5C692AF001AB001D3243 /* PhotosPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544F5C682AF001AB001D3243 /* PhotosPresenter.swift */; };
+		544F5C6B2AF002F2001D3243 /* PhotosNetworkWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544F5C6A2AF002F2001D3243 /* PhotosNetworkWorker.swift */; };
+		544F5C6D2AF00303001D3243 /* PhotosRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544F5C6C2AF00303001D3243 /* PhotosRouter.swift */; };
+		544F5C6F2AF0034E001D3243 /* PhotosInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544F5C6E2AF0034E001D3243 /* PhotosInteractor.swift */; };
+		544F5C712AF0035E001D3243 /* PhotosModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544F5C702AF0035E001D3243 /* PhotosModels.swift */; };
+		544F5C732AF0036F001D3243 /* PhotosItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544F5C722AF0036F001D3243 /* PhotosItem.swift */; };
+		544F5C752AF003A2001D3243 /* PhotosServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544F5C742AF003A2001D3243 /* PhotosServices.swift */; };
+		54566E272B07CAB7003B33A2 /* OneSignalExtension in Frameworks */ = {isa = PBXBuildFile; productRef = 54566E262B07CAB7003B33A2 /* OneSignalExtension */; };
+		54566E292B07CAB7003B33A2 /* OneSignalFramework in Frameworks */ = {isa = PBXBuildFile; productRef = 54566E282B07CAB7003B33A2 /* OneSignalFramework */; };
+		54566E2B2B07CAB7003B33A2 /* OneSignalInAppMessages in Frameworks */ = {isa = PBXBuildFile; productRef = 54566E2A2B07CAB7003B33A2 /* OneSignalInAppMessages */; };
+		54566E2D2B07CAB7003B33A2 /* OneSignalLocation in Frameworks */ = {isa = PBXBuildFile; productRef = 54566E2C2B07CAB7003B33A2 /* OneSignalLocation */; };
+		54566E352B07CFE9003B33A2 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54566E342B07CFE9003B33A2 /* NotificationService.swift */; };
+		54566E392B07CFE9003B33A2 /* OneSignalNotificationServiceExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 54566E322B07CFE9003B33A2 /* OneSignalNotificationServiceExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		54566E3F2B08A219003B33A2 /* OneSignalManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54566E3E2B08A219003B33A2 /* OneSignalManager.swift */; };
+		54566E422B08E1C7003B33A2 /* SideMenu in Frameworks */ = {isa = PBXBuildFile; productRef = 54566E412B08E1C7003B33A2 /* SideMenu */; };
+		54566E442B08F55D003B33A2 /* NotificationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54566E432B08F55D003B33A2 /* NotificationExtension.swift */; };
+		54566E472B091B96003B33A2 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54566E462B091B95003B33A2 /* User.swift */; };
+		54566E4A2B0A5D1B003B33A2 /* RoomConfigViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54566E492B0A5D1B003B33A2 /* RoomConfigViewController.swift */; };
+		54566E4C2B0A62AF003B33A2 /* DataExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54566E4B2B0A62AF003B33A2 /* DataExtension.swift */; };
+		54566E4F2B0A7687003B33A2 /* CreateOrJoinRoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54566E4E2B0A7687003B33A2 /* CreateOrJoinRoomViewController.swift */; };
+		5477E9812B00FDC200348A37 /* PhotosTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5477E9802B00FDC200348A37 /* PhotosTableViewCell.swift */; };
+		5477E9842B00FE7700348A37 /* LastPhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5477E9832B00FE7700348A37 /* LastPhotoViewController.swift */; };
+		5477E9862B010E9100348A37 /* UITableViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5477E9852B010E9100348A37 /* UITableViewExtension.swift */; };
+		5477E9882B0115E300348A37 /* CustomCameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5477E9872B0115E300348A37 /* CustomCameraViewController.swift */; };
+		5477E9912B036B6300348A37 /* MessageKit in Frameworks */ = {isa = PBXBuildFile; productRef = 5477E9902B036B6300348A37 /* MessageKit */; };
 		548FD3852AEC314E0098D6AA /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 548FD3842AEC314E0098D6AA /* LoginViewController.swift */; };
 		548FD3872AEC38D60098D6AA /* SensitiveData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 548FD3862AEC38D60098D6AA /* SensitiveData.swift */; };
 		548FD38A2AEC4D5D0098D6AA /* RiveRuntime in Frameworks */ = {isa = PBXBuildFile; productRef = 548FD3892AEC4D5D0098D6AA /* RiveRuntime */; };
@@ -32,6 +58,7 @@
 		54A675922ADFE51300743B1A /* NotesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A675912ADFE51300743B1A /* NotesViewController.swift */; };
 		54A675942ADFE51C00743B1A /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A675932ADFE51C00743B1A /* ChatViewController.swift */; };
 		54A675972ADFEDBC00743B1A /* Alertable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A675962ADFEDBC00743B1A /* Alertable.swift */; };
+		54AD10172B0B9C5200C4BF78 /* TOCropViewController in Frameworks */ = {isa = PBXBuildFile; productRef = 54AD10162B0B9C5200C4BF78 /* TOCropViewController */; };
 		74BDA94E2AE05DD5006164D7 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 74BDA94D2AE05DD5006164D7 /* SnapKit */; };
 		74BDA9512AE089FA006164D7 /* APIResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74BDA9502AE089FA006164D7 /* APIResponse.swift */; };
 		74BDA9542AE09574006164D7 /* RequestError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74BDA9532AE09574006164D7 /* RequestError.swift */; };
@@ -53,11 +80,56 @@
 		74E1104C2AE04B1300C58295 /* HomeServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74E1104B2AE04B1300C58295 /* HomeServices.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		54566E372B07CFE9003B33A2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 54A675602ADFD96A00743B1A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 54566E312B07CFE9003B33A2;
+			remoteInfo = OneSignalNotificationServiceExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		54566E3D2B07CFE9003B33A2 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				54566E392B07CFE9003B33A2 /* OneSignalNotificationServiceExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		544F5C372AED9257001D3243 /* coupleKissing.riv */ = {isa = PBXFileReference; lastKnownFileType = file; path = coupleKissing.riv; sourceTree = "<group>"; };
 		544F5C5B2AED9DA6001D3243 /* test.riv */ = {isa = PBXFileReference; lastKnownFileType = file; path = test.riv; sourceTree = "<group>"; };
 		544F5C5D2AEFE999001D3243 /* LottieHUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieHUD.swift; sourceTree = "<group>"; };
 		544F5C642AEFEC87001D3243 /* loading.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = loading.json; sourceTree = "<group>"; };
+		544F5C662AEFF122001D3243 /* PhotosBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosBuilder.swift; sourceTree = "<group>"; };
+		544F5C682AF001AB001D3243 /* PhotosPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosPresenter.swift; sourceTree = "<group>"; };
+		544F5C6A2AF002F2001D3243 /* PhotosNetworkWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosNetworkWorker.swift; sourceTree = "<group>"; };
+		544F5C6C2AF00303001D3243 /* PhotosRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosRouter.swift; sourceTree = "<group>"; };
+		544F5C6E2AF0034E001D3243 /* PhotosInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosInteractor.swift; sourceTree = "<group>"; };
+		544F5C702AF0035E001D3243 /* PhotosModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosModels.swift; sourceTree = "<group>"; };
+		544F5C722AF0036F001D3243 /* PhotosItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosItem.swift; sourceTree = "<group>"; };
+		544F5C742AF003A2001D3243 /* PhotosServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosServices.swift; sourceTree = "<group>"; };
+		54566E322B07CFE9003B33A2 /* OneSignalNotificationServiceExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = OneSignalNotificationServiceExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		54566E342B07CFE9003B33A2 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
+		54566E362B07CFE9003B33A2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		54566E3E2B08A219003B33A2 /* OneSignalManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneSignalManager.swift; sourceTree = "<group>"; };
+		54566E432B08F55D003B33A2 /* NotificationExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationExtension.swift; sourceTree = "<group>"; };
+		54566E462B091B95003B33A2 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		54566E492B0A5D1B003B33A2 /* RoomConfigViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomConfigViewController.swift; sourceTree = "<group>"; };
+		54566E4B2B0A62AF003B33A2 /* DataExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataExtension.swift; sourceTree = "<group>"; };
+		54566E4E2B0A7687003B33A2 /* CreateOrJoinRoomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateOrJoinRoomViewController.swift; sourceTree = "<group>"; };
+		5477E9802B00FDC200348A37 /* PhotosTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosTableViewCell.swift; sourceTree = "<group>"; };
+		5477E9832B00FE7700348A37 /* LastPhotoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastPhotoViewController.swift; sourceTree = "<group>"; };
+		5477E9852B010E9100348A37 /* UITableViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableViewExtension.swift; sourceTree = "<group>"; };
+		5477E9872B0115E300348A37 /* CustomCameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCameraViewController.swift; sourceTree = "<group>"; };
 		548FD3842AEC314E0098D6AA /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		548FD3862AEC38D60098D6AA /* SensitiveData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensitiveData.swift; sourceTree = "<group>"; };
 		548FD38B2AEC4E870098D6AA /* loginAnimation.riv */ = {isa = PBXFileReference; lastKnownFileType = file; path = loginAnimation.riv; sourceTree = "<group>"; };
@@ -99,21 +171,92 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		54566E2F2B07CFE9003B33A2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		54A675652ADFD96A00743B1A /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				54566E292B07CAB7003B33A2 /* OneSignalFramework in Frameworks */,
+				54566E272B07CAB7003B33A2 /* OneSignalExtension in Frameworks */,
 				544F5C612AEFE9BD001D3243 /* Lottie in Frameworks */,
+				54566E2B2B07CAB7003B33A2 /* OneSignalInAppMessages in Frameworks */,
 				74BDA94E2AE05DD5006164D7 /* SnapKit in Frameworks */,
 				548FD38A2AEC4D5D0098D6AA /* RiveRuntime in Frameworks */,
+				54566E2D2B07CAB7003B33A2 /* OneSignalLocation in Frameworks */,
+				5477E9912B036B6300348A37 /* MessageKit in Frameworks */,
 				74E1103D2AE040F700C58295 /* Kingfisher in Frameworks */,
 				74E1102C2AE0337600C58295 /* Supabase in Frameworks */,
+				54AD10172B0B9C5200C4BF78 /* TOCropViewController in Frameworks */,
+				54566E422B08E1C7003B33A2 /* SideMenu in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		54566E332B07CFE9003B33A2 /* OneSignalNotificationServiceExtension */ = {
+			isa = PBXGroup;
+			children = (
+				54566E342B07CFE9003B33A2 /* NotificationService.swift */,
+				54566E362B07CFE9003B33A2 /* Info.plist */,
+			);
+			path = OneSignalNotificationServiceExtension;
+			sourceTree = "<group>";
+		};
+		54566E452B091B8F003B33A2 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				54566E462B091B95003B33A2 /* User.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		54566E482B0A4FE3003B33A2 /* RoomConfig */ = {
+			isa = PBXGroup;
+			children = (
+				54566E492B0A5D1B003B33A2 /* RoomConfigViewController.swift */,
+			);
+			path = RoomConfig;
+			sourceTree = "<group>";
+		};
+		54566E4D2B0A766B003B33A2 /* CreateOrJoinRoomViewController */ = {
+			isa = PBXGroup;
+			children = (
+				54566E4E2B0A7687003B33A2 /* CreateOrJoinRoomViewController.swift */,
+			);
+			path = CreateOrJoinRoomViewController;
+			sourceTree = "<group>";
+		};
+		5477E97C2B00E44800348A37 /* Subviews */ = {
+			isa = PBXGroup;
+			children = (
+				5477E97F2B00FD2400348A37 /* Cell */,
+				5477E9832B00FE7700348A37 /* LastPhotoViewController.swift */,
+			);
+			path = Subviews;
+			sourceTree = "<group>";
+		};
+		5477E97F2B00FD2400348A37 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				5477E9802B00FDC200348A37 /* PhotosTableViewCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		5477E98C2B0260B400348A37 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		548FD3832AEC311D0098D6AA /* LoginRegister */ = {
 			isa = PBXGroup;
 			children = (
@@ -125,6 +268,8 @@
 		548FD38F2AEC5D270098D6AA /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				548FD3862AEC38D60098D6AA /* SensitiveData.swift */,
+				54566E3E2B08A219003B33A2 /* OneSignalManager.swift */,
 				548FD3902AEC5D4C0098D6AA /* SignInWithAppleHelper.swift */,
 				548FD3922AEC5D890098D6AA /* AuthManager.swift */,
 			);
@@ -135,11 +280,14 @@
 			isa = PBXGroup;
 			children = (
 				549E525D2AE0101500857FF5 /* UIColorExtension.swift */,
+				54566E432B08F55D003B33A2 /* NotificationExtension.swift */,
 				74E1103E2AE0416C00C58295 /* UIImageViewExtension.swift */,
 				74E110402AE0426500C58295 /* UIViewExtension.swift */,
 				74E110422AE042AE00C58295 /* CollectionExtension.swift */,
 				74BDA9552AE095D2006164D7 /* StringExtension.swift */,
 				548FD38D2AEC58CA0098D6AA /* UIViewControllerExtension.swift */,
+				5477E9852B010E9100348A37 /* UITableViewExtension.swift */,
+				54566E4B2B0A62AF003B33A2 /* DataExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -156,7 +304,9 @@
 			isa = PBXGroup;
 			children = (
 				54A6756A2ADFD96A00743B1A /* coupleZoneTest */,
+				54566E332B07CFE9003B33A2 /* OneSignalNotificationServiceExtension */,
 				54A675692ADFD96A00743B1A /* Products */,
+				5477E98C2B0260B400348A37 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -164,6 +314,7 @@
 			isa = PBXGroup;
 			children = (
 				54A675682ADFD96A00743B1A /* coupleZoneTest.app */,
+				54566E322B07CFE9003B33A2 /* OneSignalNotificationServiceExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -171,6 +322,7 @@
 		54A6756A2ADFD96A00743B1A /* coupleZoneTest */ = {
 			isa = PBXGroup;
 			children = (
+				54566E452B091B8F003B33A2 /* Models */,
 				548FD3942AEC60FC0098D6AA /* AppGlobal.swift */,
 				548FD3962AEC768B0098D6AA /* coupleZoneTest.entitlements */,
 				54A675802ADFD9A100743B1A /* Storyboards */,
@@ -220,6 +372,7 @@
 		54A675822ADFDA0800743B1A /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				54566E482B0A4FE3003B33A2 /* RoomConfig */,
 				548FD3832AEC311D0098D6AA /* LoginRegister */,
 				54A675832ADFDA1D00743B1A /* Home */,
 				54A6758C2ADFE4BF00743B1A /* Photos */,
@@ -232,6 +385,7 @@
 		54A675832ADFDA1D00743B1A /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				54566E4D2B0A766B003B33A2 /* CreateOrJoinRoomViewController */,
 				549E525F2AE024BA00857FF5 /* Settings */,
 				74E1102D2AE0384500C58295 /* HomeBuilder.swift */,
 				54A6756F2ADFD96A00743B1A /* HomeViewController.swift */,
@@ -248,7 +402,15 @@
 		54A6758C2ADFE4BF00743B1A /* Photos */ = {
 			isa = PBXGroup;
 			children = (
+				5477E97C2B00E44800348A37 /* Subviews */,
+				544F5C662AEFF122001D3243 /* PhotosBuilder.swift */,
 				54A6758F2ADFE50800743B1A /* PhotosViewController.swift */,
+				544F5C682AF001AB001D3243 /* PhotosPresenter.swift */,
+				544F5C6A2AF002F2001D3243 /* PhotosNetworkWorker.swift */,
+				544F5C6C2AF00303001D3243 /* PhotosRouter.swift */,
+				544F5C6E2AF0034E001D3243 /* PhotosInteractor.swift */,
+				544F5C702AF0035E001D3243 /* PhotosModels.swift */,
+				544F5C722AF0036F001D3243 /* PhotosItem.swift */,
 			);
 			path = Photos;
 			sourceTree = "<group>";
@@ -273,8 +435,8 @@
 			isa = PBXGroup;
 			children = (
 				54A675962ADFEDBC00743B1A /* Alertable.swift */,
-				548FD3862AEC38D60098D6AA /* SensitiveData.swift */,
 				544F5C5D2AEFE999001D3243 /* LottieHUD.swift */,
+				5477E9872B0115E300348A37 /* CustomCameraViewController.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -291,6 +453,7 @@
 			isa = PBXGroup;
 			children = (
 				74E1104B2AE04B1300C58295 /* HomeServices.swift */,
+				544F5C742AF003A2001D3243 /* PhotosServices.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -317,6 +480,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		54566E312B07CFE9003B33A2 /* OneSignalNotificationServiceExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 54566E3A2B07CFE9003B33A2 /* Build configuration list for PBXNativeTarget "OneSignalNotificationServiceExtension" */;
+			buildPhases = (
+				54566E2E2B07CFE9003B33A2 /* Sources */,
+				54566E2F2B07CFE9003B33A2 /* Frameworks */,
+				54566E302B07CFE9003B33A2 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = OneSignalNotificationServiceExtension;
+			productName = OneSignalNotificationServiceExtension;
+			productReference = 54566E322B07CFE9003B33A2 /* OneSignalNotificationServiceExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		54A675672ADFD96A00743B1A /* coupleZoneTest */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 54A6757C2ADFD96B00743B1A /* Build configuration list for PBXNativeTarget "coupleZoneTest" */;
@@ -324,10 +504,12 @@
 				54A675642ADFD96A00743B1A /* Sources */,
 				54A675652ADFD96A00743B1A /* Frameworks */,
 				54A675662ADFD96A00743B1A /* Resources */,
+				54566E3D2B07CFE9003B33A2 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				54566E382B07CFE9003B33A2 /* PBXTargetDependency */,
 			);
 			name = coupleZoneTest;
 			packageProductDependencies = (
@@ -336,6 +518,13 @@
 				74BDA94D2AE05DD5006164D7 /* SnapKit */,
 				548FD3892AEC4D5D0098D6AA /* RiveRuntime */,
 				544F5C602AEFE9BD001D3243 /* Lottie */,
+				5477E9902B036B6300348A37 /* MessageKit */,
+				54566E262B07CAB7003B33A2 /* OneSignalExtension */,
+				54566E282B07CAB7003B33A2 /* OneSignalFramework */,
+				54566E2A2B07CAB7003B33A2 /* OneSignalInAppMessages */,
+				54566E2C2B07CAB7003B33A2 /* OneSignalLocation */,
+				54566E412B08E1C7003B33A2 /* SideMenu */,
+				54AD10162B0B9C5200C4BF78 /* TOCropViewController */,
 			);
 			productName = coupleZoneTest;
 			productReference = 54A675682ADFD96A00743B1A /* coupleZoneTest.app */;
@@ -351,6 +540,9 @@
 				LastSwiftUpdateCheck = 1500;
 				LastUpgradeCheck = 1500;
 				TargetAttributes = {
+					54566E312B07CFE9003B33A2 = {
+						CreatedOnToolsVersion = 15.0.1;
+					};
 					54A675672ADFD96A00743B1A = {
 						CreatedOnToolsVersion = 15.0;
 					};
@@ -371,17 +563,29 @@
 				74BDA94C2AE05DD5006164D7 /* XCRemoteSwiftPackageReference "SnapKit" */,
 				548FD3882AEC4D5D0098D6AA /* XCRemoteSwiftPackageReference "rive-ios" */,
 				544F5C5F2AEFE9BD001D3243 /* XCRemoteSwiftPackageReference "lottie-ios" */,
+				5477E98F2B036B6300348A37 /* XCRemoteSwiftPackageReference "MessageKit" */,
+				54566E252B07CAB7003B33A2 /* XCRemoteSwiftPackageReference "OneSignal-XCFramework" */,
+				54566E402B08E1C7003B33A2 /* XCRemoteSwiftPackageReference "SideMenu" */,
+				54AD10152B0B9C5100C4BF78 /* XCRemoteSwiftPackageReference "TOCropViewController" */,
 			);
 			productRefGroup = 54A675692ADFD96A00743B1A /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
 				54A675672ADFD96A00743B1A /* coupleZoneTest */,
+				54566E312B07CFE9003B33A2 /* OneSignalNotificationServiceExtension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		54566E302B07CFE9003B33A2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		54A675662ADFD96A00743B1A /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -399,46 +603,80 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		54566E2E2B07CFE9003B33A2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				54566E352B07CFE9003B33A2 /* NotificationService.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		54A675642ADFD96A00743B1A /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				54A675702ADFD96A00743B1A /* HomeViewController.swift in Sources */,
 				74E1103A2AE03EFA00C58295 /* HomeItem.swift in Sources */,
+				54566E472B091B96003B33A2 /* User.swift in Sources */,
 				74E1104A2AE0455300C58295 /* ReachabilitySwift.swift in Sources */,
 				74E110382AE03D0D00C58295 /* HomeModels.swift in Sources */,
+				5477E9882B0115E300348A37 /* CustomCameraViewController.swift in Sources */,
 				54A675922ADFE51300743B1A /* NotesViewController.swift in Sources */,
 				74E110432AE042AE00C58295 /* CollectionExtension.swift in Sources */,
+				544F5C6B2AF002F2001D3243 /* PhotosNetworkWorker.swift in Sources */,
 				74E110482AE0454800C58295 /* InternetConnectionStatusProvider.swift in Sources */,
+				544F5C712AF0035E001D3243 /* PhotosModels.swift in Sources */,
+				544F5C692AF001AB001D3243 /* PhotosPresenter.swift in Sources */,
+				54566E3F2B08A219003B33A2 /* OneSignalManager.swift in Sources */,
 				74BDA9562AE095D2006164D7 /* StringExtension.swift in Sources */,
 				74BDA9512AE089FA006164D7 /* APIResponse.swift in Sources */,
+				54566E442B08F55D003B33A2 /* NotificationExtension.swift in Sources */,
+				544F5C6D2AF00303001D3243 /* PhotosRouter.swift in Sources */,
 				74BDA9542AE09574006164D7 /* RequestError.swift in Sources */,
 				74E1102E2AE0384500C58295 /* HomeBuilder.swift in Sources */,
 				54A675942ADFE51C00743B1A /* ChatViewController.swift in Sources */,
 				548FD38E2AEC58CA0098D6AA /* UIViewControllerExtension.swift in Sources */,
 				74E110412AE0426500C58295 /* UIViewExtension.swift in Sources */,
+				544F5C672AEFF122001D3243 /* PhotosBuilder.swift in Sources */,
 				54A6756C2ADFD96A00743B1A /* AppDelegate.swift in Sources */,
 				548FD3912AEC5D4C0098D6AA /* SignInWithAppleHelper.swift in Sources */,
 				548FD3952AEC60FC0098D6AA /* AppGlobal.swift in Sources */,
 				549E525E2AE0101500857FF5 /* UIColorExtension.swift in Sources */,
+				54566E4A2B0A5D1B003B33A2 /* RoomConfigViewController.swift in Sources */,
 				74E1104C2AE04B1300C58295 /* HomeServices.swift in Sources */,
 				54A6756E2ADFD96A00743B1A /* SceneDelegate.swift in Sources */,
 				548FD3932AEC5D890098D6AA /* AuthManager.swift in Sources */,
 				74E110342AE0398C00C58295 /* HomeInteractor.swift in Sources */,
 				54A675972ADFEDBC00743B1A /* Alertable.swift in Sources */,
 				74E110362AE03A6900C58295 /* HomeRouter.swift in Sources */,
+				544F5C6F2AF0034E001D3243 /* PhotosInteractor.swift in Sources */,
 				54A675902ADFE50800743B1A /* PhotosViewController.swift in Sources */,
+				54566E4F2B0A7687003B33A2 /* CreateOrJoinRoomViewController.swift in Sources */,
 				548FD3872AEC38D60098D6AA /* SensitiveData.swift in Sources */,
+				544F5C752AF003A2001D3243 /* PhotosServices.swift in Sources */,
 				74E1103F2AE0416C00C58295 /* UIImageViewExtension.swift in Sources */,
+				54566E4C2B0A62AF003B33A2 /* DataExtension.swift in Sources */,
 				549E52612AE024C700857FF5 /* SettingsViewController.swift in Sources */,
 				544F5C5E2AEFE999001D3243 /* LottieHUD.swift in Sources */,
+				5477E9862B010E9100348A37 /* UITableViewExtension.swift in Sources */,
+				5477E9812B00FDC200348A37 /* PhotosTableViewCell.swift in Sources */,
+				5477E9842B00FE7700348A37 /* LastPhotoViewController.swift in Sources */,
 				74E110302AE038E100C58295 /* HomePresenter.swift in Sources */,
+				544F5C732AF0036F001D3243 /* PhotosItem.swift in Sources */,
 				548FD3852AEC314E0098D6AA /* LoginViewController.swift in Sources */,
 				74E110322AE0394800C58295 /* HomeNetworkWorker.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		54566E382B07CFE9003B33A2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 54566E312B07CFE9003B33A2 /* OneSignalNotificationServiceExtension */;
+			targetProxy = 54566E372B07CFE9003B33A2 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		54A675712ADFD96A00743B1A /* Main.storyboard */ = {
@@ -460,6 +698,56 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		54566E3B2B07CFE9003B33A2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 37TC2VKVJ6;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = OneSignalNotificationServiceExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = OneSignalNotificationServiceExtension;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.walhallaa.coupleZoneTest.OneSignalNotificationServiceExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		54566E3C2B07CFE9003B33A2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 37TC2VKVJ6;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = OneSignalNotificationServiceExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = OneSignalNotificationServiceExtension;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.walhallaa.coupleZoneTest.OneSignalNotificationServiceExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		54A6757A2ADFD96B00743B1A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -582,6 +870,7 @@
 		54A6757D2ADFD96B00743B1A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = coupleZoneTest/coupleZoneTest.entitlements;
@@ -590,12 +879,13 @@
 				DEVELOPMENT_TEAM = 37TC2VKVJ6;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = coupleZoneTest/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "You need to allow access to the camera to be able to send photos with it.";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "We need access to your photo library to save and upload images.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -613,6 +903,7 @@
 		54A6757E2ADFD96B00743B1A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = coupleZoneTest/coupleZoneTest.entitlements;
@@ -621,12 +912,13 @@
 				DEVELOPMENT_TEAM = 37TC2VKVJ6;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = coupleZoneTest/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "You need to allow access to the camera to be able to send photos with it.";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "We need access to your photo library to save and upload images.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -644,6 +936,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		54566E3A2B07CFE9003B33A2 /* Build configuration list for PBXNativeTarget "OneSignalNotificationServiceExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				54566E3B2B07CFE9003B33A2 /* Debug */,
+				54566E3C2B07CFE9003B33A2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		54A675632ADFD96A00743B1A /* Build configuration list for PBXProject "coupleZoneTest" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -673,12 +974,44 @@
 				minimumVersion = 4.3.3;
 			};
 		};
+		54566E252B07CAB7003B33A2 /* XCRemoteSwiftPackageReference "OneSignal-XCFramework" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/OneSignal/OneSignal-XCFramework";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.4;
+			};
+		};
+		54566E402B08E1C7003B33A2 /* XCRemoteSwiftPackageReference "SideMenu" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/jonkykong/SideMenu.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.5.0;
+			};
+		};
+		5477E98F2B036B6300348A37 /* XCRemoteSwiftPackageReference "MessageKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/MessageKit/MessageKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.2.0;
+			};
+		};
 		548FD3882AEC4D5D0098D6AA /* XCRemoteSwiftPackageReference "rive-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/rive-app/rive-ios";
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 5.5.1;
+			};
+		};
+		54AD10152B0B9C5100C4BF78 /* XCRemoteSwiftPackageReference "TOCropViewController" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/TimOliver/TOCropViewController.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.6.1;
 			};
 		};
 		74BDA94C2AE05DD5006164D7 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
@@ -713,10 +1046,45 @@
 			package = 544F5C5F2AEFE9BD001D3243 /* XCRemoteSwiftPackageReference "lottie-ios" */;
 			productName = Lottie;
 		};
+		54566E262B07CAB7003B33A2 /* OneSignalExtension */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 54566E252B07CAB7003B33A2 /* XCRemoteSwiftPackageReference "OneSignal-XCFramework" */;
+			productName = OneSignalExtension;
+		};
+		54566E282B07CAB7003B33A2 /* OneSignalFramework */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 54566E252B07CAB7003B33A2 /* XCRemoteSwiftPackageReference "OneSignal-XCFramework" */;
+			productName = OneSignalFramework;
+		};
+		54566E2A2B07CAB7003B33A2 /* OneSignalInAppMessages */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 54566E252B07CAB7003B33A2 /* XCRemoteSwiftPackageReference "OneSignal-XCFramework" */;
+			productName = OneSignalInAppMessages;
+		};
+		54566E2C2B07CAB7003B33A2 /* OneSignalLocation */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 54566E252B07CAB7003B33A2 /* XCRemoteSwiftPackageReference "OneSignal-XCFramework" */;
+			productName = OneSignalLocation;
+		};
+		54566E412B08E1C7003B33A2 /* SideMenu */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 54566E402B08E1C7003B33A2 /* XCRemoteSwiftPackageReference "SideMenu" */;
+			productName = SideMenu;
+		};
+		5477E9902B036B6300348A37 /* MessageKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5477E98F2B036B6300348A37 /* XCRemoteSwiftPackageReference "MessageKit" */;
+			productName = MessageKit;
+		};
 		548FD3892AEC4D5D0098D6AA /* RiveRuntime */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 548FD3882AEC4D5D0098D6AA /* XCRemoteSwiftPackageReference "rive-ios" */;
 			productName = RiveRuntime;
+		};
+		54AD10162B0B9C5200C4BF78 /* TOCropViewController */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 54AD10152B0B9C5100C4BF78 /* XCRemoteSwiftPackageReference "TOCropViewController" */;
+			productName = TOCropViewController;
 		};
 		74BDA94D2AE05DD5006164D7 /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;

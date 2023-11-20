@@ -22,7 +22,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         self.tabController = UITabBarController()
         let tabController = self.tabController
         let vc0 = UINavigationController(rootViewController: HomeBuilder.build())
-        let vc1 = UINavigationController(rootViewController: PhotosViewController())
+        let vc1 = UINavigationController(rootViewController: PhotosBuilder.build())
         let vc2 = UINavigationController(rootViewController: NotesViewController())
         let vc3 = UINavigationController(rootViewController: ChatViewController())
         tabController?.viewControllers = [vc0, vc1, vc2, vc3]
@@ -78,10 +78,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 extension SceneDelegate {
     func navigateFromAuth() {
-        LottieHUD.shared.showWithoutDelay()
         Task {
             do {
-                _ = try await SensitiveData.supabase.auth.session
+                LottieHUD.shared.showWithoutDelay()
+                let session = try await SensitiveData.supabase.auth.session
+                print(session)
                 window?.rootViewController = tabController
                 LottieHUD.shared.dismiss()
             } catch {

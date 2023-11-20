@@ -7,9 +7,12 @@
 
 import UIKit
 import SnapKit
+import SideMenu
 
 @MainActor protocol HomeDisplayLogic: AnyObject {
-    func display(_ model: HomeModels.FetchData.ViewModel)
+    func display(_ model: HomeModels.FetchData.ViewModel, loadPhoto: Bool)
+    func displayHomeNotExist()
+    func displayError(with message: String)
 }
 
 final class HomeViewController: UIViewController {
@@ -47,7 +50,8 @@ final class HomeViewController: UIViewController {
     // MARK: Private Properties
     private let router: HomeRouter
     private let interactor: HomeBusinessLogic
-    
+    private var sideMenu: SideMenuNavigationController?
+
     // MARK: Initializers
     init(interactor: HomeBusinessLogic, router: HomeRouter) {
         self.interactor = interactor
@@ -60,13 +64,20 @@ final class HomeViewController: UIViewController {
     }
 
     // MARK: - Lifecycle
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func loadView() {
+        super.loadView()
         view.backgroundColor = UIColor.LilacClouds.lilac0
         setup()
         layout()
+        setupSideMenu()
         configureNavigationBar()
-        fetchData()
+    }
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        fetchData(request: .init(fetchPhoto: true))
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        fetchData(request: .init(fetchPhoto: false))
     }
 
     // MARK: - Setup
@@ -101,6 +112,8 @@ final class HomeViewController: UIViewController {
         let settingsButton = UIBarButtonItem(image: UIImage(systemName: "gear"), style: .done, target: self, action: #selector(settingsButtonAction))
         navigationItem.rightBarButtonItems = [settingsButton]
         navigationItem.rightBarButtonItem?.tintColor = .LilacClouds.lilac3
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "person.crop.circle"), style: .done, target: self, action: #selector(profileMenuButtonAction))
+        navigationItem.leftBarButtonItem?.tintColor = .LilacClouds.lilac3
 
         let titleViewLabel : UILabel = {
             let label = UILabel()
@@ -111,13 +124,19 @@ final class HomeViewController: UIViewController {
         }()
         navigationItem.titleView = titleViewLabel
     }
-    
-    private func fetchData() {
-        LottieHUD.shared.showWithoutDelay()
-        Task {
-            await interactor.fetchData(.init())
-            LottieHUD.shared.dismiss()
-        }
+
+    private func setupSideMenu() {
+        sideMenu = SideMenuNavigationController(rootViewController: SettingsViewController())
+        sideMenu?.leftSide = true
+        sideMenu?.setNavigationBarHidden(true, animated: false)
+
+        SideMenuManager.default.leftMenuNavigationController = sideMenu
+        SideMenuManager.default.addPanGestureToPresent(toView: self.view)
+    }
+
+    private func fetchData(request: HomeModels.FetchData.Request) {
+        LottieHUD.shared.show()
+        interactor.fetchData(request)
     }
 
     // MARK: - Actions
@@ -134,52 +153,79 @@ final class HomeViewController: UIViewController {
     @objc private func settingsButtonAction() {
 //        let viewController = SettingsViewController()
 //        present(viewController, animated: true)
-        LottieHUD.shared.showWithoutDelay()
-        AuthManager.shared.signOut { result in
-            LottieHUD.shared.dismiss()
-            switch result {
-                case .success(_):
-                    DispatchQueue.main.async {
-                        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene, let sceneDelegate = windowScene.delegate as? SceneDelegate else { return }
-                        sceneDelegate.navigateFromAuth()
-                    }
-                case .failure(let error):
-                    self.displaySimpleAlert(title: "Error", message: error.localizedDescription, okButtonText: "OK") {
-                        //
-                    }
+        displayAlertTwoButtons(title: "Sign Out?", message: "Dou you want to signout?", firstButtonText: "Yeap", firstButtonStyle: .destructive, seconButtonText: "Nope, I thought it was settings.", secondButtonStyle: .default) {
+            LottieHUD.shared.showWithoutDelay()
+            AuthManager.shared.signOut { result in
+                LottieHUD.shared.dismiss()
+                switch result {
+                    case .success(_):
+                        DispatchQueue.main.async {
+                            guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene, let sceneDelegate = windowScene.delegate as? SceneDelegate else { return }
+                            sceneDelegate.navigateFromAuth()
+                        }
+                    case .failure(let error):
+                        self.displaySimpleAlert(title: "Error", message: error.localizedDescription, okButtonText: "OK", completion: nil)
+                }
             }
+        } secondButtonCompletion: {
+            //
         }
+    }
+    @objc private func profileMenuButtonAction() {
+        guard let sideMenu else { return }
+        self.present(sideMenu, animated: true)
     }
 }
 
 // MARK: - Alertable
 extension HomeViewController: Alertable {}
 
+
 // MARK: - Display Logic
 extension HomeViewController: HomeDisplayLogic {
-    func display(_ model: HomeModels.FetchData.ViewModel) {
+    func display(_ model: HomeModels.FetchData.ViewModel, loadPhoto: Bool) {
         let displayModel = model.displayModel
-        self.imageView.setImage(urlString: displayModel.imageURLString)
-        self.welcomeLabel.attributedText = getAttributedWelcomeMessage(username: displayModel.username, partnerName: displayModel.partnerUsername, numberOfDays: displayModel.numberOfDays)
+        self.welcomeLabel.attributedText = getAttributedWelcomeMessage(username: displayModel.username, partnerName: displayModel.partnerUsername, numberOfDays: displayModel.numberOfDays, numberOfDaysInOrder: displayModel.numberOfDaysInOrder)
+        if loadPhoto {
+            self.imageView.setImage(urlString: displayModel.imageURLString) {
+                LottieHUD.shared.dismiss()
+            }
+        } else {
+            LottieHUD.shared.dismiss()
+        }
+    }
+    func displayError(with message: String) {
+        LottieHUD.shared.dismiss()
+    }
+    func displayHomeNotExist() {
+        LottieHUD.shared.dismiss()
+        let viewController = CreateOrJoinRoomViewController()
+        viewController.modalPresentationStyle = .fullScreen
+        self.present(viewController, animated: true)
     }
 }
 
 extension HomeViewController {
-    private func getAttributedWelcomeMessage(username: String, partnerName: String, numberOfDays: Int) -> NSAttributedString {
-        let regularAttributes: [NSAttributedString.Key: Any] = [.font: UIFont.systemFont(ofSize: 16, weight: .regular)]
-        let boldAttributes: [NSAttributedString.Key: Any] = [.font: UIFont.systemFont(ofSize: 16, weight: .bold)]
-
-        let welcomeIntro = NSMutableAttributedString(string: "Welcome \(username),", attributes: [.font: UIFont.systemFont(ofSize: 17, weight: .semibold)])
-        let two = NSMutableAttributedString(string: "\nYou've been together with this weirdo\n", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .regular)])
-        let three = NSMutableAttributedString(string: "(\(partnerName))", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .semibold)])
-        let four = NSMutableAttributedString(string: " for the past ", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .regular)])
+    private func getAttributedWelcomeMessage(username: String, partnerName: String, numberOfDays: Int, numberOfDaysInOrder: [Int]) -> NSAttributedString {
+        let welcomeIntro = NSMutableAttributedString(string: "Welcome \(username),\n", attributes: [.font: UIFont.systemFont(ofSize: 17, weight: .semibold)])
+        let two = NSMutableAttributedString(string: "You've been together with this weirdo\n", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .regular)])
+        let three = NSMutableAttributedString(string: "\(partnerName) ", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .semibold)])
+        let four = NSMutableAttributedString(string: "for the past ", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .regular)])
         let five = NSMutableAttributedString(string: "\(numberOfDays)", attributes: [.font: UIFont.systemFont(ofSize: 20, weight: .bold)])
         let six = NSMutableAttributedString(string: " days.", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .regular)])
+        let seven = NSMutableAttributedString(string: "\nWhich is ", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .regular)])
+        let eight = NSMutableAttributedString(string: "\(String(describing: numberOfDaysInOrder[safeIndex: 0] ?? 0)) \(numberOfDaysInOrder[safeIndex: 0] == 1 ? "year" : "years"), \(numberOfDaysInOrder[safeIndex: 1] ?? 0) \(numberOfDaysInOrder[safeIndex: 1] == 1 ? "month" : "months"), \(numberOfDaysInOrder[safeIndex: 2] ?? 0) \(numberOfDaysInOrder[safeIndex: 2] == 1 ? "day" : "days")", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .bold)])
+        let nine = NSMutableAttributedString(string: "", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .regular)])
         welcomeIntro.append(two)
-        welcomeIntro.append(three)
+        if !partnerName.isEmpty {
+            welcomeIntro.append(three)
+        }
         welcomeIntro.append(four)
         welcomeIntro.append(five)
         welcomeIntro.append(six)
+        welcomeIntro.append(seven)
+        welcomeIntro.append(eight)
+        welcomeIntro.append(nine)
         return welcomeIntro
     }
 }

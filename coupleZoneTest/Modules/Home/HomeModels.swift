@@ -10,7 +10,9 @@ import UIKit.UIImage
 enum HomeModels {
     
     enum FetchData {
-        struct Request {}
+        struct Request {
+            let fetchPhoto: Bool
+        }
         
         struct Response {
             let result: Result<HomeItem, RequestError>
@@ -19,9 +21,11 @@ enum HomeModels {
         struct ViewModel {
             struct DisplayableModel {
                 let imageURLString: String
-                let numberOfDays: Int
                 let username: String
                 let partnerUsername: String
+                // Computed Properties
+                let numberOfDays: Int
+                let numberOfDaysInOrder: [Int]
             }
             let displayModel: DisplayableModel
         }
