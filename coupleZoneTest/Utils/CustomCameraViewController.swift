@@ -21,6 +21,8 @@ class CustomCameraViewController: UIViewController, AVCapturePhotoCaptureDelegat
     private let angleLensButton = UIButton(type: .system)
     private var capturedImage: UIImage?
     private var currentCamera: AVCaptureDevice?
+    private var photoTaken = false
+    let capturedImageView = UIImageView()
 
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -69,6 +71,7 @@ class CustomCameraViewController: UIViewController, AVCapturePhotoCaptureDelegat
         setupCloseCameraButton()
         setupAngleLensButton()
         switchCameraButtonTapped()
+        updateButtons()
     }
 
     private func setupCaptureButton() {
@@ -252,19 +255,7 @@ class CustomCameraViewController: UIViewController, AVCapturePhotoCaptureDelegat
         }
     }
     private func updateLensButtonImage(for deviceType: AVCaptureDevice.DeviceType) {
-        var imageName = ""
         var title = ""
-
-        switch deviceType {
-            case .builtInUltraWideCamera:
-                imageName = "05.circle"
-            case .builtInWideAngleCamera:
-                imageName = "1.circle"
-            case .builtInTelephotoCamera:
-                imageName = "3.circle"
-            default:
-                imageName = "1.circle" // Default to wide angle
-        }
         switch deviceType {
             case .builtInUltraWideCamera:
                 title = "0.5"
@@ -275,10 +266,35 @@ class CustomCameraViewController: UIViewController, AVCapturePhotoCaptureDelegat
             default:
                 title = "1.0" // Default to wide angle
         }
-
-//        angleLensButton.setImage(UIImage(systemName: imageName), for: .normal)
         angleLensButton.setTitle(title, for: .normal)
-        // Update the button's appearance as needed (color, size, etc.)
+    }
+    private func updateButtons() {
+        if photoTaken {
+            captureButton.setImage(UIImage(systemName: "paperplane"), for: .normal)
+            captureButton.removeTarget(self, action: #selector(captureButtonTapped), for: .touchUpInside)
+            captureButton.addTarget(self, action: #selector(sendPhotoAction), for: .touchUpInside)
+
+            closeCameraButton.removeTarget(self, action: #selector(closeCameraButtonTapped), for: .touchUpInside)
+            closeCameraButton.addTarget(self, action: #selector(retakePhotoAction), for: .touchUpInside)
+        } else {
+            captureButton.setImage(UIImage(systemName: "circle"), for: .normal)
+            captureButton.removeTarget(self, action: #selector(sendPhotoAction), for: .touchUpInside)
+            captureButton.addTarget(self, action: #selector(captureButtonTapped), for: .touchUpInside)
+
+            closeCameraButton.removeTarget(self, action: #selector(retakePhotoAction), for: .touchUpInside)
+            closeCameraButton.addTarget(self, action: #selector(closeCameraButtonTapped), for: .touchUpInside)
+        }
+    }
+    @objc private func sendPhotoAction() {
+        displaySimpleAlert(title: "OK", message: "OK", okButtonText: "OK")
+    }
+    @objc private func retakePhotoAction() {
+        photoTaken = false
+        capturedImageView.snp.removeConstraints()
+        capturedImageView.removeFromSuperview()
+        capturedImageView.image = UIImage(systemName: "person")
+        setupCamera()
+        setupButtons()
     }
 
 
@@ -286,16 +302,18 @@ class CustomCameraViewController: UIViewController, AVCapturePhotoCaptureDelegat
     func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: Error?) {
         if let imageData = photo.fileDataRepresentation(), let capturedImage = UIImage(data: imageData) {
             print("Image captured successfully!")
+            self.photoTaken = true
 
-            let imageView = UIImageView()
-            imageView.image = capturedImage
-            imageView.contentMode = .scaleAspectFit
-            view.addSubview(imageView)
-            imageView.snp.makeConstraints { make in
-                make.top.equalTo(closeCameraButton.snp.bottom)
-                make.leading.trailing.equalToSuperview()
-                make.bottom.equalTo(captureButton.snp.top)
+            let capturedImageView = UIImageView()
+            capturedImageView.image = capturedImage
+            capturedImageView.contentMode = .scaleAspectFill
+            view.addSubview(capturedImageView)
+            capturedImageView.snp.makeConstraints { make in
+                make.edges.equalToSuperview()
             }
+            updateButtons()
+            view.bringSubviewToFront(self.captureButton)
+            view.bringSubviewToFront(self.closeCameraButton)
         } else {
             if let error = error {
                 print("Error capturing photo: \(error.localizedDescription)")
@@ -305,3 +323,5 @@ class CustomCameraViewController: UIViewController, AVCapturePhotoCaptureDelegat
         }
     }
 }
+
+extension CustomCameraViewController: Alertable {}
