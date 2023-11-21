@@ -11,6 +11,7 @@ import SnapKit
 
 class CustomCameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
 
+    // MARK: - Private Properties
     private var captureSession: AVCaptureSession!
     private var previewLayer: AVCaptureVideoPreviewLayer!
     private let borderLayer = CALayer()
@@ -21,12 +22,14 @@ class CustomCameraViewController: UIViewController, AVCapturePhotoCaptureDelegat
     private var capturedImage: UIImage?
     private var currentCamera: AVCaptureDevice?
 
+    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupCamera()
         setupButtons()
     }
 
+    // MARK: - Setup Camera
     private func setupCamera() {
         captureSession = AVCaptureSession()
         captureSession.sessionPreset = .photo
@@ -59,11 +62,13 @@ class CustomCameraViewController: UIViewController, AVCapturePhotoCaptureDelegat
         }
     }
 
+    // MARK: - Setup Buttons
     private func setupButtons() {
         setupCaptureButton()
         setupSwitchCameraButton()
         setupCloseCameraButton()
         setupAngleLensButton()
+        switchCameraButtonTapped()
     }
 
     private func setupCaptureButton() {
@@ -113,7 +118,9 @@ class CustomCameraViewController: UIViewController, AVCapturePhotoCaptureDelegat
     }
     private func setupAngleLensButton() {
         let buttonSize: CGFloat = 30.0
-        angleLensButton.setImage(UIImage(systemName: "arrow.up.backward.and.arrow.down.forward.circle"), for: .normal)
+        angleLensButton.setTitle("1.0", for: .normal)
+        angleLensButton.titleLabel?.font = .systemFont(ofSize: 12, weight: .regular)
+//        angleLensButton.setImage(UIImage(systemName: "arrow.up.backward.and.arrow.down.forward.circle"), for: .normal)
         angleLensButton.tintColor = .white
         angleLensButton.backgroundColor = .LilacClouds.lilac1
         angleLensButton.layer.cornerRadius = buttonSize / 2
@@ -124,8 +131,10 @@ class CustomCameraViewController: UIViewController, AVCapturePhotoCaptureDelegat
             make.centerX.equalToSuperview()
             make.size.equalTo(buttonSize)
         }
+        updateLensButtonImage(for: .builtInWideAngleCamera)
     }
 
+    // MARK: - Button Actions
     @objc private func closeCameraButtonTapped() {
         self.dismiss(animated: true)
     }
@@ -146,6 +155,7 @@ class CustomCameraViewController: UIViewController, AVCapturePhotoCaptureDelegat
 
         let currentPosition = currentInput.device.position
         let newPosition: AVCaptureDevice.Position = (currentPosition == .back) ? .front : .back
+        angleLensButton.isHidden = newPosition == .front
 
         // Find an available camera with the new position
         if let newCamera = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: newPosition) {
@@ -237,17 +247,42 @@ class CustomCameraViewController: UIViewController, AVCapturePhotoCaptureDelegat
                 }
 
                 captureSession.commitConfiguration()
+                updateLensButtonImage(for: nextDeviceType)
             }
         }
     }
+    private func updateLensButtonImage(for deviceType: AVCaptureDevice.DeviceType) {
+        var imageName = ""
+        var title = ""
+
+        switch deviceType {
+            case .builtInUltraWideCamera:
+                imageName = "05.circle"
+            case .builtInWideAngleCamera:
+                imageName = "1.circle"
+            case .builtInTelephotoCamera:
+                imageName = "3.circle"
+            default:
+                imageName = "1.circle" // Default to wide angle
+        }
+        switch deviceType {
+            case .builtInUltraWideCamera:
+                title = "0.5"
+            case .builtInWideAngleCamera:
+                title = "1.0"
+            case .builtInTelephotoCamera:
+                title = "3.0"
+            default:
+                title = "1.0" // Default to wide angle
+        }
+
+//        angleLensButton.setImage(UIImage(systemName: imageName), for: .normal)
+        angleLensButton.setTitle(title, for: .normal)
+        // Update the button's appearance as needed (color, size, etc.)
+    }
 
 
-
-
-
-
-
-
+    // MARK: - Photo Taken
     func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: Error?) {
         if let imageData = photo.fileDataRepresentation(), let capturedImage = UIImage(data: imageData) {
             print("Image captured successfully!")
