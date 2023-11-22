@@ -46,19 +46,20 @@ class OneSignalManager {
         guard let externalUserId = AppGlobal.shared.user?.id.uuidString else { return }
         OneSignal.login(externalUserId)
         let hm = OneSignal.User.pushSubscription.id
+        print(hm ?? "empty OneSignal Push ID")
     }
 
-    func postNotification(to subscriptionIDs: [String]) {
+    func postNotification(to subscriptionIDs: [String], title: String, message: String) {
         let parameters = [
             "app_id": SensitiveData.oneSignalAppID,
             "name": [
                 "en": "Notification Name"
             ],
             "contents": [
-                "en": "Mahmut"
+                "en": message
             ],
             "headings": [
-                "en": "Hede Hüde"
+                "en": title
             ],
             "include_subscription_ids": subscriptionIDs
         ] as [String : Any]

@@ -13,6 +13,7 @@ protocol HomePresentationLogic {
     func presentError(_ message: String)
     func presentImagePicker()
     func presentUploadPhotoResponse(_ response: HomeModels.UploadPhoto.Response)
+    func presentLoveSentResponse(_ response: HomeModels.SendLove.Response)
 }
 
 final class HomePresenter: HomePresentationLogic {
@@ -39,6 +40,14 @@ final class HomePresenter: HomePresentationLogic {
         switch response.result {
             case .success():
                 view?.displaySuccessAfterPhotoUpload()
+            case .failure(let error):
+                view?.displayError(with: error.localizedDescription)
+        }
+    }
+    @MainActor func presentLoveSentResponse(_ response: HomeModels.SendLove.Response) {
+        switch response.result {
+            case .success():
+                view?.displaySuccessAfterSendLove()
             case .failure(let error):
                 view?.displayError(with: error.localizedDescription)
         }

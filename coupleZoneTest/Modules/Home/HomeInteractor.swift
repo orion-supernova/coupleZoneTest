@@ -11,6 +11,7 @@ protocol HomeBusinessLogic {
     func fetchData(_ request: HomeModels.FetchData.Request)
     func changePhotoTapped()
     func uploadPhoto(_ request: HomeModels.UploadPhoto.Request)
+    func sendLoveToPartner()
 }
 
 protocol HomeDataStore {
@@ -60,6 +61,15 @@ final class HomeInteractor: HomeBusinessLogic, HomeDataStore {
             LottieHUD.shared.dismiss()
             DispatchQueue.main.async {
                 self.presenter.presentUploadPhotoResponse(response)
+            }
+        }
+    }
+    func sendLoveToPartner() {
+        Task {
+            let result = await worker.sendLoveToPartner()
+            let response = HomeModels.SendLove.Response.init(result: result)
+            DispatchQueue.main.async {
+                self.presenter.presentLoveSentResponse(response)
             }
         }
     }
