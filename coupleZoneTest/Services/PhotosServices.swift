@@ -34,7 +34,7 @@ class PhotosServices {
         }
     }
 
-    func uploadPhoto(_ image: UIImage) async -> Result<Bool, RequestError> {
+    func uploadPhoto(_ image: UIImage) async -> Result<Void, RequestError> {
         do {
             guard let imageData = image.jpegData(compressionQuality: 0.8) else { return .failure(.convertImageToDataError) }
             let fileName = UUID().uuidString
@@ -48,7 +48,7 @@ class PhotosServices {
             let dict = ["imageURL": "\(urlString)", "username": username, "homeID": homeID]
             let updateTable = supabase.database.from("photosTimeline").upsert(values: dict)
             try await updateTable.execute()
-            return .success(true)
+            return .success(())
         } catch let error {
             print(error.localizedDescription)
             return .failure(.generic)

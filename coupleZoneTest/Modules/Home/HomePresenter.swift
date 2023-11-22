@@ -79,9 +79,9 @@ extension HomeModels.FetchData.ViewModel.DisplayableModel {
             self.numberOfDaysInOrder = [0]
         }
         if let email = AppGlobal.shared.user?.email {
-            if email == "zeynepozahishali@gmail.com" {
+            if email == SensitiveData.myPartnersEmail {
                 self.partnerUsername = "(cankoç, on the right)"
-            } else if email == "muratcankoc@gmail.com" {
+            } else if email == SensitiveData.myEmail {
                 self.partnerUsername = "(zeynom, on the left)"
             } else {
                 self.partnerUsername = model.partnerUsername.isEmpty ? "" :   "(\(model.partnerUsername))"

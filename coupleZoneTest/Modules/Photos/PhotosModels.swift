@@ -28,7 +28,7 @@ enum PhotosModels {
             let image: UIImage
         }
         struct Response {
-            let result: Result<Bool, RequestError>
+            let result: Result<Void, RequestError>
         }
         struct ViewModel {}
     }

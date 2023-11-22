@@ -19,6 +19,17 @@ class ChatViewController: MessagesViewController {
         messagesCollectionView.messagesLayoutDelegate = self
         messagesCollectionView.messagesDisplayDelegate = self
     }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        // MARK: - FIXME: - Remove Bottom After Update
+        if let email = AppGlobal.shared.user?.email {
+            if email == SensitiveData.myPartnersEmail {
+                displaySimpleAlert(title: "Chat In Progress...", message: "Update gelince bakarsın canım sevgilim.", okButtonText: "❤️")
+            } else if email == SensitiveData.myEmail {
+                displaySimpleAlert(title: "Chat In Progress...", message: "Bitircen mi artık?", okButtonText: "sg")
+            }
+        }
+    }
     let sender = Sender(senderId: "any_unique_id", displayName: "Steven")
     let messages: [MessageType] = []
 }
@@ -43,3 +54,4 @@ extension ChatViewController: MessagesDataSource {
 }
 extension ChatViewController: MessagesDisplayDelegate {}
 extension ChatViewController: MessagesLayoutDelegate {}
+extension ChatViewController: Alertable {}

@@ -33,11 +33,7 @@ final class PhotosPresenter: PhotosPresentationLogic {
     }
     @MainActor func presentUploadPhoto(_ response: PhotosModels.UploadPhoto.Response) {
         switch response.result {
-            case .success(let success):
-                guard success else { 
-                    presentError(RequestError.generic.localizedDescription)
-                    return
-                }
+            case .success():
                 view?.displaySuccessAfterPhotoUpload()
             case .failure(let error):
                 print(error.localizedDescription)
