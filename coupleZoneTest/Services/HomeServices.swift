@@ -49,15 +49,23 @@ class HomeServices {
     }
     func sendLoveToPartner() async -> Result<Void, CustomMessageError> {
         do {
-            guard let userID = AppGlobal.shared.user?.id.uuidString else { return .failure(.init(message: "Something went wrong."))}
-            let partnerUserID = try await SensitiveData.supabase.database.from("users").select(columns: "partnerUserID", head: false).eq(column: "userID", value: userID).execute().underlyingResponse.data.convertDataToString().convertStringToDictionary()?["partnerUserID"] as? String ?? ""
-            guard !partnerUserID.isEmpty else { return .failure(.init(message: "Partner not found!"))}
+            let partnerUserID = await getPartnerUserID()
+            guard !partnerUserID.isEmpty else { return .failure(.init(message: "Partner not found."))}
             let pushDevicesIDArray = try await SensitiveData.supabase.database.from("users").select(columns: "pushSubscriptionIDs", head: false).eq(column: "userID", value: partnerUserID).execute().underlyingResponse.data.convertDataToString().convertStringToDictionary()?["pushSubscriptionIDs"] as? [String] ?? []
             let username = AppGlobal.shared.username ?? ""
             OneSignalManager.shared.postNotification(to: pushDevicesIDArray, title: "Love Received!" , message: "\(username) sent you love!")
             return .success(())
         } catch let error {
             print(error.localizedDescription)
+            return .failure(.init(message: error.localizedDescription))
+        }
+    }
+    func getPartnerUsername() async -> Result<String, CustomMessageError> {
+        do {
+            let partnerUserID = await getPartnerUserID()
+            let partnerUsername = try await SensitiveData.supabase.database.from("users").select(columns: "username", head: false).eq(column: "userID", value: partnerUserID).execute().underlyingResponse.data.convertDataToString().convertStringToDictionary()?["username"] as? String ?? ""
+            return .success(partnerUsername)
+        } catch let error {
             return .failure(.init(message: error.localizedDescription))
         }
     }
@@ -68,6 +76,17 @@ class HomeServices {
             let userDict = try await SensitiveData.supabase.database.from("users").select(columns: "*", head: false).eq(column: "userID", value: userID).execute().underlyingResponse.data.convertDataToString().convertStringToDictionary()
             let idString = userDict?["homeID"] as? String ?? ""
             return idString
+        } catch let error {
+            print(error.localizedDescription)
+            return ""
+        }
+    }
+    private func getPartnerUserID() async -> String {
+        do {
+            guard let userID = AppGlobal.shared.user?.id.uuidString else { return "" }
+            let partnerUserID = try await SensitiveData.supabase.database.from("users").select(columns: "partnerUserID", head: false).eq(column: "userID", value: userID).execute().underlyingResponse.data.convertDataToString().convertStringToDictionary()?["partnerUserID"] as? String ?? ""
+            guard !partnerUserID.isEmpty else { return "" }
+            return (partnerUserID)
         } catch let error {
             print(error.localizedDescription)
             return ""

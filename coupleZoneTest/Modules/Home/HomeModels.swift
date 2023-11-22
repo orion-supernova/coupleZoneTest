@@ -19,11 +19,11 @@ enum HomeModels {
         struct ViewModel {
             struct DisplayableModel {
                 let imageURLString: String
-                let username: String
-                let partnerUsername: String
                 // Computed Properties
                 let numberOfDays: Int
                 let numberOfDaysInOrder: [Int]
+                let partnerUsername: String
+                let username: String
             }
             let displayModel: DisplayableModel
         }

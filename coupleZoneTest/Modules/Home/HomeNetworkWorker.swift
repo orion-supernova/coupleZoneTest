@@ -12,6 +12,7 @@ protocol HomeWorker {
     func fetchData() async -> Result<HomeItem, RequestError>
     func uploadImage(_ image: UIImage) async -> Result<Void, CustomMessageError>
     func sendLoveToPartner() async -> Result<Void, CustomMessageError>
+    func getPartnerUsername() async -> Result<String, CustomMessageError>
 }
 
 final class HomeNetworkWorker: HomeWorker {
@@ -29,5 +30,8 @@ final class HomeNetworkWorker: HomeWorker {
     }
     func sendLoveToPartner() async -> Result<Void, CustomMessageError> {
         return await homeServices.sendLoveToPartner()
+    }
+    func getPartnerUsername() async -> Result<String, CustomMessageError> {
+        return await homeServices.getPartnerUsername()
     }
 }

@@ -69,7 +69,7 @@ class CustomCameraViewController: UIViewController, UINavigationControllerDelega
     }()
     private lazy var retakePhotoButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setImage(UIImage(systemName: "xmark"), for: .normal)
+        button.setImage(UIImage(systemName: "arrow.counterclockwise"), for: .normal)
         button.tintColor = .white
         button.backgroundColor = .LilacClouds.lilac1
         button.isHidden = true
@@ -164,7 +164,7 @@ class CustomCameraViewController: UIViewController, UINavigationControllerDelega
         captureButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-20)
-            make.size.equalTo(60)
+            make.size.equalTo(70)
         }
         switchCameraButton.snp.makeConstraints { make in
             make.centerY.equalTo(captureButton.snp.centerY)
@@ -184,12 +184,12 @@ class CustomCameraViewController: UIViewController, UINavigationControllerDelega
         sendPhotoButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-20)
-            make.size.equalTo(60)
+            make.size.equalTo(70)
         }
         retakePhotoButton.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            make.centerY.equalTo(captureButton.snp.centerY)
             make.left.equalTo(20)
-            make.size.equalTo(30)
+            make.size.equalTo(40)
         }
     }
     // MARK: - Gesture(s)
@@ -252,23 +252,26 @@ class CustomCameraViewController: UIViewController, UINavigationControllerDelega
             displaySimpleAlert(title: "Error", message: "Please try again later.", okButtonText: "OK")
             return
         }
-        if captureSession.isRunning {
-            captureSession.stopRunning()
-        }
-        self.dismiss(animated: true) { [weak self] in
-            guard let self else { return }
-            self.delegate?.didSendPhoto(image: image)
-        }
+        displayAlertTwoButtons(title: "Ready?", message: "Do you want to send this picture?", firstButtonText: "Yeap!", firstButtonStyle: .default, seconButtonText: "Nope.", secondButtonStyle: .cancel, firstButtonCompletion:  {
+            if self.captureSession.isRunning {
+                self.captureSession.stopRunning()
+            }
+            self.dismiss(animated: true) { [weak self] in
+                guard let self else { return }
+                self.delegate?.didSendPhoto(image: image)
+            }
+        })
+
     }
     @objc private func retakePhotoButtonAction() {
         addGestureRecognizers()
-        self.capturedImageView.alpha = 1
+        capturedImageView.alpha = 1
+        updateButtons(photoTaken: false)
         UIView.animate(withDuration: 0.5, animations: {
             self.capturedImageView.alpha = 0 // Fade out the image view
         }) { _ in
             self.capturedImageView.snp.removeConstraints()
             self.capturedImageView.removeFromSuperview()
-            self.updateButtons(photoTaken: false)
             self.capturedImageView.alpha = 1 // Reset the alpha for future display
         }
     }

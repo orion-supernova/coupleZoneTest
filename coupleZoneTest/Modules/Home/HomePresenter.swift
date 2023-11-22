@@ -55,13 +55,13 @@ final class HomePresenter: HomePresentationLogic {
 }
 
 extension HomeModels.FetchData.ViewModel.DisplayableModel {
-    init(model: HomeItem) {
-        self.imageURLString =  model.imageURLString
+    init(item: HomeItem, model: HomeModels.FetchData.ViewModel.DisplayableModel) {
+        self.imageURLString = item.imageURLString
 
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZZZZZ"
         dateFormatter.timeZone = TimeZone(identifier: "UTC")
-        if let startDate = dateFormatter.date(from: model.anniversaryDate) {
+        if let startDate = dateFormatter.date(from: item.anniversaryDate) {
             let calendar = Calendar.current
             let currentDate = calendar.startOfDay(for: Date()) // Get the current date at midnight
             let startServerDate = calendar.startOfDay(for: startDate) // Get the server's date at midnight
@@ -93,11 +93,11 @@ extension HomeModels.FetchData.ViewModel.DisplayableModel {
             } else if email == SensitiveData.myEmail {
                 self.partnerUsername = "(zeynom, on the left)"
             } else {
-                self.partnerUsername = model.partnerUsername.isEmpty ? "" :   "(\(model.partnerUsername))"
+                self.partnerUsername = model.partnerUsername
             }
         } else {
             self.partnerUsername = "Error"
         }
-        self.username = AppGlobal.shared.username ?? "Anonymous"
+        self.username = model.username
     }
 }
