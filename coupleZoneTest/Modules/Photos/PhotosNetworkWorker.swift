@@ -10,7 +10,7 @@ import UIKit.UIImage
 
 protocol PhotosWorker {
     func fetchData() async -> Result<[PhotosItem], RequestError>
-    func uploadImage(_ image: UIImage) async -> Result<Bool, RequestError>
+    func uploadImage(_ image: UIImage) async -> Result<Void, RequestError>
 }
 
 final class PhotosNetworkWorker: PhotosWorker {
@@ -23,7 +23,7 @@ final class PhotosNetworkWorker: PhotosWorker {
     func fetchData() async -> Result<[PhotosItem], RequestError> {
         return await PhotosServices.getPhotos()
     }
-    func uploadImage(_ image: UIImage) async -> Result<Bool, RequestError> {
+    func uploadImage(_ image: UIImage) async -> Result<Void, RequestError> {
         return await PhotosServices.uploadPhoto(image)
     }
 }
