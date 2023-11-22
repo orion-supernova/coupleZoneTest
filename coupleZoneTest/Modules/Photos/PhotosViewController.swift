@@ -80,11 +80,8 @@ class PhotosViewController: UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        // FIXME: - Remove Comment
-//        LottieHUD.shared.show()
-//        interactor.fetchData(.init())
-        // Remove Bottom
-        presentImagePicker()
+        LottieHUD.shared.show()
+        interactor.fetchData(.init())
     }
     // MARK: - Setup
     private func setup() {
@@ -117,8 +114,8 @@ class PhotosViewController: UIViewController {
 
     // MARK: - Private Methods
     @MainActor private func configureNavigationBar() {
-        let sendPhotoButton = UIBarButtonItem(image: UIImage(systemName: "flame"), style: .done, target: self, action: #selector(sendPhotoButtonAction))
-        navigationItem.rightBarButtonItems = [sendPhotoButton]
+        let takePhotoButton = UIBarButtonItem(image: UIImage(systemName: "flame"), style: .done, target: self, action: #selector(takePhotoButtonAction))
+        navigationItem.rightBarButtonItems = [takePhotoButton]
         navigationItem.rightBarButtonItem?.tintColor = .monkeyBlue
 
         let titleViewLabel : UILabel = {
@@ -136,30 +133,19 @@ class PhotosViewController: UIViewController {
         let indexPath = IndexPath(row: row, section: 0)
         timelineTableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
     }
-    @MainActor private func presentImagePicker() {
-        let imagePicker = CustomCameraViewController()
-        imagePicker.modalPresentationStyle = .fullScreen
-//        let imagePicker = UIImagePickerController()
-//        imagePicker.sourceType = .camera
-//        imagePicker.cameraCaptureMode = .photo
-//        imagePicker.cameraDevice = .front
-//        imagePicker.cameraFlashMode = .off
-//        imagePicker.allowsEditing = false
-//        imagePicker.delegate = self
-//
-//        // Allow more freedom in cropping
-//        imagePicker.showsCameraControls = true
-//        imagePicker.isNavigationBarHidden = false
-//        imagePicker.isToolbarHidden = false
-        present(imagePicker, animated: true)
+    @MainActor private func presentCustomCamera() {
+        let customCameraController = CustomCameraViewController()
+        customCameraController.delegate = self
+        customCameraController.modalPresentationStyle = .fullScreen
+        present(customCameraController, animated: true)
     }
 
     // MARK: - Actions
-    @objc private func sendPhotoButtonAction() {
+    @objc private func takePhotoButtonAction() {
         displayAlertTwoButtons(title: "Send Photo", message: "It's getting hot in here!", firstButtonText: "I changed my mind.", firstButtonStyle: .destructive, seconButtonText: "Take Photo!", secondButtonStyle: .default) {
             self.displaySimpleAlert(title: "Why?", message: ":(", okButtonText: "...")
         } secondButtonCompletion: {
-            self.presentImagePicker()
+            self.presentCustomCamera()
         }
     }
     @objc private func lastPhotoImageViewAction() {
@@ -225,24 +211,12 @@ extension PhotosViewController: UITableViewDelegate {
         }
     }
 }
-
-// MARK: - Image Picker
-extension PhotosViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        var image = UIImage(named: "person")
-        if let editedImage = info[.editedImage] as? UIImage {
-            image = editedImage
-        } else if let originalImage = info[.originalImage] as? UIImage {
-            image = originalImage
-        }
-        picker.dismiss(animated: true) { [weak self] in
-            guard let self else { return }
-            self.interactor.uploadPhoto(.init(image: image!))
-        }
+// MARK: - Custom Camera
+extension PhotosViewController: CustomCameraViewControllerDelegate {
+    func didSendPhoto(image: UIImage) {
+        self.interactor.uploadPhoto(.init(image: image))
     }
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        picker.dismiss(animated: true) {
-            self.displaySimpleAlert(title: "Why?", message: "Why did you cancel? Come on!", okButtonText: "...")
-        }
+    func didCancel() {
+        self.displaySimpleAlert(title: "Why?", message: "Why did you cancel? Come on!", okButtonText: "...")
     }
 }

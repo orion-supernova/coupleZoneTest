@@ -9,26 +9,110 @@ import UIKit
 import AVFoundation
 import SnapKit
 
-class CustomCameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
+protocol CustomCameraViewControllerDelegate: AnyObject {
+    func didSendPhoto(image: UIImage)
+    func didCancel()
+}
+
+class CustomCameraViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
+
+    // MARK: - UI Elements
+    private var mainContentView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .systemBackground
+        return view
+    }()
+    private lazy var captureButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setImage(UIImage(systemName: "circle"), for: .normal)
+        button.imageView?.contentMode = .scaleAspectFill
+        button.tintColor = .white
+        button.backgroundColor = .LilacClouds.lilac1
+        button.addTarget(self, action: #selector(captureButtonAction), for: .touchUpInside)
+        return button
+    }()
+    private lazy var switchCameraButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setImage(UIImage(systemName: "arrow.triangle.2.circlepath"), for: .normal)
+        button.tintColor = .white
+        button.backgroundColor = .LilacClouds.lilac1
+        button.addTarget(self, action: #selector(switchCameraButtonAction), for: .touchUpInside)
+        return button
+    }()
+    private lazy var closeCameraButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setImage(UIImage(systemName: "xmark"), for: .normal)
+        button.tintColor = .white
+        button.backgroundColor = .LilacClouds.lilac1
+        button.addTarget(self, action: #selector(closeCameraButtonAction), for: .touchUpInside)
+        return button
+    }()
+    private lazy var angleLensButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("1.0", for: .normal)
+        button.titleLabel?.font = .systemFont(ofSize: 12, weight: .regular)
+        button.tintColor = .white
+        button.backgroundColor = .LilacClouds.lilac1
+        button.isHidden = true
+        button.addTarget(self, action: #selector(angleLensButtonAction), for: .touchUpInside)
+        return button
+    }()
+    private lazy var sendPhotoButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setImage(UIImage(systemName: "paperplane"), for: .normal)
+        button.imageView?.contentMode = .scaleAspectFill
+        button.tintColor = .white
+        button.backgroundColor = .LilacClouds.lilac1
+        button.isHidden = true
+        button.addTarget(self, action: #selector(sendPhotoButtonAction), for: .touchUpInside)
+        return button
+    }()
+    private lazy var retakePhotoButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setImage(UIImage(systemName: "xmark"), for: .normal)
+        button.tintColor = .white
+        button.backgroundColor = .LilacClouds.lilac1
+        button.isHidden = true
+        button.addTarget(self, action: #selector(retakePhotoButtonAction), for: .touchUpInside)
+        return button
+    }()
+    private lazy var capturedImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFill
+        return imageView
+    }()
 
     // MARK: - Private Properties
     private var captureSession: AVCaptureSession!
     private var previewLayer: AVCaptureVideoPreviewLayer!
     private let borderLayer = CALayer()
-    private let captureButton = UIButton(type: .system)
-    private let switchCameraButton = UIButton(type: .system)
-    private let closeCameraButton = UIButton(type: .system)
-    private let angleLensButton = UIButton(type: .system)
-    private var capturedImage: UIImage?
     private var currentCamera: AVCaptureDevice?
-    private var photoTaken = false
-    let capturedImageView = UIImageView()
+
+    // MARK: - Public Properties
+    weak var delegate: CustomCameraViewControllerDelegate?
 
     // MARK: - Lifecycle
+    override func loadView() {
+        super.loadView()
+        self.view.backgroundColor = .systemBackground
+        setup()
+        layout()
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         setupCamera()
-        setupButtons()
+        view.subviews.forEach({ view.bringSubviewToFront($0) })
+        addGestureRecognizers()
+        enableNightModeIfLowLight()
+    }
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        captureButton.round(corners: .allCorners, radius: captureButton.frame.size.width/2)
+        switchCameraButton.round(corners: .allCorners, radius: switchCameraButton.frame.size.width/2)
+        closeCameraButton.round(corners: .allCorners, radius: closeCameraButton.frame.size.width/2)
+        angleLensButton.round(corners: .allCorners, radius: angleLensButton.frame.size.width/2)
+        sendPhotoButton.round(corners: .allCorners, radius: sendPhotoButton.frame.size.width/2)
+        retakePhotoButton.round(corners: .allCorners, radius: retakePhotoButton.frame.size.width/2)
     }
 
     // MARK: - Setup Camera
@@ -36,24 +120,27 @@ class CustomCameraViewController: UIViewController, AVCapturePhotoCaptureDelegat
         captureSession = AVCaptureSession()
         captureSession.sessionPreset = .photo
 
-        guard let captureDevice = AVCaptureDevice.default(for: .video),
-              let input = try? AVCaptureDeviceInput(device: captureDevice) else {
-            return
-        }
+        guard let cameraDevice = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .front) else { return }
+        guard let input = try? AVCaptureDeviceInput(device: cameraDevice) else { return }
 
-        currentCamera = captureDevice
-
+        // Add the new input to the session
         if captureSession.canAddInput(input) {
             captureSession.addInput(input)
         }
-
+        // Add an output for photo take action
         let photoOutput = AVCapturePhotoOutput()
+        photoOutput.isHighResolutionCaptureEnabled = true
         if captureSession.canAddOutput(photoOutput) {
             captureSession.addOutput(photoOutput)
         }
-
-        photoOutput.isHighResolutionCaptureEnabled = true
-
+        // Configure mirroring
+        if let photoOutput = captureSession.outputs.first as? AVCapturePhotoOutput {
+            if let connection = photoOutput.connection(with: .video),
+               connection.isVideoMirroringSupported {
+                connection.automaticallyAdjustsVideoMirroring = false
+                connection.isVideoMirrored = true
+            }
+        }
         previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
         previewLayer.videoGravity = .resizeAspectFill
         previewLayer.frame = view.layer.bounds
@@ -64,131 +151,193 @@ class CustomCameraViewController: UIViewController, AVCapturePhotoCaptureDelegat
         }
     }
 
-    // MARK: - Setup Buttons
-    private func setupButtons() {
-        setupCaptureButton()
-        setupSwitchCameraButton()
-        setupCloseCameraButton()
-        setupAngleLensButton()
-        switchCameraButtonTapped()
-        updateButtons()
-    }
-
-    private func setupCaptureButton() {
-        let buttonSize: CGFloat = 60.0
-        captureButton.setImage(UIImage(systemName: "circle"), for: .normal)
-        captureButton.imageView?.contentMode = .scaleAspectFill
-        captureButton.tintColor = .white
-        captureButton.backgroundColor = .LilacClouds.lilac1
-        captureButton.round(corners: .allCorners, radius: buttonSize/2)
-        captureButton.addTarget(self, action: #selector(captureButtonTapped), for: .touchUpInside)
+    // MARK: - Setup
+    @MainActor private func setup() {
         view.addSubview(captureButton)
+        view.addSubview(switchCameraButton)
+        view.addSubview(closeCameraButton)
+        view.addSubview(angleLensButton)
+        view.addSubview(sendPhotoButton)
+        view.addSubview(retakePhotoButton)
+    }
+    @MainActor private func layout() {
         captureButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-20)
-            make.size.equalTo(buttonSize)
+            make.size.equalTo(60)
         }
-    }
-
-    private func setupSwitchCameraButton() {
-        let buttonSize: CGFloat = 40.0
-        switchCameraButton.setImage(UIImage(systemName: "arrow.triangle.2.circlepath"), for: .normal)
-        switchCameraButton.tintColor = .white
-        switchCameraButton.backgroundColor = .LilacClouds.lilac1
-        switchCameraButton.layer.cornerRadius = buttonSize / 2
-        switchCameraButton.addTarget(self, action: #selector(switchCameraButtonTapped), for: .touchUpInside)
-        view.addSubview(switchCameraButton)
         switchCameraButton.snp.makeConstraints { make in
             make.centerY.equalTo(captureButton.snp.centerY)
             make.right.equalTo(-20)
-            make.size.equalTo(buttonSize)
+            make.size.equalTo(40)
         }
-    }
-
-    private func setupCloseCameraButton() {
-        let buttonSize: CGFloat = 30.0
-        closeCameraButton.setImage(UIImage(systemName: "xmark"), for: .normal)
-        closeCameraButton.tintColor = .white
-        closeCameraButton.backgroundColor = .LilacClouds.lilac1
-        closeCameraButton.layer.cornerRadius = buttonSize / 2
-        closeCameraButton.addTarget(self, action: #selector(closeCameraButtonTapped), for: .touchUpInside)
-        view.addSubview(closeCameraButton)
         closeCameraButton.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
             make.left.equalTo(20)
-            make.size.equalTo(buttonSize)
+            make.size.equalTo(30)
         }
-    }
-    private func setupAngleLensButton() {
-        let buttonSize: CGFloat = 30.0
-        angleLensButton.setTitle("1.0", for: .normal)
-        angleLensButton.titleLabel?.font = .systemFont(ofSize: 12, weight: .regular)
-//        angleLensButton.setImage(UIImage(systemName: "arrow.up.backward.and.arrow.down.forward.circle"), for: .normal)
-        angleLensButton.tintColor = .white
-        angleLensButton.backgroundColor = .LilacClouds.lilac1
-        angleLensButton.layer.cornerRadius = buttonSize / 2
-        angleLensButton.addTarget(self, action: #selector(switchToWideAngleLens), for: .touchUpInside)
-        view.addSubview(angleLensButton)
         angleLensButton.snp.makeConstraints { make in
             make.bottom.equalTo(captureButton.snp.top).offset(-20)
             make.centerX.equalToSuperview()
-            make.size.equalTo(buttonSize)
+            make.size.equalTo(30)
         }
-        updateLensButtonImage(for: .builtInWideAngleCamera)
-    }
-
-    // MARK: - Button Actions
-    @objc private func closeCameraButtonTapped() {
-        self.dismiss(animated: true)
-    }
-
-    @objc private func captureButtonTapped() {
-        if let photoOutput = captureSession.outputs.first as? AVCapturePhotoOutput {
-            let photoSettings = AVCapturePhotoSettings()
-            photoSettings.isAutoStillImageStabilizationEnabled = true
-            photoSettings.isHighResolutionPhotoEnabled = true
-            photoOutput.capturePhoto(with: photoSettings, delegate: self)
+        sendPhotoButton.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-20)
+            make.size.equalTo(60)
+        }
+        retakePhotoButton.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            make.left.equalTo(20)
+            make.size.equalTo(30)
         }
     }
+    // MARK: - Gesture(s)
+    private func addGestureRecognizers() {
+        // Double Tap
+        let doubleTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(doubleTapAction))
+        doubleTapGestureRecognizer.numberOfTapsRequired = 2
+        self.view.addGestureRecognizer(doubleTapGestureRecognizer)
+        // Single Tap
+        let singleTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(singleTapAction(_:)))
+        singleTapGestureRecognizer.numberOfTapsRequired = 1
+        self.view.addGestureRecognizer(singleTapGestureRecognizer)
+    }
+    @objc private func doubleTapAction() {
+        hideFocusIndicator()
+        switchCameraButtonAction()
+    }
+    @objc private func singleTapAction(_ gestureRecognizer: UITapGestureRecognizer) {
+        guard let currentInput = captureSession.inputs.first as? AVCaptureDeviceInput else { return }
+        let currentPosition = currentInput.device.position
+        guard currentPosition == .back else { return }
+        hideFocusIndicator()
+        let tapPoint = gestureRecognizer.location(in: self.view)
+        // Convert the tapPoint to a camera focus point
+        let focusPoint = CGPoint(x: tapPoint.x / previewLayer.bounds.size.width, y: tapPoint.y / previewLayer.bounds.size.height)
+        focus(with: .autoFocus, exposureMode: .autoExpose, at: focusPoint)
+    }
+    private func removeGestureRecognizers() {
+        if let gestureRecognizers = view.gestureRecognizers {
+            for recognizer in gestureRecognizers {
+                view.removeGestureRecognizer(recognizer)
+            }
+        }
+    }
 
-    @objc private func switchCameraButtonTapped() {
-        guard let currentInput = captureSession.inputs.first as? AVCaptureDeviceInput else {
+    // MARK: - Actions
+    @objc private func closeCameraButtonAction() {
+        if captureSession.isRunning {
+            captureSession.stopRunning()
+        }
+        self.dismiss(animated: true) { [weak self] in
+            guard let self else { return }
+            self.delegate?.didCancel()
+            print(captureSession.isRunning)
+        }
+    }
+    @objc private func captureButtonAction() {
+        guard let photoOutput = captureSession.outputs.first as? AVCapturePhotoOutput else { return }
+        if captureSession.canAddOutput(photoOutput) {
+            captureSession.addOutput(photoOutput)
+        }
+        let photoSettings = AVCapturePhotoSettings()
+        photoSettings.isAutoStillImageStabilizationEnabled = true
+        photoSettings.isHighResolutionPhotoEnabled = true
+        photoOutput.capturePhoto(with: photoSettings, delegate: self)
+        removeGestureRecognizers()
+    }
+    @objc private func sendPhotoButtonAction() {
+        guard let image = capturedImageView.image else {
+            displaySimpleAlert(title: "Error", message: "Please try again later.", okButtonText: "OK")
+            return
+        }
+        if captureSession.isRunning {
+            captureSession.stopRunning()
+        }
+        self.dismiss(animated: true) { [weak self] in
+            guard let self else { return }
+            self.delegate?.didSendPhoto(image: image)
+        }
+    }
+    @objc private func retakePhotoButtonAction() {
+        addGestureRecognizers()
+        self.capturedImageView.alpha = 1
+        UIView.animate(withDuration: 0.5, animations: {
+            self.capturedImageView.alpha = 0 // Fade out the image view
+        }) { _ in
+            self.capturedImageView.snp.removeConstraints()
+            self.capturedImageView.removeFromSuperview()
+            self.updateButtons(photoTaken: false)
+            self.capturedImageView.alpha = 1 // Reset the alpha for future display
+        }
+    }
+    // MARK: - Low Light
+    func enableNightModeIfLowLight() {
+        guard let device = AVCaptureDevice.default(for: .video) else {
             return
         }
 
+        do {
+            try device.lockForConfiguration()
+            defer { device.unlockForConfiguration() }
+
+            if device.isLowLightBoostSupported && device.isLowLightBoostEnabled {
+                // Low light detected, night mode is already enabled
+                print("Low light detected. Night mode is already enabled.")
+                return
+            }
+
+            if device.isLowLightBoostSupported {
+                // Low light detected, enabling night mode
+                device.automaticallyEnablesLowLightBoostWhenAvailable = true
+                print("Low light detected. Night mode enabled.")
+            } else {
+                print("Night mode not supported.")
+            }
+        } catch {
+            print("Error: \(error.localizedDescription)")
+        }
+    }
+
+
+    // MARK: - Switch Camera
+    @objc private func switchCameraButtonAction() {
+        guard let currentInput = captureSession.inputs.first as? AVCaptureDeviceInput else { return }
         let currentPosition = currentInput.device.position
         let newPosition: AVCaptureDevice.Position = (currentPosition == .back) ? .front : .back
-        angleLensButton.isHidden = newPosition == .front
 
-        // Find an available camera with the new position
-        if let newCamera = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: newPosition) {
+        // Animating the view transition on the main thread
+        DispatchQueue.main.async {
+            UIView.transition(with: self.view, duration: 0.6, options: .transitionFlipFromLeft) {
+                self.previewLayer.isHidden = true
+                self.angleLensButton.isHidden = newPosition == .front
+                // No changes needed here, only the view transition animation
+            } completion: { _ in
+                self.previewLayer.isHidden = false
+            }
+        }
+
+        // Performing camera configuration changes in the background
+        DispatchQueue.global().async {
+            // Find an available camera with the new position
+            guard let newCamera = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: newPosition) else { return }
+
             // Begin configuration changes
-            captureSession.beginConfiguration()
-
+            self.captureSession.beginConfiguration()
             // Remove the current input
-            captureSession.removeInput(currentInput)
+            self.captureSession.removeInput(currentInput)
 
             do {
                 let newInput = try AVCaptureDeviceInput(device: newCamera)
 
                 // Add the new input to the session
-                if captureSession.canAddInput(newInput) {
-                    captureSession.addInput(newInput)
-                }
-
-                // Configure mirroring based on the new camera position
-                for output in captureSession.outputs {
-                    guard let videoOutput = output as? AVCaptureVideoDataOutput,
-                          let connection = videoOutput.connection(with: .video) else { continue }
-
-                    if connection.isVideoMirroringSupported {
-                        connection.automaticallyAdjustsVideoMirroring = false
-                        connection.isVideoMirrored = (newPosition == .front)
-                    }
+                if self.captureSession.canAddInput(newInput) {
+                    self.captureSession.addInput(newInput)
                 }
 
                 // Configure photo output mirroring for front camera
-                if let photoOutput = captureSession.outputs.first as? AVCapturePhotoOutput {
+                if let photoOutput = self.captureSession.outputs.first as? AVCapturePhotoOutput {
                     if let connection = photoOutput.connection(with: .video),
                        connection.isVideoMirroringSupported {
                         connection.automaticallyAdjustsVideoMirroring = false
@@ -200,15 +349,15 @@ class CustomCameraViewController: UIViewController, AVCapturePhotoCaptureDelegat
             }
 
             // Commit the configuration changes
-            captureSession.commitConfiguration()
+            self.captureSession.commitConfiguration()
         }
     }
 
-    @objc private func switchToWideAngleLens() {
+//    // MARK: - Switch Lens
+    @objc private func angleLensButtonAction() {
         guard let currentInput = captureSession.inputs.first as? AVCaptureDeviceInput else {
             return
         }
-
         let lensTypes: [AVCaptureDevice.DeviceType] = [.builtInUltraWideCamera, .builtInWideAngleCamera, .builtInTelephotoCamera]
         let currentDeviceType = currentInput.device.deviceType
 
@@ -216,29 +365,47 @@ class CustomCameraViewController: UIViewController, AVCapturePhotoCaptureDelegat
         if let currentIndex = lensTypes.firstIndex(of: currentDeviceType) {
             let nextIndex = (currentIndex + 1) % lensTypes.count
             let nextDeviceType = lensTypes[nextIndex]
+            let _: Int = Int(currentInput.device.videoZoomFactor)
 
+            // Calculate the scale factor based on lens types
+            var scale: CGFloat = 1.0 // Default, no zoom effect
+//            switch currentDeviceType {
+//                case .builtInWideAngleCamera:
+//                    scale = 3.0
+//                case .builtInTelephotoCamera:
+//                    scale = 1/6
+//                case .builtInUltraWideCamera:
+//                    scale = 2
+//                default:
+//                    scale = 1
+//            }
+            UIView.animate(withDuration: 0.0, animations: {
+                self.previewLayer.setAffineTransform(CGAffineTransform(scaleX: scale, y: scale))
+            }) { _ in
+                self.switchToNextLens(currentInput: currentInput, nextDeviceType: nextDeviceType)
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.0) {
+
+                    self.updateLensButtonTitle(for: nextDeviceType)
+                }
+            }
+
+        }
+    }
+
+    private func switchToNextLens(currentInput: AVCaptureDeviceInput, nextDeviceType: AVCaptureDevice.DeviceType) {
+        DispatchQueue.global().async {
             if let newCamera = AVCaptureDevice.default(nextDeviceType, for: .video, position: currentInput.device.position) {
-                captureSession.beginConfiguration()
-                captureSession.removeInput(currentInput)
+                self.captureSession.beginConfiguration()
+                self.captureSession.removeInput(currentInput)
 
                 do {
                     let newInput = try AVCaptureDeviceInput(device: newCamera)
 
-                    if captureSession.canAddInput(newInput) {
-                        captureSession.addInput(newInput)
+                    if self.captureSession.canAddInput(newInput) {
+                        self.captureSession.addInput(newInput)
                     }
 
-                    for output in captureSession.outputs {
-                        guard let videoOutput = output as? AVCaptureVideoDataOutput,
-                              let connection = videoOutput.connection(with: .video) else { continue }
-
-                        if connection.isVideoMirroringSupported {
-                            connection.automaticallyAdjustsVideoMirroring = false
-                            connection.isVideoMirrored = (newCamera.position == .front)
-                        }
-                    }
-
-                    if let photoOutput = captureSession.outputs.first as? AVCapturePhotoOutput {
+                    if let photoOutput = self.captureSession.outputs.first as? AVCapturePhotoOutput {
                         if let connection = photoOutput.connection(with: .video),
                            connection.isVideoMirroringSupported {
                             connection.automaticallyAdjustsVideoMirroring = false
@@ -249,12 +416,75 @@ class CustomCameraViewController: UIViewController, AVCapturePhotoCaptureDelegat
                     print("Error creating AVCaptureDeviceInput: \(error.localizedDescription)")
                 }
 
-                captureSession.commitConfiguration()
-                updateLensButtonImage(for: nextDeviceType)
+                self.captureSession.commitConfiguration()
+
+                // Reset the transformation to its original state
+                DispatchQueue.main.async {
+                    UIView.animate(withDuration: 0.0) {
+                        self.previewLayer.setAffineTransform(.identity)
+                    }
+                }
             }
         }
     }
-    private func updateLensButtonImage(for deviceType: AVCaptureDevice.DeviceType) {
+    // MARK: - Focus
+    private func focus(with focusMode: AVCaptureDevice.FocusMode, exposureMode: AVCaptureDevice.ExposureMode, at point: CGPoint) {
+        guard let currentInput = captureSession.inputs.first as? AVCaptureDeviceInput else {
+            return
+        }
+
+        let device = currentInput.device
+
+        do {
+            try device.lockForConfiguration()
+
+            if device.isFocusPointOfInterestSupported && device.isFocusModeSupported(focusMode) {
+                device.focusPointOfInterest = point
+                device.focusMode = focusMode
+            }
+
+            if device.isExposurePointOfInterestSupported && device.isExposureModeSupported(exposureMode) {
+                device.exposurePointOfInterest = point
+                device.exposureMode = exposureMode
+            }
+
+            device.unlockForConfiguration()
+
+            // Show a focus indicator (e.g., an image or animation)
+            showFocusIndicator(at: point)
+
+            // Dispatch a delay to hide the focus indicator after 1 second
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                self.hideFocusIndicator()
+            }
+        } catch {
+            print("Failed to focus: \(error.localizedDescription)")
+        }
+    }
+
+    private func showFocusIndicator(at point: CGPoint) {
+        // Show your focus indicator (e.g., an image) at the specified point on the previewLayer
+        // You can animate its appearance or simply add it as a subview with a specific location
+        // For example:
+        let focusImage = FocusIndicatorImageView(image: UIImage(systemName: "camera.aperture"))
+        focusImage.center = CGPoint(x: point.x * previewLayer.bounds.width, y: point.y * previewLayer.bounds.height)
+        focusImage.frame.size = CGSize(width: 40, height: 40)
+        focusImage.tintColor = .LilacClouds.lilac1
+        view.addSubview(focusImage)
+    }
+
+    private func hideFocusIndicator() {
+        // Hide or remove the focus indicator after focusing
+        // For example:
+        for subview in view.subviews {
+            if let focusImage = subview as? FocusIndicatorImageView {
+                focusImage.removeFromSuperview()
+            }
+        }
+    }
+
+    // MARK: - Update Lens Button
+    private func updateLensButtonTitle(for deviceType: AVCaptureDevice.DeviceType) {
         var title = ""
         switch deviceType {
             case .builtInUltraWideCamera:
@@ -268,52 +498,40 @@ class CustomCameraViewController: UIViewController, AVCapturePhotoCaptureDelegat
         }
         angleLensButton.setTitle(title, for: .normal)
     }
-    private func updateButtons() {
+    // MARK: - Update All Buttons Configuration
+    private func updateButtons(photoTaken: Bool) {
+        captureButton.isHidden = photoTaken
+        closeCameraButton.isHidden = photoTaken
+        sendPhotoButton.isHidden = !photoTaken
+        retakePhotoButton.isHidden = !photoTaken
+
         if photoTaken {
-            captureButton.setImage(UIImage(systemName: "paperplane"), for: .normal)
-            captureButton.removeTarget(self, action: #selector(captureButtonTapped), for: .touchUpInside)
-            captureButton.addTarget(self, action: #selector(sendPhotoAction), for: .touchUpInside)
-
-            closeCameraButton.removeTarget(self, action: #selector(closeCameraButtonTapped), for: .touchUpInside)
-            closeCameraButton.addTarget(self, action: #selector(retakePhotoAction), for: .touchUpInside)
+            view.bringSubviewToFront(sendPhotoButton)
+            view.bringSubviewToFront(retakePhotoButton)
         } else {
-            captureButton.setImage(UIImage(systemName: "circle"), for: .normal)
-            captureButton.removeTarget(self, action: #selector(sendPhotoAction), for: .touchUpInside)
-            captureButton.addTarget(self, action: #selector(captureButtonTapped), for: .touchUpInside)
+            view.sendSubviewToBack(sendPhotoButton)
+            view.sendSubviewToBack(retakePhotoButton)
+        }
 
-            closeCameraButton.removeTarget(self, action: #selector(retakePhotoAction), for: .touchUpInside)
-            closeCameraButton.addTarget(self, action: #selector(closeCameraButtonTapped), for: .touchUpInside)
+    }
+    // MARK: - Show Taken Image
+    private func showTakenPhotoImageView() {
+        view.addSubview(capturedImageView)
+        capturedImageView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
         }
     }
-    @objc private func sendPhotoAction() {
-        displaySimpleAlert(title: "OK", message: "OK", okButtonText: "OK")
-    }
-    @objc private func retakePhotoAction() {
-        photoTaken = false
-        capturedImageView.snp.removeConstraints()
-        capturedImageView.removeFromSuperview()
-        capturedImageView.image = UIImage(systemName: "person")
-        setupCamera()
-        setupButtons()
-    }
+}
 
-
+extension CustomCameraViewController: AVCapturePhotoCaptureDelegate {
     // MARK: - Photo Taken
     func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: Error?) {
         if let imageData = photo.fileDataRepresentation(), let capturedImage = UIImage(data: imageData) {
             print("Image captured successfully!")
-            self.photoTaken = true
 
-            let capturedImageView = UIImageView()
             capturedImageView.image = capturedImage
-            capturedImageView.contentMode = .scaleAspectFill
-            view.addSubview(capturedImageView)
-            capturedImageView.snp.makeConstraints { make in
-                make.edges.equalToSuperview()
-            }
-            updateButtons()
-            view.bringSubviewToFront(self.captureButton)
-            view.bringSubviewToFront(self.closeCameraButton)
+            showTakenPhotoImageView()
+            updateButtons(photoTaken: true)
         } else {
             if let error = error {
                 print("Error capturing photo: \(error.localizedDescription)")
@@ -325,3 +543,5 @@ class CustomCameraViewController: UIViewController, AVCapturePhotoCaptureDelegat
 }
 
 extension CustomCameraViewController: Alertable {}
+
+class FocusIndicatorImageView: UIImageView { }
