@@ -37,4 +37,9 @@ enum HomeModels {
         }
         struct ViewModel {}
     }
+    enum SendLove {
+        struct Request { }
+        struct Response { let result: Result<Void, CustomMessageError> }
+        struct ViewModel {}
+    }
 }

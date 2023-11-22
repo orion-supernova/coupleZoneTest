@@ -11,6 +11,7 @@ import UIKit.UIImage
 protocol HomeWorker {
     func fetchData() async -> Result<HomeItem, RequestError>
     func uploadImage(_ image: UIImage) async -> Result<Void, CustomMessageError>
+    func sendLoveToPartner() async -> Result<Void, CustomMessageError>
 }
 
 final class HomeNetworkWorker: HomeWorker {
@@ -25,5 +26,8 @@ final class HomeNetworkWorker: HomeWorker {
     }
     func uploadImage(_ image: UIImage) async -> Result<Void, CustomMessageError> {
         return await homeServices.uploadPhoto(image)
+    }
+    func sendLoveToPartner() async -> Result<Void, CustomMessageError> {
+        return await homeServices.sendLoveToPartner()
     }
 }

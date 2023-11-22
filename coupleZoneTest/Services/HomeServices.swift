@@ -47,6 +47,20 @@ class HomeServices {
             return .failure(.init(message: "Something went wrong."))
         }
     }
+    func sendLoveToPartner() async -> Result<Void, CustomMessageError> {
+        do {
+            guard let userID = AppGlobal.shared.user?.id.uuidString else { return .failure(.init(message: "Something went wrong."))}
+            let partnerUserID = try await SensitiveData.supabase.database.from("users").select(columns: "partnerUserID", head: false).eq(column: "userID", value: userID).execute().underlyingResponse.data.convertDataToString().convertStringToDictionary()?["partnerUserID"] as? String ?? ""
+            guard !partnerUserID.isEmpty else { return .failure(.init(message: "Partner not found!"))}
+            let pushDevicesIDArray = try await SensitiveData.supabase.database.from("users").select(columns: "pushSubscriptionIDs", head: false).eq(column: "userID", value: partnerUserID).execute().underlyingResponse.data.convertDataToString().convertStringToDictionary()?["pushSubscriptionIDs"] as? [String] ?? []
+            let username = AppGlobal.shared.username ?? ""
+            OneSignalManager.shared.postNotification(to: pushDevicesIDArray, title: "Love Received!" , message: "\(username) sent you love!")
+            return .success(())
+        } catch let error {
+            print(error.localizedDescription)
+            return .failure(.init(message: error.localizedDescription))
+        }
+    }
     // MARK: - Private Methods
     private func getHomeID() async -> String {
         do {
