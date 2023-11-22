@@ -14,17 +14,11 @@ protocol HomeBusinessLogic {
     func sendLoveToPartner()
 }
 
-protocol HomeDataStore {
-    var homeItem: HomeItem? { get }
-}
-
-final class HomeInteractor: HomeBusinessLogic, HomeDataStore {
-    // MARK: Public Properties
-    var homeItem: HomeItem?
-
+final class HomeInteractor: HomeBusinessLogic {
     // MARK: Private Properties
     private let worker: HomeWorker
     private let presenter: HomePresentationLogic
+    private var partnerUsername: String?
 
     // MARK: Initializers
     init(presenter: HomePresentationLogic, worker: HomeWorker) {
@@ -39,14 +33,17 @@ final class HomeInteractor: HomeBusinessLogic, HomeDataStore {
     func fetchData(_ request: HomeModels.FetchData.Request) {
         Task {
             let result = await worker.fetchData()
-            DispatchQueue.main.async {
-                switch result {
-                    case .success(let homeItem):
-                        let viewModel = HomeModels.FetchData.ViewModel.init(displayModel: .init(model: homeItem))
+            switch result {
+                case .success(let homeItem):
+                    let homeModel = await setHomeModel(with: homeItem)
+                    let viewModel = HomeModels.FetchData.ViewModel.init(displayModel: .init(item: homeItem, model: homeModel))
+                    DispatchQueue.main.async {
                         self.presenter.presentData(viewModel, loadPhoto: request.fetchPhoto)
-                    case .failure:
+                    }
+                case .failure:
+                    DispatchQueue.main.async {
                         self.presenter.presentHomeNotExist()
-                }
+                    }
             }
         }
     }
@@ -82,5 +79,21 @@ final class HomeInteractor: HomeBusinessLogic, HomeDataStore {
     }
     @objc private func addUserToHomeSuccess() {
         fetchData(.init(fetchPhoto: true))
+    }
+    // MARK: - Private Methods
+    private func setHomeModel(with item: HomeItem) async -> HomeModels.FetchData.ViewModel.DisplayableModel {
+        await setPartnerUsername()
+        return .init(imageURLString: item.imageURLString, numberOfDays: 0, numberOfDaysInOrder: [0], partnerUsername: partnerUsername ?? "", username: AppGlobal.shared.username ?? "Anonymous")
+    }
+    private func setPartnerUsername() async {
+        do {
+            let result = await worker.getPartnerUsername()
+            switch result {
+                case .success(let partnerUsername):
+                    self.partnerUsername = partnerUsername
+                case .failure:
+                    break
+            }
+        }
     }
 }

@@ -48,6 +48,7 @@ class PhotosServices {
             let dict = ["imageURL": "\(urlString)", "username": username, "homeID": homeID]
             let updateTable = supabase.database.from("photosTimeline").upsert(values: dict)
             try await updateTable.execute()
+            await sendNotificationToPartner()
             return .success(())
         } catch let error {
             print(error.localizedDescription)
@@ -77,6 +78,17 @@ class PhotosServices {
         } catch let error {
             print(error.localizedDescription)
             return ""
+        }
+    }
+    private func sendNotificationToPartner() async {
+        do {
+            guard let userID = AppGlobal.shared.user?.id.uuidString else { return }
+            let username = await getUsername()
+            let partnerUserID = try await SensitiveData.supabase.database.from("users").select(columns: "partnerUserID", head: false).eq(column: "userID", value: userID).execute().underlyingResponse.data.convertDataToString().convertStringToDictionary()?["partnerUserID"] as? String ?? ""
+            let pushDevicesIDArray = try await SensitiveData.supabase.database.from("users").select(columns: "pushSubscriptionIDs", head: false).eq(column: "userID", value: partnerUserID).execute().underlyingResponse.data.convertDataToString().convertStringToDictionary()?["pushSubscriptionIDs"] as? [String] ?? []
+            OneSignalManager.shared.postNotification(to: pushDevicesIDArray, title: "Wow!", message: "\(username) has sent you a photo!")
+        } catch let error {
+            print(error.localizedDescription)
         }
     }
 }
