@@ -15,6 +15,7 @@ import SideMenu
     func displayError(with message: String)
     func displayImagePicker()
     func displaySuccessAfterPhotoUpload()
+    func displaySuccessAfterSendLove()
 }
 
 final class HomeViewController: UIViewController {
@@ -143,9 +144,7 @@ final class HomeViewController: UIViewController {
 
     // MARK: - Actions
     @objc private func sendLoveButtonAction() {
-        displaySimpleAlert(title: "Yes", message: "Love sent!", okButtonText: "OK") {
-            //
-        }
+        interactor.sendLoveToPartner()
     }
     @objc private func imageViewAction() {
         displayAlertTwoButtons(title: "Change Photo", message: "Do you want to change the photo?", firstButtonText: "Yes", firstButtonStyle: .default, seconButtonText: "Nope", secondButtonStyle: .cancel) {
@@ -219,7 +218,10 @@ extension HomeViewController: HomeDisplayLogic {
     }
     func displaySuccessAfterPhotoUpload() {
         interactor.fetchData(.init(fetchPhoto: true))
-        displaySimpleAlert(title: "Successs", message: "Photo changed successfully!", okButtonText: "OK")
+        displaySimpleAlert(title: "Success!", message: "Photo changed successfully!", okButtonText: "OK")
+    }
+    func displaySuccessAfterSendLove() {
+        displaySimpleAlert(title: "Success!", message: "Love sent!", okButtonText: "Yay!")
     }
 }
 
