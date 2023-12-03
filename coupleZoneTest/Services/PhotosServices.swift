@@ -48,11 +48,41 @@ class PhotosServices {
             let dict = ["imageURL": "\(urlString)", "username": username, "homeID": homeID]
             let updateTable = supabase.database.from("photosTimeline").upsert(values: dict)
             try await updateTable.execute()
-            await sendNotificationToPartner()
+            await sendNotificationToPartner(title: "Wow!", message: "\(username) has sent you a photo!", pushCategory: .timelinePhoto, notificationSoundString: "photo-notification.wav")
             return .success(())
         } catch let error {
             print(error.localizedDescription)
             return .failure(.generic)
+        }
+    }
+    
+    func getNotificationTime() async -> Result<String, CustomMessageError> {
+        do {
+            let homeID = await getHomeID()
+            let notificationTimestamp = try await SensitiveData.supabase.database.from("homes").select(columns: "photoNotificationTime", head: false).eq(column: "id", value: homeID).execute().underlyingResponse.data.convertDataToString().convertStringToDictionary()?["photoNotificationTime"] as? String ?? ""
+            return .success(notificationTimestamp)
+        } catch let error {
+            print(error.localizedDescription)
+            return .failure(.init(message: "Something went wrong"))
+        }
+    }
+    
+    func updateNotificationTime(_ time: String) async -> Result<String, CustomMessageError> {
+        do {
+            let homeID = await getHomeID()
+            let table = SensitiveData.supabase.database.from("homes").update(values: ["photoNotificationTime": time]).eq(column: "id", value: homeID)
+            try await table.execute()
+            print("Update Notification Time Success")
+            let newNotificationTimeWithTimeZoneResponse = await getNotificationTime()
+            var newTime = ""
+            if case let .success(time) = newNotificationTimeWithTimeZoneResponse {
+                newTime = time
+            }
+            await sendNotificationToPartner(title: "Your Photo Time Changed!", message: "Your Partner has changed the time of notification to \(newTime.convertStringToDate(receivedformat: "yyyy-MM-dd'T'HH:mm:ssZ", desiredFormat: "HH:mm"))!", pushCategory: .timeLinePhotoNotificationTimeUpdate, notificationSoundString: "guitar-notification.wav", data: ["time": time])
+            return .success(time)
+        } catch let error {
+            print(error.localizedDescription)
+            return .failure(.init(message: "Something went wrong."))
         }
     }
 
@@ -74,19 +104,19 @@ class PhotosServices {
             guard let userID = AppGlobal.shared.user?.id else { return "" }
             let userDict = try await SensitiveData.supabase.database.from("users").select(columns: "*", head: false).eq(column: "userID", value: userID).execute().underlyingResponse.data.convertDataToString().convertStringToDictionary()
             let idString = userDict?["homeID"] as? String ?? ""
+            print("DEBUG: ----- \(idString)", userDict)
             return idString
         } catch let error {
             print(error.localizedDescription)
             return ""
         }
     }
-    private func sendNotificationToPartner() async {
+    private func sendNotificationToPartner(title: String, message: String, pushCategory: PushNotificationIdentifiers.Category, notificationSoundString: String, data: [String: Any]? = nil) async {
         do {
             guard let userID = AppGlobal.shared.user?.id.uuidString else { return }
-            let username = await getUsername()
             let partnerUserID = try await SensitiveData.supabase.database.from("users").select(columns: "partnerUserID", head: false).eq(column: "userID", value: userID).execute().underlyingResponse.data.convertDataToString().convertStringToDictionary()?["partnerUserID"] as? String ?? ""
             let pushDevicesIDArray = try await SensitiveData.supabase.database.from("users").select(columns: "pushSubscriptionIDs", head: false).eq(column: "userID", value: partnerUserID).execute().underlyingResponse.data.convertDataToString().convertStringToDictionary()?["pushSubscriptionIDs"] as? [String] ?? []
-            OneSignalManager.shared.postNotification(to: pushDevicesIDArray, title: "Wow!", message: "\(username) has sent you a photo!")
+            OneSignalManager.shared.postNotification(to: pushDevicesIDArray, title: title, message: message, notificationSoundString: notificationSoundString, pushCategory: pushCategory, data: data)
         } catch let error {
             print(error.localizedDescription)
         }

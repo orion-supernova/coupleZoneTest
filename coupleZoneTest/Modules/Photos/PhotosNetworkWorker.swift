@@ -11,6 +11,8 @@ import UIKit.UIImage
 protocol PhotosWorker {
     func fetchData() async -> Result<[PhotosItem], RequestError>
     func uploadImage(_ image: UIImage) async -> Result<Void, RequestError>
+    func updateNotificationTime(_ time: String) async -> Result<String, CustomMessageError>
+    func getNotificationTime() async -> Result<String, CustomMessageError>
 }
 
 final class PhotosNetworkWorker: PhotosWorker {
@@ -25,5 +27,11 @@ final class PhotosNetworkWorker: PhotosWorker {
     }
     func uploadImage(_ image: UIImage) async -> Result<Void, RequestError> {
         return await PhotosServices.uploadPhoto(image)
+    }
+    func updateNotificationTime(_ time: String) async -> Result<String, CustomMessageError> {
+        return await PhotosServices.updateNotificationTime(time)
+    }
+    func getNotificationTime() async -> Result<String, CustomMessageError> {
+        return await PhotosServices.getNotificationTime()
     }
 }

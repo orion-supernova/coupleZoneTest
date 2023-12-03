@@ -6,3 +6,7 @@ coupleZoneTest.xcodeproj/project.xcworkspace/xcuserdata/muratcankoc.xcuserdatad/
 *.xcuserstate
 
 coupleZoneTest.xcodeproj/xcuserdata/muratcankoc.xcuserdatad/xcschemes/xcschememanagement.plist
+
+.DS_Store
+
+coupleZoneTest.xcodeproj/xcuserdata/mkoc.xcuserdatad/xcschemes/xcschememanagement.plist

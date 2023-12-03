@@ -12,6 +12,8 @@ import TOCropViewController
     func display(_ model: PhotosModels.FetchData.ViewModel)
     func displayError(_ errorString: String)
     func displaySuccessAfterPhotoUpload()
+    func displaySuccessAfterUpdateNotificationTime(_ model: PhotosModels.UpdateNotificationTime.ViewModel)
+    func displayNotificationTime(_ model: PhotosModels.GetNotificationTime.ViewModel)
 }
 
 class PhotosViewController: UIViewController {
@@ -117,6 +119,11 @@ class PhotosViewController: UIViewController {
         let takePhotoButton = UIBarButtonItem(image: UIImage(systemName: "flame"), style: .done, target: self, action: #selector(takePhotoButtonAction))
         navigationItem.rightBarButtonItems = [takePhotoButton]
         navigationItem.rightBarButtonItem?.tintColor = .monkeyBlue
+        let timeButton = UIBarButtonItem(image: UIImage(systemName: "clock"), style: .done, target: self, action: #selector(timeButtonAction))
+        navigationItem.rightBarButtonItems = [takePhotoButton]
+        navigationItem.rightBarButtonItem?.tintColor = .monkeyBlue
+        navigationItem.leftBarButtonItems = [timeButton]
+        navigationItem.leftBarButtonItem?.tintColor = .monkeyBlue
 
         let titleViewLabel : UILabel = {
             let label = UILabel()
@@ -133,7 +140,8 @@ class PhotosViewController: UIViewController {
         let indexPath = IndexPath(row: row, section: 0)
         timelineTableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
     }
-    @MainActor private func presentCustomCamera() {
+    // MARK: - Public Methods
+    @MainActor func presentCustomCamera() {
         let customCameraController = CustomCameraViewController()
         customCameraController.delegate = self
         customCameraController.modalPresentationStyle = .fullScreen
@@ -148,6 +156,97 @@ class PhotosViewController: UIViewController {
             self.presentCustomCamera()
         }
     }
+    @objc private func timeButtonAction() {
+        let alertController = UIAlertController(title: "\n\n\n\n\n\n\n\n", message: "\n\nChoose your time wisely!\nYou and your partner will be notified everyday!", preferredStyle: .actionSheet)
+
+        let picker = UIDatePicker()
+        picker.datePickerMode = .time
+        picker.preferredDatePickerStyle = .wheels
+        picker.minuteInterval = 1
+        picker.locale = Locale(identifier: "en_GB")
+        picker.frame = CGRect(x: 0, y: 0, width: alertController.view.frame.width - 20, height: 200)
+        
+        var hourToDisplay = 0
+        var minuteToDisplay = 0
+        
+        let dispatchGroup = DispatchGroup()
+        dispatchGroup.enter()
+        // Set the initial time with server data
+        interactor.getPhotoNotificationTime(.init()) { serverDateString in
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+
+
+            if let date = dateFormatter.date(from: serverDateString) {
+                dateFormatter.dateFormat = "HH:mm"
+                let convertedDateString = dateFormatter.string(from: date)
+
+                // Split the convertedDateString into hours and minutes
+                let components = convertedDateString.components(separatedBy: ":")
+                
+                if components.count == 2, let hours = Int(components[0]), let minutes = Int(components[1]) {
+                    print("Hours: \(hours), Minutes: \(minutes)")
+                    hourToDisplay = hours
+                    minuteToDisplay = minutes
+                } else {
+                    print("Invalid time string format")
+                }
+            } else {
+                print("Invalid date string format")
+            }
+            dispatchGroup.leave()
+        }
+        
+        dispatchGroup.notify(queue: .main) {
+            let calendar = Calendar.current
+            var components = DateComponents()
+            components.hour = hourToDisplay
+            components.minute = minuteToDisplay
+            picker.setDate(calendar.date(from: components)!, animated: true)
+
+            alertController.view.addSubview(picker)
+
+            let doneAction = UIAlertAction(title: "Done", style: .default) { _ in
+                let selectedTime = picker.date // Retrieve the selected date from the picker
+
+                // Get the current calendar and components
+                let calendar = Calendar.current
+                let currentYear = calendar.component(.year, from: Date())
+                let currentMonth = calendar.component(.month, from: Date())
+
+                // Extract time components from the selected time
+                let timeComponents = calendar.dateComponents([.hour, .minute, .second], from: selectedTime)
+
+                // Construct a new date with current year, month, and extracted time components
+                var updatedComponents = DateComponents()
+                updatedComponents.year = currentYear
+                updatedComponents.month = currentMonth
+                updatedComponents.hour = timeComponents.hour
+                updatedComponents.minute = timeComponents.minute
+                updatedComponents.second = timeComponents.second
+
+                if let updatedDate = calendar.date(from: updatedComponents) {
+                    let dateFormatter = DateFormatter()
+                    dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+
+                    let formattedTimeString = dateFormatter.string(from: updatedDate)
+                    print("Formatted time: \(formattedTimeString)")
+
+                    self.interactor.updatePhotoNotificationTime(.init(notificationTime: formattedTimeString))
+                } else {
+                    print("Error creating updated date")
+                }
+            }
+
+            alertController.addAction(doneAction)
+            alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+
+            self.present(alertController, animated: true, completion: nil)
+        }
+        
+        
+
+    }
     @objc private func lastPhotoImageViewAction() {
         guard let image = lastPhotoImageView.image else { return }
         let viewController = LastPhotoViewController(photo: image)
@@ -157,6 +256,7 @@ class PhotosViewController: UIViewController {
 
 // MARK: - Alertable
 extension PhotosViewController: Alertable {}
+
 
 // MARK: - Display Logic
 extension PhotosViewController: PhotosDisplayLogic {
@@ -184,6 +284,12 @@ extension PhotosViewController: PhotosDisplayLogic {
     func displaySuccessAfterPhotoUpload() {
         self.interactor.fetchData(.init())
         self.displaySimpleAlert(title: "Success", message: "", okButtonText: "Olley!")
+    }
+    func displaySuccessAfterUpdateNotificationTime(_ model: PhotosModels.UpdateNotificationTime.ViewModel) {
+        self.displaySimpleAlert(title: "Okay!", message: "You will be notified everyday at \(model.notificationTime)!", okButtonText: "Yay!")
+    }
+    func displayNotificationTime(_ model: PhotosModels.GetNotificationTime.ViewModel) {
+        //
     }
 }
 

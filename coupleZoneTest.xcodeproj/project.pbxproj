@@ -59,6 +59,11 @@
 		54A675942ADFE51C00743B1A /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A675932ADFE51C00743B1A /* ChatViewController.swift */; };
 		54A675972ADFEDBC00743B1A /* Alertable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A675962ADFEDBC00743B1A /* Alertable.swift */; };
 		54AD10172B0B9C5200C4BF78 /* TOCropViewController in Frameworks */ = {isa = PBXBuildFile; productRef = 54AD10162B0B9C5200C4BF78 /* TOCropViewController */; };
+		742243E72B19134500977E8C /* AlertHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 742243E62B19134500977E8C /* AlertHelper.swift */; };
+		7426FF302B19549700AAA111 /* photo-notification.wav in Resources */ = {isa = PBXBuildFile; fileRef = 7426FF2F2B19549700AAA111 /* photo-notification.wav */; };
+		7439AF0E2B153A07008A844F /* Zoomy in Frameworks */ = {isa = PBXBuildFile; productRef = 7439AF0D2B153A07008A844F /* Zoomy */; };
+		749BA2932B19432C00687CB7 /* guitar-notification.wav in Resources */ = {isa = PBXBuildFile; fileRef = 749BA2912B19432C00687CB7 /* guitar-notification.wav */; };
+		749BA2942B19432C00687CB7 /* romantic-notification.wav in Resources */ = {isa = PBXBuildFile; fileRef = 749BA2922B19432C00687CB7 /* romantic-notification.wav */; };
 		74BDA94E2AE05DD5006164D7 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 74BDA94D2AE05DD5006164D7 /* SnapKit */; };
 		74BDA9512AE089FA006164D7 /* APIResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74BDA9502AE089FA006164D7 /* APIResponse.swift */; };
 		74BDA9542AE09574006164D7 /* RequestError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74BDA9532AE09574006164D7 /* RequestError.swift */; };
@@ -152,6 +157,10 @@
 		54A675912ADFE51300743B1A /* NotesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesViewController.swift; sourceTree = "<group>"; };
 		54A675932ADFE51C00743B1A /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		54A675962ADFEDBC00743B1A /* Alertable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alertable.swift; sourceTree = "<group>"; };
+		742243E62B19134500977E8C /* AlertHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertHelper.swift; sourceTree = "<group>"; };
+		7426FF2F2B19549700AAA111 /* photo-notification.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "photo-notification.wav"; sourceTree = "<group>"; };
+		749BA2912B19432C00687CB7 /* guitar-notification.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "guitar-notification.wav"; sourceTree = "<group>"; };
+		749BA2922B19432C00687CB7 /* romantic-notification.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "romantic-notification.wav"; sourceTree = "<group>"; };
 		74BDA9502AE089FA006164D7 /* APIResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIResponse.swift; sourceTree = "<group>"; };
 		74BDA9532AE09574006164D7 /* RequestError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestError.swift; sourceTree = "<group>"; };
 		74BDA9552AE095D2006164D7 /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
@@ -183,6 +192,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				54566E292B07CAB7003B33A2 /* OneSignalFramework in Frameworks */,
+				7439AF0E2B153A07008A844F /* Zoomy in Frameworks */,
 				54566E272B07CAB7003B33A2 /* OneSignalExtension in Frameworks */,
 				544F5C612AEFE9BD001D3243 /* Lottie in Frameworks */,
 				54566E2B2B07CAB7003B33A2 /* OneSignalInAppMessages in Frameworks */,
@@ -322,6 +332,9 @@
 		54A6756A2ADFD96A00743B1A /* coupleZoneTest */ = {
 			isa = PBXGroup;
 			children = (
+				7426FF2F2B19549700AAA111 /* photo-notification.wav */,
+				749BA2912B19432C00687CB7 /* guitar-notification.wav */,
+				749BA2922B19432C00687CB7 /* romantic-notification.wav */,
 				54566E452B091B8F003B33A2 /* Models */,
 				548FD3942AEC60FC0098D6AA /* AppGlobal.swift */,
 				548FD3962AEC768B0098D6AA /* coupleZoneTest.entitlements */,
@@ -435,6 +448,7 @@
 			isa = PBXGroup;
 			children = (
 				54A675962ADFEDBC00743B1A /* Alertable.swift */,
+				742243E62B19134500977E8C /* AlertHelper.swift */,
 				544F5C5D2AEFE999001D3243 /* LottieHUD.swift */,
 				5477E9872B0115E300348A37 /* CustomCameraViewController.swift */,
 			);
@@ -525,6 +539,7 @@
 				54566E2C2B07CAB7003B33A2 /* OneSignalLocation */,
 				54566E412B08E1C7003B33A2 /* SideMenu */,
 				54AD10162B0B9C5200C4BF78 /* TOCropViewController */,
+				7439AF0D2B153A07008A844F /* Zoomy */,
 			);
 			productName = coupleZoneTest;
 			productReference = 54A675682ADFD96A00743B1A /* coupleZoneTest.app */;
@@ -567,6 +582,7 @@
 				54566E252B07CAB7003B33A2 /* XCRemoteSwiftPackageReference "OneSignal-XCFramework" */,
 				54566E402B08E1C7003B33A2 /* XCRemoteSwiftPackageReference "SideMenu" */,
 				54AD10152B0B9C5100C4BF78 /* XCRemoteSwiftPackageReference "TOCropViewController" */,
+				7439AF0C2B153A07008A844F /* XCRemoteSwiftPackageReference "Zoomy" */,
 			);
 			productRefGroup = 54A675692ADFD96A00743B1A /* Products */;
 			projectDirPath = "";
@@ -591,11 +607,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				54A675782ADFD96B00743B1A /* LaunchScreen.storyboard in Resources */,
+				749BA2942B19432C00687CB7 /* romantic-notification.wav in Resources */,
 				544F5C5C2AED9DA6001D3243 /* test.riv in Resources */,
 				544F5C382AED9257001D3243 /* coupleKissing.riv in Resources */,
+				749BA2932B19432C00687CB7 /* guitar-notification.wav in Resources */,
 				54A675752ADFD96B00743B1A /* Assets.xcassets in Resources */,
 				544F5C652AEFEC87001D3243 /* loading.json in Resources */,
 				548FD38C2AEC4E870098D6AA /* loginAnimation.riv in Resources */,
+				7426FF302B19549700AAA111 /* photo-notification.wav in Resources */,
 				54A675732ADFD96A00743B1A /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -627,6 +646,7 @@
 				74E110482AE0454800C58295 /* InternetConnectionStatusProvider.swift in Sources */,
 				544F5C712AF0035E001D3243 /* PhotosModels.swift in Sources */,
 				544F5C692AF001AB001D3243 /* PhotosPresenter.swift in Sources */,
+				742243E72B19134500977E8C /* AlertHelper.swift in Sources */,
 				54566E3F2B08A219003B33A2 /* OneSignalManager.swift in Sources */,
 				74BDA9562AE095D2006164D7 /* StringExtension.swift in Sources */,
 				74BDA9512AE089FA006164D7 /* APIResponse.swift in Sources */,
@@ -875,7 +895,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = coupleZoneTest/coupleZoneTest.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 37TC2VKVJ6;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = coupleZoneTest/Info.plist;
@@ -893,7 +913,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2;
+				MARKETING_VERSION = 1.2.9;
 				PRODUCT_BUNDLE_IDENTIFIER = com.walhallaa.coupleZoneTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -912,7 +932,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = coupleZoneTest/coupleZoneTest.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 37TC2VKVJ6;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = coupleZoneTest/Info.plist;
@@ -930,7 +950,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2;
+				MARKETING_VERSION = 1.2.9;
 				PRODUCT_BUNDLE_IDENTIFIER = com.walhallaa.coupleZoneTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -1022,6 +1042,14 @@
 				minimumVersion = 2.6.1;
 			};
 		};
+		7439AF0C2B153A07008A844F /* XCRemoteSwiftPackageReference "Zoomy" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/lvnkmn/Zoomy.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.0;
+			};
+		};
 		74BDA94C2AE05DD5006164D7 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
@@ -1093,6 +1121,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 54AD10152B0B9C5100C4BF78 /* XCRemoteSwiftPackageReference "TOCropViewController" */;
 			productName = TOCropViewController;
+		};
+		7439AF0D2B153A07008A844F /* Zoomy */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7439AF0C2B153A07008A844F /* XCRemoteSwiftPackageReference "Zoomy" */;
+			productName = Zoomy;
 		};
 		74BDA94D2AE05DD5006164D7 /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;

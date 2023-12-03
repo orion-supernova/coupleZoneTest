@@ -81,11 +81,9 @@ class PhotosTableViewCell: UITableViewCell {
 
     // MARK: - Public Methods
     func configure(with model: DisplayableModel) {
-        photoImageView.setImage(urlString: model.imageURLString) {
-            //
-        }
         usernameLabel.text = model.usernameString
         uploadTimeLabel.text = getDateStringForUploadTime(from: model.uploadTimeString)
+        photoImageView.setImage(urlString: model.imageURLString, placeholder: UIImage(systemName:"icloud.slash"))
     }
 
     // MARK: - Private Methods

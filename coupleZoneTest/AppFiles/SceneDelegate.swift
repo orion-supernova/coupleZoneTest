@@ -77,13 +77,23 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 }
 
 extension SceneDelegate {
-    func navigateFromAuth() {
+    func navigateFromAuth(selectedIndex: Int? = 0, isDailyPhotoAction: Bool = false) {
         Task {
             do {
                 LottieHUD.shared.showWithoutDelay()
                 let session = try await SensitiveData.supabase.auth.session
                 print(session)
-                window?.rootViewController = tabController
+                DispatchQueue.main.async {
+                    self.window?.rootViewController = self.tabController
+                    self.tabController?.selectedIndex = selectedIndex ?? 0
+                    if isDailyPhotoAction {
+                        if let secondNavController = self.tabController?.viewControllers?[1] as? UINavigationController,
+                           let photosViewController = secondNavController.viewControllers.first as? PhotosViewController {
+                            photosViewController.presentCustomCamera()
+                        }
+                    }
+                }
+
                 LottieHUD.shared.dismiss()
             } catch {
                 window?.rootViewController = LoginViewController()

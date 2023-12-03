@@ -30,4 +30,17 @@ extension String {
         }
         return nil
     }
+    func convertStringToDate(receivedformat: String, desiredFormat: String) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = receivedformat
+
+        if let date = dateFormatter.date(from: self) {
+            dateFormatter.dateFormat = desiredFormat
+            let convertedDateString = dateFormatter.string(from: date)
+            return convertedDateString
+        } else {
+            print("Invalid time string format")
+            return ""
+        }
+    }
 }

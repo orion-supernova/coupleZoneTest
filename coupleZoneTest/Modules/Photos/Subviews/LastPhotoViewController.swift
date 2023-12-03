@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import Zoomy
 
 class LastPhotoViewController: UIViewController {
 
@@ -48,6 +49,7 @@ class LastPhotoViewController: UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+        addZoombehavior(for: imageView, settings: .defaultSettings)
     }
 
     // MARK: - Setup

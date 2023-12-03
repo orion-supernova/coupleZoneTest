@@ -48,6 +48,16 @@ class CreateOrJoinRoomViewController: UIViewController {
         button.addTarget(self, action: #selector(joinHomeButtonAction), for: .touchUpInside)
         return button
     }()
+    private lazy var logoutButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("Logout", for: .normal)
+        button.setTitleColor(.LilacClouds.lilac1, for: .normal)
+        button.titleLabel?.font = .systemFont(ofSize: 14, weight: .semibold)
+        button.addBorder(borderColor: .LilacClouds.lilac1, borderWidth: 1)
+        button.round(corners: .allCorners, radius: 4)
+        button.addTarget(self, action: #selector(logoutButtonAction), for: .touchUpInside)
+        return button
+    }()
     // MARK: - Lifecycle
     override func loadView() {
         super.loadView()
@@ -66,6 +76,7 @@ class CreateOrJoinRoomViewController: UIViewController {
         mainContentView.addSubview(infoLabel)
         mainContentView.addSubview(createHomeButton)
         mainContentView.addSubview(joinHomeButton)
+        mainContentView.addSubview(logoutButton)
     }
     private func layout() {
         mainContentView.snp.makeConstraints { make in
@@ -89,6 +100,11 @@ class CreateOrJoinRoomViewController: UIViewController {
         }
         joinHomeButton.snp.makeConstraints { make in
             make.top.equalTo(createHomeButton.snp.bottom).offset(10)
+            make.horizontalEdges.equalToSuperview()
+            make.height.equalTo(30)
+        }
+        logoutButton.snp.makeConstraints { make in
+            make.bottom.equalTo(-20)
             make.horizontalEdges.equalToSuperview()
             make.height.equalTo(30)
         }
@@ -126,6 +142,19 @@ class CreateOrJoinRoomViewController: UIViewController {
                             LottieHUD.shared.dismiss()
                             self.displaySimpleAlert(title: "Error", message: error.localizedDescription, okButtonText: "OK")
                     }
+                }
+            }
+        }
+    }
+    @objc private func logoutButtonAction() {
+        AuthManager.shared.signOut { result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success:
+                    guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene, let sceneDelegate = windowScene.delegate as? SceneDelegate else { return }
+                    sceneDelegate.navigateFromAuth()
+                case .failure(let error):
+                    self.displaySimpleAlert(title: "Error", message: error.localizedDescription, okButtonText: "OK")
                 }
             }
         }

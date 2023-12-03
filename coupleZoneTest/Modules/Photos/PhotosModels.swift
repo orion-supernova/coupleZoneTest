@@ -32,4 +32,24 @@ enum PhotosModels {
         }
         struct ViewModel {}
     }
+    enum UpdateNotificationTime {
+        struct Request {
+            let notificationTime: String
+        }
+        struct Response {
+            let result: Result<String, CustomMessageError>
+        }
+        struct ViewModel {
+            let notificationTime: String
+        }
+    }
+    enum GetNotificationTime {
+        struct Request { }
+        struct Response {
+            let result: Result<String, CustomMessageError>
+        }
+        struct ViewModel {
+            let notificationTime: String
+        }
+    }
 }

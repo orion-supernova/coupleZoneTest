@@ -11,6 +11,8 @@ import UIKit.UIImage
 protocol PhotosBusinessLogic {
     func fetchData(_ request: PhotosModels.FetchData.Request)
     func uploadPhoto(_ request: PhotosModels.UploadPhoto.Request)
+    func updatePhotoNotificationTime(_ request: PhotosModels.UpdateNotificationTime.Request)
+    func getPhotoNotificationTime(_ request: PhotosModels.GetNotificationTime.Request, completion: @escaping (String) -> Void)
 }
 
 protocol PhotosDataStore {
@@ -18,8 +20,7 @@ protocol PhotosDataStore {
 }
 
 final class PhotosInteractor: PhotosBusinessLogic, PhotosDataStore {
-    // MARK: Public Properties
-
+    
     // MARK: Private Properties
     private let worker: PhotosWorker
     private let presenter: PhotosPresentationLogic
@@ -48,6 +49,31 @@ final class PhotosInteractor: PhotosBusinessLogic, PhotosDataStore {
             LottieHUD.shared.dismiss()
             DispatchQueue.main.async {
                 self.presenter.presentUploadPhoto(response)
+            }
+        }
+    }
+    
+    func updatePhotoNotificationTime(_ request: PhotosModels.UpdateNotificationTime.Request) {
+        Task {
+            let result = await worker.updateNotificationTime(request.notificationTime)
+            let response = PhotosModels.UpdateNotificationTime.Response.init(result: result)
+            DispatchQueue.main.async {
+                self.presenter.presentUpdateNotificationTime(response)
+            }
+        }
+    }
+    
+    func getPhotoNotificationTime(_ request: PhotosModels.GetNotificationTime.Request, completion: @escaping (String) -> Void) {
+        Task {
+            let result = await worker.getNotificationTime()
+            let response = PhotosModels.GetNotificationTime.Response.init(result: result)
+            switch response.result {
+            case .success(let time):
+                DispatchQueue.main.async {
+                    completion(time)
+                }
+            case .failure:
+                break
             }
         }
     }
