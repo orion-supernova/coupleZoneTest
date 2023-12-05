@@ -8,6 +8,7 @@
 import UIKit
 import OneSignalFramework
 import UserNotifications
+import IQKeyboardManagerSwift
 
 enum PushNotificationIdentifiers {
     enum Category: String {
@@ -15,6 +16,7 @@ enum PushNotificationIdentifiers {
         case timelinePhoto
         case dailyPhotoNotification
         case love
+        case note
     }
     enum Action: String {
         case viewAction
@@ -41,6 +43,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             print("User accepted notifications: \(accepted)")
         }, fallbackToSettings: true)
         OneSignal.Notifications.addClickListener(self)
+
+        IQKeyboardManager.shared.enable = true
+        IQKeyboardManager.shared.enableAutoToolbar = false
 
         return true
     }
@@ -122,6 +127,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let dailyPhotoNotificationCategory = UNNotificationCategory(
                 identifier: PushNotificationIdentifiers.Category.dailyPhotoNotification.rawValue,
                 actions: [dailyPhotoSendAction, dismissAction],
+                intentIdentifiers: [],
+                options: [])
+            let noteCategory = UNNotificationCategory(
+                identifier: PushNotificationIdentifiers.Category.note.rawValue,
+                actions: [viewAction, dismissAction],
                 intentIdentifiers: [],
                 options: [])
 

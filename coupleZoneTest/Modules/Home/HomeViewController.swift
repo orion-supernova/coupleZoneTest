@@ -138,7 +138,6 @@ final class HomeViewController: UIViewController {
     }
 
     private func fetchData(request: HomeModels.FetchData.Request) {
-        LottieHUD.shared.show()
         interactor.fetchData(request)
     }
 
@@ -157,9 +156,7 @@ final class HomeViewController: UIViewController {
 //        let viewController = SettingsViewController()
 //        present(viewController, animated: true)
         displayAlertTwoButtons(title: "Sign Out?", message: "Dou you want to signout?", firstButtonText: "Yeap", firstButtonStyle: .destructive, seconButtonText: "Nope, I thought it was settings.", secondButtonStyle: .default) {
-            LottieHUD.shared.showWithoutDelay()
             AuthManager.shared.signOut { result in
-                LottieHUD.shared.dismiss()
                 switch result {
                     case .success(_):
                         DispatchQueue.main.async {
@@ -191,18 +188,14 @@ extension HomeViewController: HomeDisplayLogic {
         self.welcomeLabel.attributedText = getAttributedWelcomeMessage(username: displayModel.username, partnerName: displayModel.partnerUsername, numberOfDays: displayModel.numberOfDays, numberOfDaysInOrder: displayModel.numberOfDaysInOrder)
         if loadPhoto {
             self.imageView.setImage(urlString: displayModel.imageURLString) {
-                LottieHUD.shared.dismiss()
             }
         } else {
-            LottieHUD.shared.dismiss()
         }
     }
     func displayError(with message: String) {
-        LottieHUD.shared.dismiss()
         displaySimpleAlert(title: "Error", message: message, okButtonText: "OK")
     }
     func displayHomeNotExist() {
-        LottieHUD.shared.dismiss()
         let viewController = CreateOrJoinRoomViewController()
         viewController.modalPresentationStyle = .fullScreen
         self.present(viewController, animated: true)

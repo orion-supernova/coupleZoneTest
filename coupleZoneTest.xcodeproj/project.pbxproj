@@ -38,6 +38,17 @@
 		5477E9862B010E9100348A37 /* UITableViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5477E9852B010E9100348A37 /* UITableViewExtension.swift */; };
 		5477E9882B0115E300348A37 /* CustomCameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5477E9872B0115E300348A37 /* CustomCameraViewController.swift */; };
 		5477E9912B036B6300348A37 /* MessageKit in Frameworks */ = {isa = PBXBuildFile; productRef = 5477E9902B036B6300348A37 /* MessageKit */; };
+		548B1AB02B1D159B00527B8F /* NotesPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 548B1AAB2B1D159B00527B8F /* NotesPresenter.swift */; };
+		548B1AB12B1D159B00527B8F /* NotesWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 548B1AAC2B1D159B00527B8F /* NotesWorker.swift */; };
+		548B1AB22B1D159B00527B8F /* NotesModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 548B1AAD2B1D159B00527B8F /* NotesModels.swift */; };
+		548B1AB32B1D159B00527B8F /* NotesBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 548B1AAE2B1D159B00527B8F /* NotesBuilder.swift */; };
+		548B1AB42B1D159B00527B8F /* NotesInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 548B1AAF2B1D159B00527B8F /* NotesInteractor.swift */; };
+		548B1AB62B1D15D900527B8F /* NotesServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 548B1AB52B1D15D900527B8F /* NotesServices.swift */; };
+		548B1AB82B1D163700527B8F /* NoteItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 548B1AB72B1D163700527B8F /* NoteItem.swift */; };
+		548B1ABB2B1D17AE00527B8F /* NotesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 548B1ABA2B1D17AE00527B8F /* NotesTableViewCell.swift */; };
+		548B1ABF2B1D1C0E00527B8F /* NoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 548B1ABE2B1D1C0E00527B8F /* NoteViewController.swift */; };
+		548B1AC12B1D31EF00527B8F /* NoteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 548B1AC02B1D31EF00527B8F /* NoteTableViewCell.swift */; };
+		548B1AC42B1E35CD00527B8F /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 548B1AC32B1E35CD00527B8F /* IQKeyboardManagerSwift */; };
 		548FD3852AEC314E0098D6AA /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 548FD3842AEC314E0098D6AA /* LoginViewController.swift */; };
 		548FD3872AEC38D60098D6AA /* SensitiveData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 548FD3862AEC38D60098D6AA /* SensitiveData.swift */; };
 		548FD38A2AEC4D5D0098D6AA /* RiveRuntime in Frameworks */ = {isa = PBXBuildFile; productRef = 548FD3892AEC4D5D0098D6AA /* RiveRuntime */; };
@@ -59,6 +70,7 @@
 		54A675942ADFE51C00743B1A /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A675932ADFE51C00743B1A /* ChatViewController.swift */; };
 		54A675972ADFEDBC00743B1A /* Alertable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A675962ADFEDBC00743B1A /* Alertable.swift */; };
 		54AD10172B0B9C5200C4BF78 /* TOCropViewController in Frameworks */ = {isa = PBXBuildFile; productRef = 54AD10162B0B9C5200C4BF78 /* TOCropViewController */; };
+		54C89BA32B1F2582004C6205 /* typewriter-notification.wav in Resources */ = {isa = PBXBuildFile; fileRef = 54C89BA22B1F2582004C6205 /* typewriter-notification.wav */; };
 		742243E72B19134500977E8C /* AlertHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 742243E62B19134500977E8C /* AlertHelper.swift */; };
 		7426FF302B19549700AAA111 /* photo-notification.wav in Resources */ = {isa = PBXBuildFile; fileRef = 7426FF2F2B19549700AAA111 /* photo-notification.wav */; };
 		7439AF0E2B153A07008A844F /* Zoomy in Frameworks */ = {isa = PBXBuildFile; productRef = 7439AF0D2B153A07008A844F /* Zoomy */; };
@@ -135,6 +147,16 @@
 		5477E9832B00FE7700348A37 /* LastPhotoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastPhotoViewController.swift; sourceTree = "<group>"; };
 		5477E9852B010E9100348A37 /* UITableViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableViewExtension.swift; sourceTree = "<group>"; };
 		5477E9872B0115E300348A37 /* CustomCameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCameraViewController.swift; sourceTree = "<group>"; };
+		548B1AAB2B1D159B00527B8F /* NotesPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesPresenter.swift; sourceTree = "<group>"; };
+		548B1AAC2B1D159B00527B8F /* NotesWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesWorker.swift; sourceTree = "<group>"; };
+		548B1AAD2B1D159B00527B8F /* NotesModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesModels.swift; sourceTree = "<group>"; };
+		548B1AAE2B1D159B00527B8F /* NotesBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesBuilder.swift; sourceTree = "<group>"; };
+		548B1AAF2B1D159B00527B8F /* NotesInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesInteractor.swift; sourceTree = "<group>"; };
+		548B1AB52B1D15D900527B8F /* NotesServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesServices.swift; sourceTree = "<group>"; };
+		548B1AB72B1D163700527B8F /* NoteItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteItem.swift; sourceTree = "<group>"; };
+		548B1ABA2B1D17AE00527B8F /* NotesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesTableViewCell.swift; sourceTree = "<group>"; };
+		548B1ABE2B1D1C0E00527B8F /* NoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteViewController.swift; sourceTree = "<group>"; };
+		548B1AC02B1D31EF00527B8F /* NoteTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteTableViewCell.swift; sourceTree = "<group>"; };
 		548FD3842AEC314E0098D6AA /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		548FD3862AEC38D60098D6AA /* SensitiveData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensitiveData.swift; sourceTree = "<group>"; };
 		548FD38B2AEC4E870098D6AA /* loginAnimation.riv */ = {isa = PBXFileReference; lastKnownFileType = file; path = loginAnimation.riv; sourceTree = "<group>"; };
@@ -157,6 +179,7 @@
 		54A675912ADFE51300743B1A /* NotesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesViewController.swift; sourceTree = "<group>"; };
 		54A675932ADFE51C00743B1A /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		54A675962ADFEDBC00743B1A /* Alertable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alertable.swift; sourceTree = "<group>"; };
+		54C89BA22B1F2582004C6205 /* typewriter-notification.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "typewriter-notification.wav"; sourceTree = "<group>"; };
 		742243E62B19134500977E8C /* AlertHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertHelper.swift; sourceTree = "<group>"; };
 		7426FF2F2B19549700AAA111 /* photo-notification.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "photo-notification.wav"; sourceTree = "<group>"; };
 		749BA2912B19432C00687CB7 /* guitar-notification.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "guitar-notification.wav"; sourceTree = "<group>"; };
@@ -198,6 +221,7 @@
 				54566E2B2B07CAB7003B33A2 /* OneSignalInAppMessages in Frameworks */,
 				74BDA94E2AE05DD5006164D7 /* SnapKit in Frameworks */,
 				548FD38A2AEC4D5D0098D6AA /* RiveRuntime in Frameworks */,
+				548B1AC42B1E35CD00527B8F /* IQKeyboardManagerSwift in Frameworks */,
 				54566E2D2B07CAB7003B33A2 /* OneSignalLocation in Frameworks */,
 				5477E9912B036B6300348A37 /* MessageKit in Frameworks */,
 				74E1103D2AE040F700C58295 /* Kingfisher in Frameworks */,
@@ -265,6 +289,32 @@
 			children = (
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		548B1AB92B1D17A400527B8F /* Subviews */ = {
+			isa = PBXGroup;
+			children = (
+				548B1ABD2B1D1BF000527B8F /* Note */,
+				548B1ABC2B1D1BE600527B8F /* Cell */,
+			);
+			path = Subviews;
+			sourceTree = "<group>";
+		};
+		548B1ABC2B1D1BE600527B8F /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				548B1ABA2B1D17AE00527B8F /* NotesTableViewCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		548B1ABD2B1D1BF000527B8F /* Note */ = {
+			isa = PBXGroup;
+			children = (
+				548B1ABE2B1D1C0E00527B8F /* NoteViewController.swift */,
+				548B1AC02B1D31EF00527B8F /* NoteTableViewCell.swift */,
+			);
+			path = Note;
 			sourceTree = "<group>";
 		};
 		548FD3832AEC311D0098D6AA /* LoginRegister */ = {
@@ -335,12 +385,12 @@
 				7426FF2F2B19549700AAA111 /* photo-notification.wav */,
 				749BA2912B19432C00687CB7 /* guitar-notification.wav */,
 				749BA2922B19432C00687CB7 /* romantic-notification.wav */,
+				54C89BA22B1F2582004C6205 /* typewriter-notification.wav */,
 				54566E452B091B8F003B33A2 /* Models */,
 				548FD3942AEC60FC0098D6AA /* AppGlobal.swift */,
 				548FD3962AEC768B0098D6AA /* coupleZoneTest.entitlements */,
 				54A675802ADFD9A100743B1A /* Storyboards */,
 				54A6757F2ADFD99200743B1A /* AppFiles */,
-				74E110442AE044F500C58295 /* Services */,
 				74E110452AE044FC00C58295 /* Networking */,
 				54A675822ADFDA0800743B1A /* Modules */,
 				54A675952ADFEDB300743B1A /* Utils */,
@@ -400,6 +450,7 @@
 			children = (
 				54566E4D2B0A766B003B33A2 /* CreateOrJoinRoomViewController */,
 				549E525F2AE024BA00857FF5 /* Settings */,
+				74E1104B2AE04B1300C58295 /* HomeServices.swift */,
 				74E1102D2AE0384500C58295 /* HomeBuilder.swift */,
 				54A6756F2ADFD96A00743B1A /* HomeViewController.swift */,
 				74E1102F2AE038E100C58295 /* HomePresenter.swift */,
@@ -416,6 +467,7 @@
 			isa = PBXGroup;
 			children = (
 				5477E97C2B00E44800348A37 /* Subviews */,
+				544F5C742AF003A2001D3243 /* PhotosServices.swift */,
 				544F5C662AEFF122001D3243 /* PhotosBuilder.swift */,
 				54A6758F2ADFE50800743B1A /* PhotosViewController.swift */,
 				544F5C682AF001AB001D3243 /* PhotosPresenter.swift */,
@@ -431,7 +483,15 @@
 		54A6758D2ADFE4C400743B1A /* Notes */ = {
 			isa = PBXGroup;
 			children = (
+				548B1AB92B1D17A400527B8F /* Subviews */,
+				548B1AB52B1D15D900527B8F /* NotesServices.swift */,
+				548B1AB72B1D163700527B8F /* NoteItem.swift */,
+				548B1AAD2B1D159B00527B8F /* NotesModels.swift */,
 				54A675912ADFE51300743B1A /* NotesViewController.swift */,
+				548B1AAE2B1D159B00527B8F /* NotesBuilder.swift */,
+				548B1AAF2B1D159B00527B8F /* NotesInteractor.swift */,
+				548B1AAC2B1D159B00527B8F /* NotesWorker.swift */,
+				548B1AAB2B1D159B00527B8F /* NotesPresenter.swift */,
 			);
 			path = Notes;
 			sourceTree = "<group>";
@@ -461,15 +521,6 @@
 				74BDA9502AE089FA006164D7 /* APIResponse.swift */,
 			);
 			path = Data;
-			sourceTree = "<group>";
-		};
-		74E110442AE044F500C58295 /* Services */ = {
-			isa = PBXGroup;
-			children = (
-				74E1104B2AE04B1300C58295 /* HomeServices.swift */,
-				544F5C742AF003A2001D3243 /* PhotosServices.swift */,
-			);
-			path = Services;
 			sourceTree = "<group>";
 		};
 		74E110452AE044FC00C58295 /* Networking */ = {
@@ -540,6 +591,7 @@
 				54566E412B08E1C7003B33A2 /* SideMenu */,
 				54AD10162B0B9C5200C4BF78 /* TOCropViewController */,
 				7439AF0D2B153A07008A844F /* Zoomy */,
+				548B1AC32B1E35CD00527B8F /* IQKeyboardManagerSwift */,
 			);
 			productName = coupleZoneTest;
 			productReference = 54A675682ADFD96A00743B1A /* coupleZoneTest.app */;
@@ -583,6 +635,7 @@
 				54566E402B08E1C7003B33A2 /* XCRemoteSwiftPackageReference "SideMenu" */,
 				54AD10152B0B9C5100C4BF78 /* XCRemoteSwiftPackageReference "TOCropViewController" */,
 				7439AF0C2B153A07008A844F /* XCRemoteSwiftPackageReference "Zoomy" */,
+				548B1AC22B1E35CD00527B8F /* XCRemoteSwiftPackageReference "IQKeyboardManager" */,
 			);
 			productRefGroup = 54A675692ADFD96A00743B1A /* Products */;
 			projectDirPath = "";
@@ -607,6 +660,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				54A675782ADFD96B00743B1A /* LaunchScreen.storyboard in Resources */,
+				54C89BA32B1F2582004C6205 /* typewriter-notification.wav in Resources */,
 				749BA2942B19432C00687CB7 /* romantic-notification.wav in Resources */,
 				544F5C5C2AED9DA6001D3243 /* test.riv in Resources */,
 				544F5C382AED9257001D3243 /* coupleKissing.riv in Resources */,
@@ -638,7 +692,9 @@
 				74E1103A2AE03EFA00C58295 /* HomeItem.swift in Sources */,
 				54566E472B091B96003B33A2 /* User.swift in Sources */,
 				74E1104A2AE0455300C58295 /* ReachabilitySwift.swift in Sources */,
+				548B1AB82B1D163700527B8F /* NoteItem.swift in Sources */,
 				74E110382AE03D0D00C58295 /* HomeModels.swift in Sources */,
+				548B1AB12B1D159B00527B8F /* NotesWorker.swift in Sources */,
 				5477E9882B0115E300348A37 /* CustomCameraViewController.swift in Sources */,
 				54A675922ADFE51300743B1A /* NotesViewController.swift in Sources */,
 				74E110432AE042AE00C58295 /* CollectionExtension.swift in Sources */,
@@ -650,6 +706,7 @@
 				54566E3F2B08A219003B33A2 /* OneSignalManager.swift in Sources */,
 				74BDA9562AE095D2006164D7 /* StringExtension.swift in Sources */,
 				74BDA9512AE089FA006164D7 /* APIResponse.swift in Sources */,
+				548B1AB02B1D159B00527B8F /* NotesPresenter.swift in Sources */,
 				54566E442B08F55D003B33A2 /* NotificationExtension.swift in Sources */,
 				544F5C6D2AF00303001D3243 /* PhotosRouter.swift in Sources */,
 				74BDA9542AE09574006164D7 /* RequestError.swift in Sources */,
@@ -659,14 +716,17 @@
 				74E110412AE0426500C58295 /* UIViewExtension.swift in Sources */,
 				544F5C672AEFF122001D3243 /* PhotosBuilder.swift in Sources */,
 				54A6756C2ADFD96A00743B1A /* AppDelegate.swift in Sources */,
+				548B1ABF2B1D1C0E00527B8F /* NoteViewController.swift in Sources */,
 				548FD3912AEC5D4C0098D6AA /* SignInWithAppleHelper.swift in Sources */,
 				548FD3952AEC60FC0098D6AA /* AppGlobal.swift in Sources */,
 				549E525E2AE0101500857FF5 /* UIColorExtension.swift in Sources */,
 				54566E4A2B0A5D1B003B33A2 /* RoomConfigViewController.swift in Sources */,
 				74E1104C2AE04B1300C58295 /* HomeServices.swift in Sources */,
 				54A6756E2ADFD96A00743B1A /* SceneDelegate.swift in Sources */,
+				548B1AB32B1D159B00527B8F /* NotesBuilder.swift in Sources */,
 				548FD3932AEC5D890098D6AA /* AuthManager.swift in Sources */,
 				74E110342AE0398C00C58295 /* HomeInteractor.swift in Sources */,
+				548B1AC12B1D31EF00527B8F /* NoteTableViewCell.swift in Sources */,
 				54A675972ADFEDBC00743B1A /* Alertable.swift in Sources */,
 				74E110362AE03A6900C58295 /* HomeRouter.swift in Sources */,
 				544F5C6F2AF0034E001D3243 /* PhotosInteractor.swift in Sources */,
@@ -675,6 +735,8 @@
 				548FD3872AEC38D60098D6AA /* SensitiveData.swift in Sources */,
 				544F5C752AF003A2001D3243 /* PhotosServices.swift in Sources */,
 				74E1103F2AE0416C00C58295 /* UIImageViewExtension.swift in Sources */,
+				548B1AB42B1D159B00527B8F /* NotesInteractor.swift in Sources */,
+				548B1AB62B1D15D900527B8F /* NotesServices.swift in Sources */,
 				54566E4C2B0A62AF003B33A2 /* DataExtension.swift in Sources */,
 				549E52612AE024C700857FF5 /* SettingsViewController.swift in Sources */,
 				544F5C5E2AEFE999001D3243 /* LottieHUD.swift in Sources */,
@@ -683,6 +745,8 @@
 				5477E9842B00FE7700348A37 /* LastPhotoViewController.swift in Sources */,
 				74E110302AE038E100C58295 /* HomePresenter.swift in Sources */,
 				544F5C732AF0036F001D3243 /* PhotosItem.swift in Sources */,
+				548B1ABB2B1D17AE00527B8F /* NotesTableViewCell.swift in Sources */,
+				548B1AB22B1D159B00527B8F /* NotesModels.swift in Sources */,
 				548FD3852AEC314E0098D6AA /* LoginViewController.swift in Sources */,
 				74E110322AE0394800C58295 /* HomeNetworkWorker.swift in Sources */,
 			);
@@ -913,7 +977,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2.9;
+				MARKETING_VERSION = 1.2.10;
 				PRODUCT_BUNDLE_IDENTIFIER = com.walhallaa.coupleZoneTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -950,7 +1014,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2.9;
+				MARKETING_VERSION = 1.2.10;
 				PRODUCT_BUNDLE_IDENTIFIER = com.walhallaa.coupleZoneTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -1026,6 +1090,14 @@
 				minimumVersion = 4.2.0;
 			};
 		};
+		548B1AC22B1E35CD00527B8F /* XCRemoteSwiftPackageReference "IQKeyboardManager" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/hackiftekhar/IQKeyboardManager.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.5.16;
+			};
+		};
 		548FD3882AEC4D5D0098D6AA /* XCRemoteSwiftPackageReference "rive-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/rive-app/rive-ios";
@@ -1062,8 +1134,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/supabase/supabase-swift.git";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.3.0;
+				kind = exactVersion;
+				version = 0.3.0;
 			};
 		};
 		74E1103B2AE040F700C58295 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
@@ -1111,6 +1183,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 5477E98F2B036B6300348A37 /* XCRemoteSwiftPackageReference "MessageKit" */;
 			productName = MessageKit;
+		};
+		548B1AC32B1E35CD00527B8F /* IQKeyboardManagerSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 548B1AC22B1E35CD00527B8F /* XCRemoteSwiftPackageReference "IQKeyboardManager" */;
+			productName = IQKeyboardManagerSwift;
 		};
 		548FD3892AEC4D5D0098D6AA /* RiveRuntime */ = {
 			isa = XCSwiftPackageProductDependency;

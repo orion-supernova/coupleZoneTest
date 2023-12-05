@@ -8,18 +8,19 @@
 import UIKit
 
 public protocol Alertable: UIViewController {
-    func displaySimpleAlert(title: String, message: String, okButtonText: String, completion: (() -> Void)?)
+    func displaySimpleAlert(title: String, message: String, okButtonText: String, tintColor: UIColor?, completion: (() -> Void)?)
     func displayAlertTwoButtons(title: String, message: String, firstButtonText: String, firstButtonStyle: UIAlertAction.Style, seconButtonText: String, secondButtonStyle: UIAlertAction.Style, firstButtonCompletion: (() -> Void)?, secondButtonCompletion: (() -> Void)?)
 }
 
 public extension Alertable {
 
-    @MainActor func displaySimpleAlert(title: String, message: String, okButtonText: String, completion: (() -> Void)? = nil) {
+    @MainActor func displaySimpleAlert(title: String, message: String, okButtonText: String, tintColor: UIColor? = nil, completion: (() -> Void)? = nil) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let okAction = UIAlertAction(title: okButtonText, style: .default) { _ in
             completion?()
         }
         alertController.addAction(okAction)
+        alertController.view.tintColor = tintColor
         present(alertController, animated: true)
     }
     @MainActor func displayAlertTwoButtons(title: String, message: String, firstButtonText: String, firstButtonStyle: UIAlertAction.Style, seconButtonText: String, secondButtonStyle: UIAlertAction.Style, firstButtonCompletion: (() -> Void)? = nil, secondButtonCompletion: (() -> Void)? = nil) {
@@ -34,7 +35,7 @@ public extension Alertable {
         alertController.addAction(secondButtonAction)
         present(alertController, animated: true)
     }
-    @MainActor func displayAlertWithTextfield(title: String, message: String, okButtonText: String, cancelButtonText: String, placeholder: String? = nil, completion: @escaping (String) -> Void) {
+    @MainActor func displayAlertWithTextfield(title: String, message: String, okButtonText: String, cancelButtonText: String, placeholder: String? = nil, tintColor: UIColor? = nil, completion: @escaping (String) -> Void) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alertController.addTextField { textfield in
             textfield.placeholder = placeholder
@@ -48,6 +49,7 @@ public extension Alertable {
         let cancelButtonAction = UIAlertAction(title: cancelButtonText, style: .cancel)
         alertController.addAction(okButtonAction)
         alertController.addAction(cancelButtonAction)
+        alertController.view.tintColor = tintColor
         present(alertController, animated: true)
     }
 }
