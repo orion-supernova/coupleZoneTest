@@ -23,7 +23,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let tabController = self.tabController
         let vc0 = UINavigationController(rootViewController: HomeBuilder.build())
         let vc1 = UINavigationController(rootViewController: PhotosBuilder.build())
-        let vc2 = UINavigationController(rootViewController: NotesViewController())
+        let vc2 = UINavigationController(rootViewController: NotesBuilder.build())
         let vc3 = UINavigationController(rootViewController: ChatViewController())
         tabController?.viewControllers = [vc0, vc1, vc2, vc3]
         tabController?.selectedIndex = 0

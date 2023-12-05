@@ -78,11 +78,14 @@ class PhotosViewController: UIViewController {
         super.loadView()
         setup()
         layout()
-        configureNavigationBar()
     }
     override func viewDidLoad() {
         super.viewDidLoad()
         LottieHUD.shared.show()
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        configureNavigationBar()
         interactor.fetchData(.init())
     }
     // MARK: - Setup
