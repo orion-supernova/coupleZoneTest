@@ -71,6 +71,7 @@
 		54A675972ADFEDBC00743B1A /* Alertable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A675962ADFEDBC00743B1A /* Alertable.swift */; };
 		54AD10172B0B9C5200C4BF78 /* TOCropViewController in Frameworks */ = {isa = PBXBuildFile; productRef = 54AD10162B0B9C5200C4BF78 /* TOCropViewController */; };
 		54C89BA32B1F2582004C6205 /* typewriter-notification.wav in Resources */ = {isa = PBXBuildFile; fileRef = 54C89BA22B1F2582004C6205 /* typewriter-notification.wav */; };
+		54EEA7722B1F63A20076B2AF /* UIApplicationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54EEA7712B1F63A20076B2AF /* UIApplicationExtension.swift */; };
 		742243E72B19134500977E8C /* AlertHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 742243E62B19134500977E8C /* AlertHelper.swift */; };
 		7426FF302B19549700AAA111 /* photo-notification.wav in Resources */ = {isa = PBXBuildFile; fileRef = 7426FF2F2B19549700AAA111 /* photo-notification.wav */; };
 		7439AF0E2B153A07008A844F /* Zoomy in Frameworks */ = {isa = PBXBuildFile; productRef = 7439AF0D2B153A07008A844F /* Zoomy */; };
@@ -180,6 +181,7 @@
 		54A675932ADFE51C00743B1A /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		54A675962ADFEDBC00743B1A /* Alertable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alertable.swift; sourceTree = "<group>"; };
 		54C89BA22B1F2582004C6205 /* typewriter-notification.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "typewriter-notification.wav"; sourceTree = "<group>"; };
+		54EEA7712B1F63A20076B2AF /* UIApplicationExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplicationExtension.swift; sourceTree = "<group>"; };
 		742243E62B19134500977E8C /* AlertHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertHelper.swift; sourceTree = "<group>"; };
 		7426FF2F2B19549700AAA111 /* photo-notification.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "photo-notification.wav"; sourceTree = "<group>"; };
 		749BA2912B19432C00687CB7 /* guitar-notification.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "guitar-notification.wav"; sourceTree = "<group>"; };
@@ -348,6 +350,7 @@
 				548FD38D2AEC58CA0098D6AA /* UIViewControllerExtension.swift */,
 				5477E9852B010E9100348A37 /* UITableViewExtension.swift */,
 				54566E4B2B0A62AF003B33A2 /* DataExtension.swift */,
+				54EEA7712B1F63A20076B2AF /* UIApplicationExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -702,6 +705,7 @@
 				74E110482AE0454800C58295 /* InternetConnectionStatusProvider.swift in Sources */,
 				544F5C712AF0035E001D3243 /* PhotosModels.swift in Sources */,
 				544F5C692AF001AB001D3243 /* PhotosPresenter.swift in Sources */,
+				54EEA7722B1F63A20076B2AF /* UIApplicationExtension.swift in Sources */,
 				742243E72B19134500977E8C /* AlertHelper.swift in Sources */,
 				54566E3F2B08A219003B33A2 /* OneSignalManager.swift in Sources */,
 				74BDA9562AE095D2006164D7 /* StringExtension.swift in Sources */,
@@ -792,6 +796,7 @@
 				INFOPLIST_FILE = OneSignalNotificationServiceExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = OneSignalNotificationServiceExtension;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -817,6 +822,7 @@
 				INFOPLIST_FILE = OneSignalNotificationServiceExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = OneSignalNotificationServiceExtension;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -884,7 +890,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -941,7 +947,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -977,7 +983,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2.10;
+				MARKETING_VERSION = 1.2.12;
 				PRODUCT_BUNDLE_IDENTIFIER = com.walhallaa.coupleZoneTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -1014,7 +1020,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2.10;
+				MARKETING_VERSION = 1.2.12;
 				PRODUCT_BUNDLE_IDENTIFIER = com.walhallaa.coupleZoneTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -1134,8 +1140,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/supabase/supabase-swift.git";
 			requirement = {
-				kind = exactVersion;
-				version = 0.3.0;
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
 			};
 		};
 		74E1103B2AE040F700C58295 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {

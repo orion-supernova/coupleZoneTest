@@ -165,7 +165,7 @@ class CreateOrJoinRoomViewController: UIViewController {
     private func getHomeID() async -> String {
         do {
             guard let userID = AppGlobal.shared.user?.id else { return "" }
-            let userDict = try await SensitiveData.supabase.database.from("users").select(columns: "*", head: false).eq(column: "userID", value: userID).execute().underlyingResponse.data.convertDataToString().convertStringToDictionary()
+            let userDict = try await SensitiveData.supabase.database.from("users").select("*", head: false).eq("userID", value: userID).execute().data.convertDataToString().convertStringToDictionary()
             let idString = userDict?["homeID"] as? String ?? ""
             return idString
         } catch let error {
@@ -188,11 +188,9 @@ class CreateOrJoinRoomViewController: UIViewController {
             let homeID = await self.getHomeID()
             guard let userIDString = AppGlobal.shared.user?.id.uuidString else { return }
             let dict = ["id": homeID, "anniversary_date": dateString]
-            let homeTable = SensitiveData.supabase.database.from("homes").upsert(values: dict)
-            try await homeTable.execute()
+            try await SensitiveData.supabase.database.from("homes").upsert(dict).execute()
             let partnerIDs: [String] = [userIDString]
-            let updateTable = SensitiveData.supabase.database.from("homes").update(values: ["partnerUserIDs": partnerIDs]).eq(column: "id", value: homeID)
-            try await updateTable.execute()
+            try await SensitiveData.supabase.database.from("homes").update(["partnerUserIDs": partnerIDs]).eq("id", value: homeID).execute()
             print("create A New Home Success")
             self.dismiss(animated: true)
         }
@@ -256,7 +254,7 @@ class CreateOrJoinRoomViewController: UIViewController {
     private func checkIfUserHasAHome() async -> Bool {
         do {
             guard let userID = AppGlobal.shared.user?.id.uuidString else { return true }
-            let homeIDString = try await SensitiveData.supabase.database.from("users").select(columns: "homeID", head: false).eq(column: "userID", value: userID).execute().underlyingResponse.data.convertDataToString().convertStringToDictionary()?["homeID"] as? String ?? ""
+            let homeIDString = try await SensitiveData.supabase.database.from("users").select("homeID").eq("userID", value: userID).execute().data.convertDataToString().convertStringToDictionary()?["homeID"] as? String ?? ""
             let usersHomeExists = await checkIfHomeExists(with: homeIDString)
             guard usersHomeExists == false else { return true }
             return false
@@ -270,7 +268,7 @@ class CreateOrJoinRoomViewController: UIViewController {
     /// - Returns: true if the home exists. Returns false if home doesn't exist or some error occured.
     private func checkIfHomeExists(with idString: String) async -> Bool {
         do {
-            let homeDict = try await SensitiveData.supabase.database.from("homes").select(columns: "*", head: false).eq(column: "id", value: idString).execute().underlyingResponse.data.convertDataToString().convertStringToDictionary()
+            let homeDict = try await SensitiveData.supabase.database.from("homes").select("*", head: false).eq("id", value: idString).execute().data.convertDataToString().convertStringToDictionary()
             guard homeDict != nil else { return false }
             return true
         } catch let error {
@@ -304,11 +302,11 @@ class CreateOrJoinRoomViewController: UIViewController {
                 }
                 let partnerID = partnerIDsOfTheRoom.first ?? ""
                 partnerIDsOfTheRoom.append(userID)
-                try await SensitiveData.supabase.database.from("homes").update(values: ["partnerUserIDs": partnerIDsOfTheRoom]).eq(column: "id", value: homeID) .execute()
+                try await SensitiveData.supabase.database.from("homes").update(["partnerUserIDs": partnerIDsOfTheRoom]).eq("id", value: homeID) .execute()
                 // Update User's Home ID and Partner ID
-                try await SensitiveData.supabase.database.from("users").update(values: ["homeID": homeID, "partnerUserID": partnerID]).eq(column: "userID", value: userID).execute()
+                try await SensitiveData.supabase.database.from("users").update(["homeID": homeID, "partnerUserID": partnerID]).eq("userID", value: userID).execute()
                 // Update Partner's Partner ID
-                try await SensitiveData.supabase.database.from("users").update(values: ["partnerUserID": userID]).eq(column: "userID", value: partnerID).execute()
+                try await SensitiveData.supabase.database.from("users").update(["partnerUserID": userID]).eq("userID", value: partnerID).execute()
                 completion(.success("Successfully connected you to the home with your partner."))
             } catch let error {
                 completion(.failure(.init(message: error.localizedDescription)))
@@ -320,7 +318,7 @@ class CreateOrJoinRoomViewController: UIViewController {
     /// - Returns: All ids of the partners inside a home.
     private func getPartnerIDsForHome(with homeID: String) async -> [String]? {
         do {
-            let homePartnerIDs = try await SensitiveData.supabase.database.from("homes").select(columns: "partnerUserIDs", head: false).eq(column: "id", value: homeID).execute().underlyingResponse.data.convertDataToString().convertStringToDictionary()?["partnerUserIDs"] as? [String]
+            let homePartnerIDs = try await SensitiveData.supabase.database.from("homes").select("partnerUserIDs").eq("id", value: homeID).execute().data.convertDataToString().convertStringToDictionary()?["partnerUserIDs"] as? [String]
             return homePartnerIDs
         } catch let error {
             print(error.localizedDescription)

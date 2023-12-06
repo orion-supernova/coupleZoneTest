@@ -59,7 +59,7 @@ import SnapKit
 
     // MARK: - Private Functions
     private func createHUD() {
-        guard let window = UIApplication.shared.keyWindow else { return }
+        guard let window = UIApplication.shared.keyWindoww else { return }
 
         window.isUserInteractionEnabled = false
         self.containerView.addSubview(self.animationView)
@@ -94,7 +94,7 @@ import SnapKit
     }
 
     private func cleanHUD() {
-        guard let window = UIApplication.shared.keyWindow else { return }
+        guard let window = UIApplication.shared.keyWindoww else { return }
 
         messageLabel.text               = nil
         window.isUserInteractionEnabled = true

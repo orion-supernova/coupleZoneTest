@@ -144,7 +144,7 @@ class SettingsViewController: UIViewController {
     private func changeUsername(with username: String, completion: @escaping () -> Void) {
         Task {
             guard let userEmail = AppGlobal.shared.user?.email else { return }
-            try await SensitiveData.supabase.database.from("users").update(values: ["username": username]).eq(column: "email", value: userEmail).execute()
+            try await SensitiveData.supabase.database.from("users").update(["username": username]).eq("email", value: userEmail).execute()
             AppGlobal.shared.username = username
             completion()
         }
@@ -181,7 +181,7 @@ class SettingsViewController: UIViewController {
         Task {
             LottieHUD.shared.show()
             let homeID = await getHomeID()
-            let homeDict = try await SensitiveData.supabase.database.from("homes").select(columns: "*", head: false).eq(column: "id", value: homeID).execute().underlyingResponse.data.convertDataToString().convertStringToDictionary()
+            let homeDict = try await SensitiveData.supabase.database.from("homes").select("*", head: false).eq("id", value: homeID).execute().data.convertDataToString().convertStringToDictionary()
             if homeDict == nil {
                 let button = UIButton(type: .system)
                 button.setTitle("Connect your home", for: .normal)
@@ -202,7 +202,7 @@ class SettingsViewController: UIViewController {
     private func getHomeID() async -> String {
         do {
             guard let userID = AppGlobal.shared.user?.id else { return "" }
-            let userDict = try await SensitiveData.supabase.database.from("users").select(columns: "*", head: false).eq(column: "userID", value: userID).execute().underlyingResponse.data.convertDataToString().convertStringToDictionary()
+            let userDict = try await SensitiveData.supabase.database.from("users").select("*", head: false).eq("userID", value: userID).execute().data.convertDataToString().convertStringToDictionary()
             let idString = userDict?["homeID"] as? String ?? ""
             return idString
         } catch let error {
@@ -223,8 +223,7 @@ class SettingsViewController: UIViewController {
                 return
             }
             let homeID = await self.getHomeID()
-            let updateTable = SensitiveData.supabase.database.from("homes").update(values: ["anniversary_date": dateToPut]).eq(column: "id", value: homeID)
-            try await updateTable.execute()
+            try await SensitiveData.supabase.database.from("homes").update(["anniversary_date": dateToPut]).eq("id", value: homeID).execute()
             print("Change Anniversary Date Success")
             LottieHUD.shared.dismiss()
             completion()
@@ -255,7 +254,7 @@ class SettingsViewController: UIViewController {
     private func getAnniversaryText() async -> String {
         do {
             let homeID = await getHomeID()
-            let anniversaryDict = try await SensitiveData.supabase.database.from("homes").select(columns: "anniversary_date", head: false).eq(column: "id", value: homeID).execute().underlyingResponse.data.convertDataToString().convertStringToDictionary()
+            let anniversaryDict = try await SensitiveData.supabase.database.from("homes").select("anniversary_date", head: false).eq("id", value: homeID).execute().data.convertDataToString().convertStringToDictionary()
             let anniversaryDateString = anniversaryDict?["anniversary_date"] as? String ?? ""
             let formattedDate = getFormattedDateForDisplay(from: anniversaryDateString)
             return formattedDate

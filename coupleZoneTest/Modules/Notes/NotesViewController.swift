@@ -57,6 +57,10 @@ class NotesViewController: UIViewController {
         configureNavigationBar()
         interactor.fetchData(.init())
     }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        interactor.disconnectSocket()
+    }
     // MARK: - NavigationBar
     private func configureNavigationBar() {
         let navBarAppearance = UINavigationBarAppearance()

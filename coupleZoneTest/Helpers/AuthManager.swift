@@ -61,7 +61,7 @@ class AuthManager: NSObject {
     }
 
     func startSignInWithAppleFlow(completion: @escaping (Result<SignInWithAppleCredentials, Error>) -> Void) {
-        let rootViewController = UIApplication.shared.keyWindow?.rootViewController
+        let rootViewController = UIApplication.shared.keyWindoww?.rootViewController
         guard let topController = rootViewController?.topController else { return }
 
         let nonce = randomNonceString()
@@ -81,7 +81,7 @@ class AuthManager: NSObject {
 }
 extension AuthManager: ASAuthorizationControllerPresentationContextProviding {
     func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
-        let rootViewController = UIApplication.shared.keyWindow?.rootViewController
+        let rootViewController = UIApplication.shared.keyWindoww?.rootViewController
         guard let topController = rootViewController?.topController else { return .init() }
         return topController.view.window!
     }
@@ -148,7 +148,7 @@ extension AuthManager {
     func getUsernameIfExists() async -> String? {
         do {
             guard let userEmail = AppGlobal.shared.user?.email else { return nil }
-            let data = try await SensitiveData.supabase.database.from("users").select(columns: "*", head: false).eq(column: "email", value: userEmail).execute().underlyingResponse.data
+            let data = try await SensitiveData.supabase.database.from("users").select("*", head: false).eq("email", value: userEmail).execute().data
             let stringData = String(data: data, encoding: .utf8)
             guard let userDict = stringData?.convertStringToDictionary() else { return nil }
             let username = userDict["username"] as? String ?? ""
@@ -170,8 +170,7 @@ extension AuthManager {
         let userID = user.id.uuidString
         let username = AppGlobal.shared.appleCredentialUserFullName?.givenName ?? "Anonymous"
         let dict = ["userID": userID, "username": username, "email": user.email]
-        let updateTable = SensitiveData.supabase.database.from("users").upsert(values: dict)
-        try await updateTable.execute()
+        try await SensitiveData.supabase.database.from("users").upsert(dict).execute()
         AppGlobal.shared.username = username
     }
     private func addOneSignalSubscriptionIDToSupabaseIfNeeded() async throws {
@@ -193,13 +192,12 @@ extension AuthManager {
         }
         guard let user = AppGlobal.shared.user else { return }
         let userID = user.id.uuidString
-        let updateQuery = SensitiveData.supabase.database.from("users").update(values: ["pushSubscriptionIDs": pushIDArray]).eq(column: "userID", value: userID)
-        try await updateQuery.execute()
+        try await SensitiveData.supabase.database.from("users").update(["pushSubscriptionIDs": pushIDArray]).eq("userID", value: userID).execute()
     }
     private func getSubscriptionIDsIfExists() async -> [String]? {
         do {
             guard let userEmail = AppGlobal.shared.user?.email else { return nil }
-            let data = try await SensitiveData.supabase.database.from("users").select(columns: "*", head: false).eq(column: "email", value: userEmail).execute().underlyingResponse.data
+            let data = try await SensitiveData.supabase.database.from("users").select("*", head: false).eq("email", value: userEmail).execute().data
             let stringData = String(data: data, encoding: .utf8)
             guard let userDict = stringData?.convertStringToDictionary() else { return nil }
             let pushIDs = userDict["pushSubscriptionIDs"] as? [String] ?? []

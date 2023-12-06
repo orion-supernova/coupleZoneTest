@@ -242,7 +242,6 @@ class CustomCameraViewController: UIViewController, UINavigationControllerDelega
             captureSession.addOutput(photoOutput)
         }
         let photoSettings = AVCapturePhotoSettings()
-        photoSettings.isAutoStillImageStabilizationEnabled = true
         photoSettings.isHighResolutionPhotoEnabled = true
         photoOutput.capturePhoto(with: photoSettings, delegate: self)
         removeGestureRecognizers()
@@ -371,7 +370,7 @@ class CustomCameraViewController: UIViewController, UINavigationControllerDelega
             let _: Int = Int(currentInput.device.videoZoomFactor)
 
             // Calculate the scale factor based on lens types
-            var scale: CGFloat = 1.0 // Default, no zoom effect
+            let scale: CGFloat = 1.0 // Default, no zoom effect
 //            switch currentDeviceType {
 //                case .builtInWideAngleCamera:
 //                    scale = 3.0

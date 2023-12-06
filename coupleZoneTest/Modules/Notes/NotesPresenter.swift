@@ -49,5 +49,6 @@ extension NotesModels.FetchData.ViewModel.DisplayableModel {
         self.title = model.title
         self.note = model.note
         self.editedAt = model.editedAt ?? ""
+        self.id = model.id
     }
 }

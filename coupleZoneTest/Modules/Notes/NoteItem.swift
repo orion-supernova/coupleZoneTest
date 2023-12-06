@@ -14,13 +14,16 @@ final class NoteItem: APIResponse {
         case title = "title"
         case note = "note"
         case editedAt = "edited_at"
+        case id = "id"
     }
     let createdAt: String?
     let editedAt: String?
     let title: String
     let note: [String: Any]
+    let id: Int
 
     init?(with json: JSON) {
+        self.id = json[CodingKeys.id.stringValue] as? Int ?? 0
         self.createdAt = json[CodingKeys.createdAt.stringValue] as? String ?? ""
         self.editedAt = json[CodingKeys.editedAt.stringValue] as? String ?? ""
         self.title = json[CodingKeys.title.stringValue] as? String ?? ""

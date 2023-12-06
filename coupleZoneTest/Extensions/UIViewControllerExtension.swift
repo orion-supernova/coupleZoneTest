@@ -20,6 +20,6 @@ extension UIViewController {
         }
     }
     var rootController: UIViewController? {
-        return UIApplication.shared.keyWindow?.rootViewController
+        return UIApplication.shared.keyWindoww?.rootViewController
     }
 }
