@@ -7,7 +7,7 @@
 
 import Foundation
 import UIKit.UIImage
-import SupabaseStorage
+import Supabase
 
 class HomeServices {
     
@@ -17,11 +17,11 @@ class HomeServices {
     func getHomeInfo() async -> Result<HomeItem, RequestError> {
         do {
             guard let userID = AppGlobal.shared.user?.id else { return .failure(.generic) }
-            let homeIDData = try await supabase.database.from("users").select(columns: "homeID").eq(column: "userID", value: userID).execute().underlyingResponse.data
+            let homeIDData = try await supabase.database.from("users").select("homeID").eq("userID", value: userID).execute().data
             let homeIDStringData = String(data: homeIDData, encoding: .utf8) ?? ""
             let homeIDDict = homeIDStringData.convertStringToDictionary()
             let homeID = homeIDDict?["homeID"] as? String ?? ""
-            let homeData = try await supabase.database.from("homes").select(columns: "*", head: false).eq(column: "id", value: homeID).execute().underlyingResponse.data
+            let homeData = try await supabase.database.from("homes").select("*", head: false).eq("id", value: homeID).execute().data
             let homeStringData = String(data: homeData, encoding: .utf8) ?? ""
             guard let homeDict = homeStringData.convertStringToDictionary() else { return .failure(.generic) }
             guard let item = HomeItem(with: homeDict) else { return .failure(.generic) }
@@ -34,13 +34,13 @@ class HomeServices {
         do {
             guard let imageData = image.jpegData(compressionQuality: 0.8) else { return .failure(.init(message: "Image Convertion to Data Error")) }
             let fileName = UUID().uuidString
-            let file = File(name: fileName, data: imageData, fileName: fileName, contentType: "image/jpeg")
+            let fileData = File(name: fileName, data: imageData, fileName: fileName, contentType: "image/jpeg").data
             let homeID = await getHomeID()
-            let uploadPhotoToStorage = try await supabase.storage.from(id: "homes/\(homeID)/homePhotos").upload(path: "\(fileName).jpeg", file: file, fileOptions: FileOptions(cacheControl: "3600"))
-            let urlString = try supabase.storage.from(id: "homes/\(homeID)/homePhotos").getPublicURL(path: "\(fileName).jpeg").absoluteString
+            let uploadPhotoToStorage = try await supabase.storage.from("homes/\(homeID)/homePhotos").upload(path: "\(fileName).jpeg", file: fileData, options: .init(cacheControl: "3600"))
+            let urlString = try supabase.storage.from("homes/\(homeID)/homePhotos").getPublicURL(path: "\(fileName).jpeg").absoluteString
             print(urlString)
             print(uploadPhotoToStorage)
-            try await supabase.database.from("homes").update(values: ["imageURLString": urlString]).eq(column: "id", value: homeID).execute()
+            try await supabase.database.from("homes").update(["imageURLString": urlString]).eq("id", value: homeID).execute()
             return .success(())
         } catch let error {
             print(error.localizedDescription)
@@ -51,7 +51,7 @@ class HomeServices {
         do {
             let partnerUserID = await getPartnerUserID()
             guard !partnerUserID.isEmpty else { return .failure(.init(message: "Partner not found."))}
-            let pushDevicesIDArray = try await SensitiveData.supabase.database.from("users").select(columns: "pushSubscriptionIDs", head: false).eq(column: "userID", value: partnerUserID).execute().underlyingResponse.data.convertDataToString().convertStringToDictionary()?["pushSubscriptionIDs"] as? [String] ?? []
+            let pushDevicesIDArray = try await SensitiveData.supabase.database.from("users").select("pushSubscriptionIDs").eq("userID", value: partnerUserID).execute().data.convertDataToString().convertStringToDictionary()?["pushSubscriptionIDs"] as? [String] ?? []
             let username = AppGlobal.shared.username ?? ""
             OneSignalManager.shared.postNotification(to: pushDevicesIDArray, title: "Love Received!" , message: "\(username) sent you love!", notificationSoundString: "guitar-notification.wav", photoURLString: "https://ifhmuzgasdnjaegpvzpo.supabase.co/storage/v1/object/public/photos/balloon.jpg",pushCategory: .love)
             return .success(())
@@ -63,7 +63,7 @@ class HomeServices {
     func getPartnerUsername() async -> Result<String, CustomMessageError> {
         do {
             let partnerUserID = await getPartnerUserID()
-            let partnerUsername = try await SensitiveData.supabase.database.from("users").select(columns: "username", head: false).eq(column: "userID", value: partnerUserID).execute().underlyingResponse.data.convertDataToString().convertStringToDictionary()?["username"] as? String ?? ""
+            let partnerUsername = try await SensitiveData.supabase.database.from("users").select("username").eq("userID", value: partnerUserID).execute().data.convertDataToString().convertStringToDictionary()?["username"] as? String ?? ""
             return .success(partnerUsername)
         } catch let error {
             return .failure(.init(message: error.localizedDescription))
@@ -73,7 +73,7 @@ class HomeServices {
     private func getHomeID() async -> String {
         do {
             guard let userID = AppGlobal.shared.user?.id else { return "" }
-            let userDict = try await SensitiveData.supabase.database.from("users").select(columns: "*", head: false).eq(column: "userID", value: userID).execute().underlyingResponse.data.convertDataToString().convertStringToDictionary()
+            let userDict = try await SensitiveData.supabase.database.from("users").select("*").eq("userID", value: userID).execute().data.convertDataToString().convertStringToDictionary()
             let idString = userDict?["homeID"] as? String ?? ""
             return idString
         } catch let error {
@@ -84,7 +84,7 @@ class HomeServices {
     private func getPartnerUserID() async -> String {
         do {
             guard let userID = AppGlobal.shared.user?.id.uuidString else { return "" }
-            let partnerUserID = try await SensitiveData.supabase.database.from("users").select(columns: "partnerUserID", head: false).eq(column: "userID", value: userID).execute().underlyingResponse.data.convertDataToString().convertStringToDictionary()?["partnerUserID"] as? String ?? ""
+            let partnerUserID = try await SensitiveData.supabase.database.from("users").select("partnerUserID").eq("userID", value: userID).execute().data.convertDataToString().convertStringToDictionary()?["partnerUserID"] as? String ?? ""
             guard !partnerUserID.isEmpty else { return "" }
             return (partnerUserID)
         } catch let error {

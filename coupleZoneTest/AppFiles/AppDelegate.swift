@@ -135,7 +135,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 intentIdentifiers: [],
                 options: [])
 
-            UNUserNotificationCenter.current().setNotificationCategories([timelinePhotoCategory, timeLinePhotoNotificationTimeUpdateCategory, loveCategory, dailyPhotoNotificationCategory])
+            UNUserNotificationCenter.current().setNotificationCategories([timelinePhotoCategory, timeLinePhotoNotificationTimeUpdateCategory, loveCategory, dailyPhotoNotificationCategory, noteCategory])
 
             self?.getNotificationSettings()
         }
@@ -258,7 +258,6 @@ extension AppDelegate {
             let components = calendar.dateComponents([.hour, .minute], from: date)
 
             let trigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: true)
-            let trigger2 = UNTimeIntervalNotificationTrigger(timeInterval: 2, repeats: false)
 
             let request = UNNotificationRequest(identifier: "DailyNotification", content: content, trigger: trigger)
 

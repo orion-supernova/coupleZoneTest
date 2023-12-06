@@ -11,6 +11,7 @@ import Foundation
 protocol NotesBusinessLogic: AnyObject {
     func fetchData(_ request: NotesModels.FetchData.Request)
     func createNote(_ request: NotesModels.CreateNote.Request)
+    func disconnectSocket()
 }
 
 final class NotesInteractor: NotesBusinessLogic {
@@ -36,13 +37,14 @@ final class NotesInteractor: NotesBusinessLogic {
     }
     func createNote(_ request: NotesModels.CreateNote.Request) {
         Task {
-            LottieHUD.shared.show()
             let result = await worker.createNote(title: request.title)
             let response = NotesModels.CreateNote.Response.init(result: result)
             DispatchQueue.main.async {
-                LottieHUD.shared.dismiss()
                 self.presenter.presentAfterNewNote(response)
             }
         }
+    }
+    func disconnectSocket() {
+        worker.disconnectSocket()
     }
 }

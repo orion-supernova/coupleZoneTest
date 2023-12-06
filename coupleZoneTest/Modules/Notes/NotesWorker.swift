@@ -11,6 +11,7 @@ import Foundation
 protocol NotesWorker {
     func fetchData() async -> Result<[NoteItem], CustomMessageError>
     func createNote(title: String) async -> Result<Void, CustomMessageError>
+    func disconnectSocket()
 }
 
 final class NotesNetworkWorker: NotesWorker {
@@ -27,5 +28,8 @@ final class NotesNetworkWorker: NotesWorker {
     }
     func createNote(title: String) async -> Result<Void, CustomMessageError> {
         return await notesServices.createNote(title: title)
+    }
+    func disconnectSocket() {
+        notesServices.disconnectSocket()
     }
 }

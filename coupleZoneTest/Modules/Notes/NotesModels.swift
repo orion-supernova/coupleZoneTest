@@ -22,6 +22,7 @@ enum NotesModels {
                 let createdAt: String
                 let editedAt: String
                 let title: String
+                let id: Int
                 let note: [String: Any]
             }
             let displayableModels: [DisplayableModel]

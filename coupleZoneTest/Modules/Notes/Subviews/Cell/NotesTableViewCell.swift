@@ -115,8 +115,6 @@ extension NotesTableViewCell {
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
             if let date = dateFormatter.date(from: editedAt) {
-                let today = Calendar.current.startOfDay(for: Date())
-                let yesterday = Calendar.current.date(byAdding: .day, value: -1, to: today) ?? Date()
                 if Calendar.current.isDateInToday(date) {
                     dateFormatter.dateFormat = "'Today', HH:mm"
                 } else if Calendar.current.isDateInYesterday(date) {

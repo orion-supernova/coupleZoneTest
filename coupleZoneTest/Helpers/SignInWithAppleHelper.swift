@@ -44,7 +44,7 @@ class SignInWithAppleHelper: NSObject  {
     }
 
     func startSignInWithAppleFlow(completion: @escaping (Result<SignInWithAppleCredentials, Error>) -> Void) {
-        let rootViewController = UIApplication.shared.keyWindow?.rootViewController
+        let rootViewController = UIApplication.shared.keyWindoww?.rootViewController
         guard let topController = rootViewController?.topController else { return }
 
         let nonce = randomNonceString()
@@ -102,7 +102,7 @@ extension SignInWithAppleHelper: ASAuthorizationControllerDelegate {
 
 extension SignInWithAppleHelper: ASAuthorizationControllerPresentationContextProviding {
     func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
-        let rootViewController = UIApplication.shared.keyWindow?.rootViewController
+        let rootViewController = UIApplication.shared.keyWindoww?.rootViewController
         guard let topController = rootViewController?.topController else { return .init() }
         return topController.view.window!
     }
