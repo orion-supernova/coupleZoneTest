@@ -71,12 +71,7 @@ class PhotosServices {
             let homeID = await getHomeID()
             try await SensitiveData.supabase.database.from("homes").update(["photoNotificationTime": time]).eq("id", value: homeID).execute()
             print("Update Notification Time Success")
-            let newNotificationTimeWithTimeZoneResponse = await getNotificationTime()
-            var newTime = ""
-            if case let .success(time) = newNotificationTimeWithTimeZoneResponse {
-                newTime = time
-            }
-            await sendNotificationToPartner(title: "Your Photo Time Changed!", message: "Your Partner has changed the time of notification to \(newTime.convertStringToDate(receivedformat: "yyyy-MM-dd'T'HH:mm:ssZ", desiredFormat: "HH:mm"))!", pushCategory: .timeLinePhotoNotificationTimeUpdate, notificationSoundString: "guitar-notification.wav", data: ["time": time])
+            await sendNotificationToPartner(title: "Your Photo Time Changed!", message: "Your Partner has changed the time of notification to \(time)!", pushCategory: .timeLinePhotoNotificationTimeUpdate, notificationSoundString: "guitar-notification.wav", data: ["time": time])
             return .success(time)
         } catch let error {
             print(error.localizedDescription)
