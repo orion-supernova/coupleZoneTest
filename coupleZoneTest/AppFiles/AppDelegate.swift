@@ -12,11 +12,13 @@ import IQKeyboardManagerSwift
 
 enum PushNotificationIdentifiers {
     enum Category: String {
+        case none
         case timeLinePhotoNotificationTimeUpdate
         case timelinePhoto
         case dailyPhotoNotification
         case love
         case note
+        case message
     }
     enum Action: String {
         case viewAction
@@ -84,12 +86,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // MARK: - Apple Push Notifications Service
     func registerForPushNotifications() {
-        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { [weak self] granted, _ in
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) {
+            [weak self] granted,
+            _ in
             print("Permission granted: \(granted)")
             guard granted else { return }
-
+            
             UNUserNotificationCenter.current().delegate = self
-
+            
             // MARK: - Notification Actions
             let viewAction = UNNotificationAction(
                 identifier: PushNotificationIdentifiers.Action.viewAction.rawValue,
@@ -107,7 +111,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 identifier: PushNotificationIdentifiers.Action.dailyPhotoSendAction.rawValue,
                 title: "Okay, I'm getting ready!",
                 options: [])
-
+            
             // MARK: - Notification Categories
             let timelinePhotoCategory = UNNotificationCategory(
                 identifier: PushNotificationIdentifiers.Category.timelinePhoto.rawValue,
@@ -134,9 +138,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 actions: [viewAction, dismissAction],
                 intentIdentifiers: [],
                 options: [])
-
-            UNUserNotificationCenter.current().setNotificationCategories([timelinePhotoCategory, timeLinePhotoNotificationTimeUpdateCategory, loveCategory, dailyPhotoNotificationCategory, noteCategory])
-
+            let messageCategory = UNNotificationCategory(
+                identifier: PushNotificationIdentifiers.Category.message.rawValue,
+                actions: [viewAction, dismissAction],
+                intentIdentifiers: [],
+                options: [])
+            
+            UNUserNotificationCenter.current().setNotificationCategories(
+                [
+                    timelinePhotoCategory,
+                    timeLinePhotoNotificationTimeUpdateCategory,
+                    loveCategory,
+                    dailyPhotoNotificationCategory,
+                    noteCategory,
+                    messageCategory
+                ]
+            )
             self?.getNotificationSettings()
         }
     }
@@ -161,26 +178,62 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     // MARK: - Notification Handler
-    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+    func application(
+        _ application: UIApplication,
+        didReceiveRemoteNotification userInfo: [AnyHashable: Any],
+        fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void
+    ) {
         handlePayloadInBackground(userInfo: userInfo)
         application.applicationIconBadgeNumber = application.applicationIconBadgeNumber + 1
     }
 
+    // MARK: - Foreground Notification
+    func userNotificationCenter(
+        _ center: UNUserNotificationCenter,
+        willPresent notification: UNNotification,
+        withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+            let userInfo = notification.request.content.userInfo
+            let notificationCategory = getNotificationCategory(from: userInfo)
+
+            switch notificationCategory {
+                default:
+                    let custom = userInfo["custom"] as? [String: Any] ?? [:]
+                    let a = custom["a"] as? [String: Any] ?? [:]
+                    let additionalData = a["additionalData"] as? [String: Any] ?? [:]
+                    let senderUID = additionalData["senderUID"] as? String ?? ""
+                    let userID = AppGlobal.shared.user?.id.uuidString ?? ""
+                    if senderUID == userID {
+                        completionHandler([])
+                    } else {
+                        completionHandler([.sound])
+                    }
+            }
+        }
+
+    private func getNotificationCategory(from userInfo: [AnyHashable: Any] ) -> PushNotificationIdentifiers.Category {
+        guard let aps = userInfo["aps"] as? [String: Any] else { return .none }
+        guard let categoryString = aps["category"] as? String else { return .none }
+        guard let category = PushNotificationIdentifiers.Category(rawValue: categoryString) else { return .none }
+        return category
+    }
 }
 // MARK: - Push Background Event
 extension AppDelegate {
     func handlePayloadInBackground(userInfo: [AnyHashable: Any]) {
-        guard let aps = userInfo["aps"] as? [String: Any] else { return }
-        guard let categoryString = aps["category"] as? String else { return }
-        guard let category = PushNotificationIdentifiers.Category(rawValue: categoryString) else { return }
+        let category = getNotificationCategory(from: userInfo)
+        guard let customData = userInfo["custom"] as? [String: Any] else { return }
+        guard let a = customData["a"] as? [String: Any] else { return }
+        guard let additionalData = a["additionalData"] as? [String: Any] else { return }
         switch category {
             case .timeLinePhotoNotificationTimeUpdate:
-                guard let customData = userInfo["custom"] as? [String: Any] else { return }
-                guard let a = customData["a"] as? [String: Any] else { return }
-                guard let additionalData = a["additionalData"] as? [String: Any] else { return }
                 guard let time = additionalData["time"] as? String else { return }
                 print(time)
-                scheduleNotification(at: time)
+                let manager = LocalNotificationManager()
+                manager.scheduleDailyPhotoNotification(at: time)
+            case .message:
+                let senderUID = additionalData["senderUID"] as? String ?? ""
+                guard senderUID != AppGlobal.shared.user?.id.uuidString else { return }
+                NotificationCenter.default.post(name: .newMessageReceived, object: nil)
             default:
                 break
         }
@@ -226,6 +279,19 @@ extension AppDelegate: OSNotificationClickListener {
                         print("DEBUG: ----- Love Sent Back!")
                     }
                 }
+            case .note:
+                let action = getActionType(from: data)
+                guard action != .dismissAction else { return }
+                let additionalData = data["additionalData"] as? [String: Any] ?? [:]
+                _ = additionalData["noteID"] as? String ?? ""
+                navigateFromSceneDelegate(selectedIndex: 2)
+            case .message:
+                let action = getActionType(from: data)
+                guard action != .dismissAction else { return }
+                DispatchQueue.main.async {
+                    guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene, let sceneDelegate = windowScene.delegate as? SceneDelegate else { return }
+                    sceneDelegate.navigateFromAuth(selectedIndex: 3)
+                }
             default:
                 break
         }
@@ -237,64 +303,32 @@ extension AppDelegate: OSNotificationClickListener {
     }
 }
 
-extension AppDelegate {
-    func scheduleNotification(at userTime: String) {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
-
-        if let date = dateFormatter.date(from: userTime) {
-            let content = UNMutableNotificationContent()
-            content.title = "Photo Time!"
-            content.body = "Send your partner a stunning photo to blew their mind!"
-
-            // Set a custom sound
-            content.sound = UNNotificationSound(named: UNNotificationSoundName(rawValue: "romantic-notification.wav"))
-
-            // Add custom information for the notification action
-            content.userInfo = ["customAction": "photoSend"]
-//            content.categoryIdentifier = PushNotificationIdentifiers.Category.dailyPhotoNotification.rawValue
-
-            let calendar = Calendar.current
-            let components = calendar.dateComponents([.hour, .minute], from: date)
-
-            let trigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: true)
-
-            let request = UNNotificationRequest(identifier: "DailyNotification", content: content, trigger: trigger)
-
-            UNUserNotificationCenter.current().getPendingNotificationRequests { array in
-                print(array)
-            }
-            UNUserNotificationCenter.current().add(request) { error in
-                if let error = error {
-                    print("Error scheduling notification: \(error.localizedDescription)")
-                } else {
-                    print("Notification scheduled successfully!")
-                }
-            }
-        } else {
-            print("Invalid date format")
-        }
-    }
-}
-
+// MARK: - Local Notification
 extension AppDelegate: UNUserNotificationCenterDelegate {
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         print("DEBUG: ----- CLICKED OR RECEIVED")
         // Only handling daily photo notification for now. Should change when new types added.
-//        let category = response.notification.request.content.categoryIdentifier
-//        if category == PushNotificationIdentifiers.Category.dailyPhotoNotification.rawValue {
-//            let action = PushNotificationIdentifiers.Action(rawValue: response.actionIdentifier)
-//            guard action != .dismissAction else { return }
-//            DispatchQueue.main.async {
-//                guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene, let sceneDelegate = windowScene.delegate as? SceneDelegate else { return }
-//                sceneDelegate.navigateFromAuth(selectedIndex: 1, isDailyPhotoAction: true)
-//                completionHandler()
-//            }
-//        }
+        let categoryString = response.notification.request.content.categoryIdentifier
+        guard let category = PushNotificationIdentifiers.Category(rawValue: categoryString) else { return }
+        switch category {
+            case .dailyPhotoNotification:
+                DispatchQueue.main.async {
+                    guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene, let sceneDelegate = windowScene.delegate as? SceneDelegate else { return }
+                    sceneDelegate.navigateFromAuth(selectedIndex: 1, isDailyPhotoAction: true)
+                    completionHandler()
+                }
+            default:
+                break
+        }
+    }
+}
+
+// MARK: - Navigate
+extension AppDelegate {
+    private func navigateFromSceneDelegate(selectedIndex: Int, isDailyPhotoAction: Bool = false) {
         DispatchQueue.main.async {
             guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene, let sceneDelegate = windowScene.delegate as? SceneDelegate else { return }
-            sceneDelegate.navigateFromAuth(selectedIndex: 1, isDailyPhotoAction: true)
-            completionHandler()
+            sceneDelegate.navigateFromAuth(selectedIndex: selectedIndex, isDailyPhotoAction: isDailyPhotoAction)
         }
     }
 }

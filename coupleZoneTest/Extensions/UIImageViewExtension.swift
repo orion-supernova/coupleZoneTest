@@ -10,12 +10,17 @@ import Kingfisher
 
 @objc extension UIImageView {
     
+//    func makeCircular() {
+//        layer.cornerRadius  = bounds.size.height/2
+//        layer.masksToBounds = true
+//        clipsToBounds       = true
+//    }
     func makeCircular() {
-        layer.cornerRadius  = bounds.size.height/2
+        layer.cornerRadius = min(bounds.size.width, bounds.size.height) / 2.0
         layer.masksToBounds = true
-        clipsToBounds       = true
+        clipsToBounds = true
     }
-    
+
     func setImage(url: URL?, placeholder: UIImage? = nil, completion: (() -> Void)? = nil) {
         kf.setImage(with: url, placeholder: placeholder) { result in
             completion?()

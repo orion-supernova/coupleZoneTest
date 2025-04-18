@@ -148,7 +148,7 @@ extension AuthManager {
     func getUsernameIfExists() async -> String? {
         do {
             guard let userEmail = AppGlobal.shared.user?.email else { return nil }
-            let data = try await SensitiveData.supabase.database.from("users").select("*", head: false).eq("email", value: userEmail).execute().data
+            let data = try await SensitiveData.supabase.from("users").select("*", head: false).eq("email", value: userEmail).execute().data
             let stringData = String(data: data, encoding: .utf8)
             guard let userDict = stringData?.convertStringToDictionary() else { return nil }
             let username = userDict["username"] as? String ?? ""
@@ -170,7 +170,7 @@ extension AuthManager {
         let userID = user.id.uuidString
         let username = AppGlobal.shared.appleCredentialUserFullName?.givenName ?? "Anonymous"
         let dict = ["userID": userID, "username": username, "email": user.email]
-        try await SensitiveData.supabase.database.from("users").upsert(dict).execute()
+        try await SensitiveData.supabase.from("users").upsert(dict).execute()
         AppGlobal.shared.username = username
     }
     private func addOneSignalSubscriptionIDToSupabaseIfNeeded() async throws {
@@ -192,12 +192,12 @@ extension AuthManager {
         }
         guard let user = AppGlobal.shared.user else { return }
         let userID = user.id.uuidString
-        try await SensitiveData.supabase.database.from("users").update(["pushSubscriptionIDs": pushIDArray]).eq("userID", value: userID).execute()
+        try await SensitiveData.supabase.from("users").update(["pushSubscriptionIDs": pushIDArray]).eq("userID", value: userID).execute()
     }
     private func getSubscriptionIDsIfExists() async -> [String]? {
         do {
             guard let userEmail = AppGlobal.shared.user?.email else { return nil }
-            let data = try await SensitiveData.supabase.database.from("users").select("*", head: false).eq("email", value: userEmail).execute().data
+            let data = try await SensitiveData.supabase.from("users").select("*", head: false).eq("email", value: userEmail).execute().data
             let stringData = String(data: data, encoding: .utf8)
             guard let userDict = stringData?.convertStringToDictionary() else { return nil }
             let pushIDs = userDict["pushSubscriptionIDs"] as? [String] ?? []

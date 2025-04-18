@@ -16,11 +16,11 @@ class PhotosServices {
     func getPhotos() async -> Result<[PhotosItem], RequestError> {
         do {
             guard let userID = AppGlobal.shared.user?.id else { return .failure(.generic) }
-            let homeIDData = try await supabase.database.from("users").select("homeID").eq("userID", value: userID).execute().data
+            let homeIDData = try await supabase.from("users").select("homeID").eq("userID", value: userID).execute().data
             let homeIDStringData = String(data: homeIDData, encoding: .utf8) ?? ""
             let homeIDDict = homeIDStringData.convertStringToDictionary()
             let homeID = homeIDDict?["homeID"] as? String ?? ""
-            let data = try await supabase.database.from("photosTimeline").select("*", head: false).eq("homeID", value: homeID).execute().data
+            let data = try await supabase.from("photosTimeline").select("*", head: false).eq("homeID", value: homeID).execute().data
             let stringData = String(data: data, encoding: .utf8) ?? ""
             guard let dict = stringData.convertStringToDictionaryArray() else { return .failure(.generic) }
             var items = [PhotosItem]()
@@ -46,7 +46,7 @@ class PhotosServices {
             print(uploadPhotoToStorage)
             let username = await getUsername()
             let dict = ["imageURL": "\(urlString)", "username": username, "homeID": homeID]
-            try await supabase.database.from("photosTimeline").upsert(dict).execute()
+            try await supabase.from("photosTimeline").upsert(dict).execute()
             await sendNotificationToPartner(title: "Wow!", message: "\(username) has sent you a photo!", pushCategory: .timelinePhoto, notificationSoundString: "photo-notification.wav")
             return .success(())
         } catch let error {
@@ -58,7 +58,7 @@ class PhotosServices {
     func getNotificationTime() async -> Result<String, CustomMessageError> {
         do {
             let homeID = await getHomeID()
-            let notificationTimestamp = try await SensitiveData.supabase.database.from("homes").select("photoNotificationTime", head: false).eq("id", value: homeID).execute().data.convertDataToString().convertStringToDictionary()?["photoNotificationTime"] as? String ?? ""
+            let notificationTimestamp = try await SensitiveData.supabase.from("homes").select("photoNotificationTime", head: false).eq("id", value: homeID).execute().data.convertDataToString().convertStringToDictionary()?["photoNotificationTime"] as? String ?? ""
             return .success(notificationTimestamp)
         } catch let error {
             print(error.localizedDescription)
@@ -69,9 +69,11 @@ class PhotosServices {
     func updateNotificationTime(_ time: String) async -> Result<String, CustomMessageError> {
         do {
             let homeID = await getHomeID()
-            try await SensitiveData.supabase.database.from("homes").update(["photoNotificationTime": time]).eq("id", value: homeID).execute()
+            try await SensitiveData.supabase.from("homes").update(["photoNotificationTime": time]).eq("id", value: homeID).execute()
             print("Update Notification Time Success")
             await sendNotificationToPartner(title: "Your Photo Time Changed!", message: "Your Partner has changed the time of notification to \(time)!", pushCategory: .timeLinePhotoNotificationTimeUpdate, notificationSoundString: "guitar-notification.wav", data: ["time": time])
+            let localNotificationManager = LocalNotificationManager()
+            localNotificationManager.scheduleDailyPhotoNotification(at: time)
             return .success(time)
         } catch let error {
             print(error.localizedDescription)
@@ -83,7 +85,7 @@ class PhotosServices {
     private func getUsername() async -> String {
         do {
             guard let userEmail = AppGlobal.shared.user?.email else { return "" }
-            let data = try await supabase.database.from("users").select("*", head: false).eq("email", value: userEmail).execute().data
+            let data = try await supabase.from("users").select("*", head: false).eq("email", value: userEmail).execute().data
             let stringData = String(data: data, encoding: .utf8)
             guard let userDict = stringData?.convertStringToDictionary() else { return "" }
             let username = userDict["username"] as? String ?? ""
@@ -95,7 +97,7 @@ class PhotosServices {
     private func getHomeID() async -> String {
         do {
             guard let userID = AppGlobal.shared.user?.id else { return "" }
-            let userDict = try await SensitiveData.supabase.database.from("users").select("*", head: false).eq("userID", value: userID).execute().data.convertDataToString().convertStringToDictionary()
+            let userDict = try await SensitiveData.supabase.from("users").select("*", head: false).eq("userID", value: userID).execute().data.convertDataToString().convertStringToDictionary()
             let idString = userDict?["homeID"] as? String ?? ""
             print("DEBUG: ----- \(idString)", userDict!)
             return idString
@@ -107,8 +109,8 @@ class PhotosServices {
     private func sendNotificationToPartner(title: String, message: String, pushCategory: PushNotificationIdentifiers.Category, notificationSoundString: String, data: [String: Any]? = nil) async {
         do {
             guard let userID = AppGlobal.shared.user?.id.uuidString else { return }
-            let partnerUserID = try await SensitiveData.supabase.database.from("users").select("partnerUserID", head: false).eq("userID", value: userID).execute().data.convertDataToString().convertStringToDictionary()?["partnerUserID"] as? String ?? ""
-            let pushDevicesIDArray = try await SensitiveData.supabase.database.from("users").select("pushSubscriptionIDs", head: false).eq("userID", value: partnerUserID).execute().data.convertDataToString().convertStringToDictionary()?["pushSubscriptionIDs"] as? [String] ?? []
+            let partnerUserID = try await SensitiveData.supabase.from("users").select("partnerUserID", head: false).eq("userID", value: userID).execute().data.convertDataToString().convertStringToDictionary()?["partnerUserID"] as? String ?? ""
+            let pushDevicesIDArray = try await SensitiveData.supabase.from("users").select("pushSubscriptionIDs", head: false).eq("userID", value: partnerUserID).execute().data.convertDataToString().convertStringToDictionary()?["pushSubscriptionIDs"] as? [String] ?? []
             OneSignalManager.shared.postNotification(to: pushDevicesIDArray, title: title, message: message, notificationSoundString: notificationSoundString, pushCategory: pushCategory, data: data)
         } catch let error {
             print(error.localizedDescription)

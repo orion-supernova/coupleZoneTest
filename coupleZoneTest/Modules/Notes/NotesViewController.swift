@@ -144,7 +144,7 @@ extension NotesViewController: UITableViewDelegate {
         guard let cell = tableView.cellForRow(at: indexPath) as? NotesTableViewCell else { return }
         cell.highlightCell()
         guard let indexModel = self.items[safeIndex: indexPath.section] else { return }
-        let viewController = NoteViewController(note: indexModel)
+        let viewController = NoteViewControllerV2(note: indexModel)
         viewController.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(viewController, animated: true)
     }

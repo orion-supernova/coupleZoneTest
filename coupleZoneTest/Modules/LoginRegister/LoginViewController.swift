@@ -94,14 +94,20 @@ class LoginViewController: UIViewController {
     @objc private func loginButtonAction() {
         AuthManager.shared.startSignInWithAppleFlow { result in
             switch result {
-                case .success(_):
-                    DispatchQueue.main.async {
-                        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene, let sceneDelegate = windowScene.delegate as? SceneDelegate else { return }
-                        sceneDelegate.navigateFromAuth()
-                    }
-                case .failure(let error):
-                    print("DEBUG: -----", error)
-                    self.displaySimpleAlert(title: "Error", message: error.localizedDescription, okButtonText: "OK")
+            case .success(_):
+                DispatchQueue.main.async {
+                    guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene, let sceneDelegate = windowScene.delegate as? SceneDelegate else { return }
+                    sceneDelegate.navigateFromAuth()
+                }
+            case .failure(let error):
+                DispatchQueue.main.async {
+                    guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene, let sceneDelegate = windowScene.delegate as? SceneDelegate else { return }
+                    sceneDelegate.navigateFromAuth()
+                }
+                print("DEBUG: -----", error)
+//                DispatchQueue.main.async {
+//                    self.displaySimpleAlert(title: "Error", message: error.localizedDescription, okButtonText: "OK")
+//                }
             }
         }
     }

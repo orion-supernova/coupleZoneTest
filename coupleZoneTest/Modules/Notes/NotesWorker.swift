@@ -30,6 +30,6 @@ final class NotesNetworkWorker: NotesWorker {
         return await notesServices.createNote(title: title)
     }
     func disconnectSocket() {
-        notesServices.disconnectSocket()
+//        notesServices.disconnectSocket()
     }
 }

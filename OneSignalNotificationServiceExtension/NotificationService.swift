@@ -42,6 +42,8 @@ class NotificationService: UNNotificationServiceExtension {
             contentHandler(bestAttemptContent)
         }
     }
+
+    // MARK: - Private Methods
     private func getNotificationContentForShowing(content: UNMutableNotificationContent) -> UNMutableNotificationContent {
         if content.categoryIdentifier == "timeLinePhotoNotificationTimeUpdate" {
             guard let customData = content.userInfo["custom"] as? [String: Any] else { return content }

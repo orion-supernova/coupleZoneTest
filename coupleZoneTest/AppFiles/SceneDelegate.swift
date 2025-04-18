@@ -24,7 +24,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let vc0 = UINavigationController(rootViewController: HomeBuilder.build())
         let vc1 = UINavigationController(rootViewController: PhotosBuilder.build())
         let vc2 = UINavigationController(rootViewController: NotesBuilder.build())
-        let vc3 = UINavigationController(rootViewController: ChatViewController())
+        let vc3 = UINavigationController(rootViewController: ChatRoomViewController())
         tabController?.viewControllers = [vc0, vc1, vc2, vc3]
         tabController?.selectedIndex = 0
         tabController?.tabBar.tintColor = .systemPink
@@ -81,8 +81,8 @@ extension SceneDelegate {
         Task {
             do {
                 LottieHUD.shared.showWithoutDelay()
-                let session = try await SensitiveData.supabase.auth.session
-                print(session)
+//                let session = try await SensitiveData.supabase.auth.session
+//                print(session)
                 DispatchQueue.main.async {
                     self.window?.rootViewController = self.tabController
                     self.tabController?.selectedIndex = selectedIndex ?? 0
