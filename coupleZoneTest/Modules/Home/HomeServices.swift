@@ -53,7 +53,7 @@ class HomeServices {
             guard !partnerUserID.isEmpty else { return .failure(.init(message: "Partner not found."))}
             let pushDevicesIDArray = try await SensitiveData.supabase.from("users").select("pushSubscriptionIDs").eq("userID", value: partnerUserID).execute().data.convertDataToString().convertStringToDictionary()?["pushSubscriptionIDs"] as? [String] ?? []
             let username = AppGlobal.shared.username ?? ""
-            OneSignalManager.shared.postNotification(to: pushDevicesIDArray, title: "Love Received!" , message: "\(username) sent you love!", notificationSoundString: "guitar-notification.wav", photoURLString: "https://ifhmuzgasdnjaegpvzpo.supabase.co/storage/v1/object/public/photos/balloon.jpg",pushCategory: .love)
+            OneSignalManager.shared.postNotification(to: pushDevicesIDArray, title: "Love Received!" , message: "\(username) sent you love!", notificationSoundString: "guitar-notification.wav", photoURLString: "https://euiqavrnhhpblahzzpwn.supabase.co/storage/v1/object/public/photos/balloon.jpg",pushCategory: .love)
             return .success(())
         } catch let error {
             print(error.localizedDescription)
