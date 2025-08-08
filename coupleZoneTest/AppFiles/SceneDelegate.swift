@@ -81,8 +81,8 @@ extension SceneDelegate {
         Task {
             do {
                 LottieHUD.shared.showWithoutDelay()
-//                let session = try await SensitiveData.supabase.auth.session
-//                print(session)
+                let session = try await SensitiveData.supabase.auth.session
+                print(session)
                 DispatchQueue.main.async {
                     self.window?.rootViewController = self.tabController
                     self.tabController?.selectedIndex = selectedIndex ?? 0
