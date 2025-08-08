@@ -105,9 +105,9 @@ class LoginViewController: UIViewController {
                     sceneDelegate.navigateFromAuth()
                 }
                 print("DEBUG: -----", error)
-//                DispatchQueue.main.async {
-//                    self.displaySimpleAlert(title: "Error", message: error.localizedDescription, okButtonText: "OK")
-//                }
+                DispatchQueue.main.async {
+                    self.displaySimpleAlert(title: "Error", message: error.localizedDescription, okButtonText: "OK")
+                }
             }
         }
     }
